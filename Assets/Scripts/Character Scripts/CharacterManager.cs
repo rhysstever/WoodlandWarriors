@@ -20,13 +20,22 @@ public class CharacterManager : MonoBehaviour
     private Transform characterSelectIconParent;
     [SerializeField]
     private SpriteRenderer characterSelectSprite;
+    [SerializeField]
+    private Transform allySpawnTrans;
     [SerializeField]    // Character Sprites
     private Sprite badgerSprite, beaverSprite, foxSprite, opossumSprite, otterSprite, skunkSprite;
+    [SerializeField]    // Ally Prefabs
+    private GameObject squirrelPrefab;  // TODO: add the rest
+    [SerializeField]    // Spirit Prefabs
+    private GameObject earthSpiritPrefab;  // TODO: add the rest
 
     // Set at Start
     private Character chosenCharacter;
+    private GameObject allyObject, spiritObject;
 
     public Character ChosenCharacter { get { return chosenCharacter; } }
+    public GameObject AllyObject { get { return allyObject; } }
+    public GameObject SpiritObject { get { return spiritObject; } }
 
     private void Awake()
     {
@@ -59,6 +68,8 @@ public class CharacterManager : MonoBehaviour
     public void ChooseCharacter(Character character)
     {
         chosenCharacter = character;
+        allyObject = null;
+        spiritObject = null;
         HideCharacterSelectIcons();
         ClearCharacterSelectInfo();
         GameManager.instance.StartGame();
@@ -146,5 +157,34 @@ public class CharacterManager : MonoBehaviour
             Character.Skunk => "Intricate deck with allies and healing.",
             _ => "",
         };
+    }
+
+    private GameObject GetAllyPrefab(string allyType)
+    {
+        return allyType switch
+        {
+            "Squirrel" => squirrelPrefab,
+            _ => squirrelPrefab,
+        };
+    }
+
+    public void SummonAlly(string allyTypeToSummon, int initialHealth)
+    {
+        if(allyObject != null)
+        {
+            allyObject.GetComponent<Ally>().Buff(initialHealth);
+        }
+        else
+        {
+            Ally newAlly = Instantiate(
+                GetAllyPrefab(allyTypeToSummon),
+                allySpawnTrans.position,
+                Quaternion.identity,
+                GameManager.instance.Player.transform
+            ).GetComponent<Ally>();
+
+            newAlly.SetHealth(initialHealth);
+            allyObject = newAlly.gameObject;
+        }
     }
 }

@@ -84,6 +84,7 @@ public class CardManager : MonoBehaviour
             // Draw Cards: "Draw X cards"   // TODO: implement drawing
             // Cleanse Debuffs: "Cleanse"
             // Buff: "Buff X by Y"
+            // Summon: "Summon a [NAME] with X health. ..."
 
             // Main hand cards
             new CardData("Shortsword", Slot.MainHand, Rarity.Starter, TargetType.Unit, "Attack for 1"),
@@ -108,14 +109,14 @@ public class CardManager : MonoBehaviour
             //new CardData("Arcane Focus", Slot.OffHand, Rarity.Rare, TargetType.Self, "Some magic... nothing yet"),
 
             // Ally cards
-            new CardData("Squirrel", Slot.Ally, Rarity.Starter, TargetType.Unit, "Attack for 1"),
-            new CardData("Frog", Slot.Ally, Rarity.Common, TargetType.Self, "Heal for 1"),
-            new CardData("Rat", Slot.Ally, Rarity.Common, TargetType.Unit, "Poison for 1"),
-            new CardData("Newt", Slot.Ally, Rarity.Common, TargetType.Unit, "Burn for 1"),
-            //new CardData("Bunny", Slot.Ally, Rarity.Rare, TargetType.Self, "Some magic... nothing yet"),
-            new CardData("Toad", Slot.Ally, Rarity.Rare, TargetType.Unit, "Heal for 1. Poison for 1"),
-            new CardData("Porcupine", Slot.Ally, Rarity.Rare, TargetType.None, "Spike for 1"),
-            new CardData("Hamster", Slot.Ally, Rarity.Rare, TargetType.Unit, "Draw 1 card"),
+            new CardData("Squirrel", Slot.Ally, Rarity.Starter, TargetType.Self, "Summon a Squirrel with 1 health. Attacks for 1"),
+            new CardData("Frog", Slot.Ally, Rarity.Common, TargetType.Self, "Summon 1. Heals for 1"),
+            new CardData("Rat", Slot.Ally, Rarity.Common, TargetType.Self, "Summon 1. Poison for 1"),
+            new CardData("Newt", Slot.Ally, Rarity.Common, TargetType.Self, "Summon 1. Burn for 1"),
+            //new CardData("Bunny", Slot.Ally, Rarity.Rare, TargetType.Self, "Summon 1. Some magic... nothing yet"),
+            new CardData("Toad", Slot.Ally, Rarity.Rare, TargetType.Self, "Summon 1. Heal for 1. Poison for 1"),
+            new CardData("Porcupine", Slot.Ally, Rarity.Rare, TargetType.Self, "Summon 1. Spike for 1"),
+            new CardData("Hamster", Slot.Ally, Rarity.Rare, TargetType.Self, "Summon 1. Draw 1 card"),
 
             // Spirit cards
             new CardData("Earth Spirit", Slot.Spirit, Rarity.Starter, TargetType.Self, "Buff Defense by 1"),
@@ -173,6 +174,11 @@ public class CardManager : MonoBehaviour
             yield return actionDelayWait;
             PerformCardAction(actions[actionIndex], targetEnemy, cardData.Slot);
             actionIndex++;
+
+            if(cardData.Slot == Slot.Ally)
+            {
+                break;
+            } 
         }
 
         // Remove card and reset targetting
@@ -221,6 +227,12 @@ public class CardManager : MonoBehaviour
                 amount = int.Parse(action.Split(" ")[3]);
                 string type = action.Split(" ")[1];
                 ParseBuff(amount, type);
+                break;
+            case "Summon":
+                string[] trimmedAction = action.Split(".")[0].Split(" ");
+                string allyName = trimmedAction[2];
+                int allyHealth = int.Parse(trimmedAction[4]);
+                CharacterManager.instance.SummonAlly(allyName, allyHealth);
                 break;
             default:
                 Debug.Log(string.Format("Error! No action found for: {0}", action));

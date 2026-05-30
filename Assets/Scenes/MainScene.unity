@@ -788,7 +788,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Department of Woodland Security
+  m_text: Woodland Warriors
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d109bfc125b5f0143a03651c705d4b8f, type: 2}
   m_sharedMaterial: {fileID: 1267354866193280412, guid: d109bfc125b5f0143a03651c705d4b8f, type: 2}
@@ -1043,6 +1043,7 @@ Transform:
   - {fileID: 225071771}
   - {fileID: 596362264}
   - {fileID: 848342543}
+  - {fileID: 566465880}
   - {fileID: 1819420467}
   - {fileID: 529048174}
   - {fileID: 322939597}
@@ -1207,12 +1208,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterSelectIconParent: {fileID: 1047628280}
   characterSelectSprite: {fileID: 1320994478}
+  allySpawnTrans: {fileID: 566465880}
   badgerSprite: {fileID: 1947896252910339220, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   beaverSprite: {fileID: -7506843205370739377, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   foxSprite: {fileID: 1057077476486816784, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   opossumSprite: {fileID: -5515171930948586337, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   otterSprite: {fileID: 6151593519759729981, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   skunkSprite: {fileID: 5915982472212450843, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
+  squirrelPrefab: {fileID: 893089760025702593, guid: 0f205192699a00f40ba2c237bb18bf00, type: 3}
+  earthSpiritPrefab: {fileID: 0}
 --- !u!114 &231419623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2311,6 +2315,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 231419613}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &566465879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 566465880}
+  m_Layer: 0
+  m_Name: AllySpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &566465880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566465879}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.48, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
