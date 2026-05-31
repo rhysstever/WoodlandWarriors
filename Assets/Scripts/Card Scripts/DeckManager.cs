@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -146,8 +145,7 @@ public class DeckManager : MonoBehaviour
     private GameObject SpawnCard(GameObject cardPrefab, CardData cardData, Vector2 position, Transform parent)
     {
         GameObject newCard = Instantiate(cardPrefab, position, Quaternion.identity, parent);
-        CardObject cardObj = newCard.GetComponent<CardObject>();
-        cardObj.SetCardData(cardData);
+        newCard.GetComponent<CardObject>().SetCardData(cardData);
 
         return newCard;
     }

@@ -10,9 +10,9 @@ public class CardObject : MonoBehaviour
     [SerializeField]
     protected GameObject cardSelectionRing, cardToBePlayedRing;
     [SerializeField]
-    private Image cardArtImage, cardRarityIcon, cardSlotIcon;
+    private Image cardBaseImage, cardArtImage;
     [SerializeField]
-    private TMP_Text cardNameText, cardDescriptionText;
+    private TMP_Text cardNameText, cardSlotText, cardDescriptionText;
 
     // Set at Start
     protected bool isSelected, isBeingDragged;
@@ -36,6 +36,16 @@ public class CardObject : MonoBehaviour
     {
         this.cardData = cardData;
         cardNameText.text = cardData.Name;
+        cardSlotText.text = cardData.Slot switch
+        {
+            Slot.MainHand => "ATK",
+            Slot.OffHand => "DEF",
+            Slot.Ally => "ALY",
+            Slot.Spell => "SPL",
+            Slot.Spirit => "SPR",
+            Slot.Drink => "DRK",
+            _ => "???"
+        };
         cardDescriptionText.text = cardData.Description;
 
         Sprite cardArtSprite = CardManager.instance.GetCardArtSprite(cardData.Name);
@@ -50,28 +60,12 @@ public class CardObject : MonoBehaviour
             cardArtImage.gameObject.SetActive(false);
         }
 
-        Sprite rarityIconSprite = CardManager.instance.GetCardBaseRarityIconSprite(cardData.Rarity);
-        if(rarityIconSprite != null)
+        Sprite cardBaseSprite = CardManager.instance.GetCardBaseSprite(cardData.Slot, cardData.Rarity);
+        if(cardBaseSprite != null)
         {
-            // Set card background rarity image
-            cardRarityIcon.gameObject.SetActive(true);
-            cardRarityIcon.sprite = rarityIconSprite;
-        }
-        else
-        {
-            cardRarityIcon.gameObject.SetActive(false);
-        }
-
-        Sprite slotIconSprite = CardManager.instance.GetCardBaseSlotIconSprite(cardData.Slot);
-        if(slotIconSprite != null)
-        {
-            // Set card background slot image
-            cardSlotIcon.gameObject.SetActive(true);
-            cardSlotIcon.sprite = slotIconSprite;
-        }
-        else
-        {
-            cardSlotIcon.gameObject.SetActive(false);
+            // Set card base image
+            cardBaseImage.gameObject.SetActive(true);
+            cardBaseImage.sprite = cardBaseSprite;
         }
     }
 

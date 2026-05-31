@@ -1,11 +1,18 @@
-using static AudioManager;
+public enum Slot
+{
+    MainHand,
+    OffHand,
+    Ally,
+    Spell,
+    Spirit,
+    Drink
+}
 
 public enum Rarity
 {
-    Starter,
-    Common,
-    Rare,
-    Legendary
+    Basic,
+    Uncommon,
+    Rare
 }
 
 public enum TargetType

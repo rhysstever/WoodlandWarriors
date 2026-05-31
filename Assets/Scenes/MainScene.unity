@@ -1079,14 +1079,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf8e796c45fb9534eab063ea2b0360b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardBaseIconStarter: {fileID: 2347523605620919716, guid: efa83b905d15be648a3444473703f436, type: 3}
-  cardBaseIconRare: {fileID: 4913536548869769874, guid: efa83b905d15be648a3444473703f436, type: 3}
-  cardBaseIconMainhand: {fileID: 1498822906698890035, guid: efa83b905d15be648a3444473703f436, type: 3}
-  cardBaseIconOffhand: {fileID: -8471193539344995406, guid: efa83b905d15be648a3444473703f436, type: 3}
-  cardBaseIconAlly: {fileID: 9139232968916999130, guid: efa83b905d15be648a3444473703f436, type: 3}
-  cardBaseIconSpirit: {fileID: 5213714647233212211, guid: efa83b905d15be648a3444473703f436, type: 3}
-  cardBaseIconSpell: {fileID: -2320281315706383989, guid: efa83b905d15be648a3444473703f436, type: 3}
-  cardBaseIconDrink: {fileID: 8024715357060293378, guid: efa83b905d15be648a3444473703f436, type: 3}
+  cardBaseAttack: {fileID: 21300000, guid: 5279b5a1cc6b40b41b678e4c1491df00, type: 3}
+  cardBaseDefend: {fileID: 21300000, guid: e3e9b53934d13604c9ed93f0cfe4a6f1, type: 3}
+  cardBaseAlly: {fileID: 21300000, guid: be824542368afef4489703c5f4cbdbc1, type: 3}
+  cardBaseSpell: {fileID: 21300000, guid: a7a1748335ccc3242905cd89e9adde1d, type: 3}
+  cardBaseSpirit: {fileID: 21300000, guid: 47967a82c7a92684b94f8a64ce2406d5, type: 3}
+  cardBaseDrink: {fileID: 21300000, guid: e8441c005814a504ab7c75ea381d5da2, type: 3}
+  cardBaseUncommonAttack: {fileID: 21300000, guid: 0a892c0d92fd3ef49b1940dba0cfbf57, type: 3}
+  cardBaseUncommonDefend: {fileID: 21300000, guid: 4b81b2655f169cb44b111c3ecdf6890e, type: 3}
+  cardBaseUncommonAlly: {fileID: 21300000, guid: 7c3334ad06ec25843b4be6421d76f4a9, type: 3}
+  cardBaseUncommonSpell: {fileID: 21300000, guid: 46274a5012e60604095d4d72774816eb, type: 3}
+  cardBaseUncommonSpirit: {fileID: 21300000, guid: 83f5890ad7844064aba3c1898e839993, type: 3}
+  cardBaseUncommonDrink: {fileID: 21300000, guid: 64d3feda2c5822b40a55774a7f7b0e46, type: 3}
+  cardBaseRareAttack: {fileID: 21300000, guid: 0055b629eae15c740b7d0e0f25327a9f, type: 3}
+  cardBaseRareDefend: {fileID: 21300000, guid: 2d2b9a23c4c40aa459ae31dd98c82e6f, type: 3}
+  cardBaseRareAlly: {fileID: 21300000, guid: f0793182d70921c4f8d361cb8212abce, type: 3}
+  cardBaseRareSpell: {fileID: 21300000, guid: 8cb06b8414c92f043af8fcdbe6c51f25, type: 3}
+  cardBaseRareSpirit: {fileID: 21300000, guid: f64906e6d295c2e409d481c1f6d97bd0, type: 3}
+  cardBaseRareDrink: {fileID: 21300000, guid: 218d725bf81513a4b9d43250f806d835, type: 3}
   actionIconSpriteAttack: {fileID: 1161201145128540330, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   actionIconSpriteDefend: {fileID: 2130535880278150251, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   actionIconSpriteHeal: {fileID: 184950751378207249, guid: 6a9766e68245de946a4a81db07478054, type: 3}
