@@ -216,6 +216,8 @@ public class CardManager : MonoBehaviour
                 GameManager.instance.Player.Cleanse();
                 break;
             case "Buff":
+                string spiritName = GetCurrentCardData(Slot.Spirit).Name.Split(' ')[0];
+                CharacterManager.instance.SummonSpirit(spiritName);
                 amount = int.Parse(action.Split(" ")[3]);
                 string type = action.Split(" ")[1];
                 ParseBuff(amount, type);

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2342040484589157696}
   - component: {fileID: 7227121155969684516}
   m_Layer: 0
-  m_Name: Squirrel
+  m_Name: Newt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 048d2abb3f6a30e49adf15a19263abb3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d054d6db3b451fc4ba68d71db4d35177, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0

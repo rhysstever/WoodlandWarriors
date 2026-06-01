@@ -1044,6 +1044,7 @@ Transform:
   - {fileID: 596362264}
   - {fileID: 848342543}
   - {fileID: 566465880}
+  - {fileID: 1846258373}
   - {fileID: 1819420467}
   - {fileID: 529048174}
   - {fileID: 322939597}
@@ -1219,6 +1220,7 @@ MonoBehaviour:
   characterSelectIconParent: {fileID: 1047628280}
   characterSelectSprite: {fileID: 1320994478}
   allySpawnTrans: {fileID: 566465880}
+  spiritSpawnTrans: {fileID: 1846258373}
   badgerSprite: {fileID: 1947896252910339220, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   beaverSprite: {fileID: -7506843205370739377, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   foxSprite: {fileID: 1057077476486816784, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
@@ -1226,7 +1228,18 @@ MonoBehaviour:
   otterSprite: {fileID: 6151593519759729981, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   skunkSprite: {fileID: 5915982472212450843, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   squirrelPrefab: {fileID: 893089760025702593, guid: 0f205192699a00f40ba2c237bb18bf00, type: 3}
-  earthSpiritPrefab: {fileID: 0}
+  frogPrefab: {fileID: 893089760025702593, guid: d10c3b065aba3484aaf748eedadaab7b, type: 3}
+  ratPrefab: {fileID: 893089760025702593, guid: 6ec94c60df763a341af849c5e3095f0e, type: 3}
+  newtPrefab: {fileID: 893089760025702593, guid: 93e01c6ca362e884e971cdd961c85264, type: 3}
+  toadPrefab: {fileID: 893089760025702593, guid: 7cf66ef504471af4eaf8a731b9a3dedb, type: 3}
+  porcupinePrefab: {fileID: 893089760025702593, guid: 7cf66ef504471af4eaf8a731b9a3dedb, type: 3}
+  hamsterPrefab: {fileID: 893089760025702593, guid: 78a5d9faaf33efb4a90627c07da0f094, type: 3}
+  earthSpiritPrefab: {fileID: 441819906633108402, guid: 12aca27b1e916f04da9f07f643766ac1, type: 3}
+  airSpiritPrefab: {fileID: 893089760025702593, guid: dc1d6e57eca2ad24ab1c97d54b9ad53c, type: 3}
+  fireSpiritPrefab: {fileID: 893089760025702593, guid: 5caefc0383220e340be7b71bfd5d78f3, type: 3}
+  waterSpiritPrefab: {fileID: 893089760025702593, guid: 78bbf234d10ee9d479afe9311885ea05, type: 3}
+  darkSpiritPrefab: {fileID: 893089760025702593, guid: ed4a0e8fdc72002498960f5e72f96e9f, type: 3}
+  lightSpiritPrefab: {fileID: 893089760025702593, guid: 6edbb4e95e98b5c489d512990fa9e43b, type: 3}
 --- !u!114 &231419623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7314,6 +7327,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841813511}
   m_CullTransparentMesh: 1
+--- !u!1 &1846258372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1846258373}
+  m_Layer: 0
+  m_Name: SpiritSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1846258373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846258372}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.9, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 231419613}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1847622290
 GameObject:
   m_ObjectHideFlags: 0

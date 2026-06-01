@@ -21,13 +21,13 @@ public class CharacterManager : MonoBehaviour
     [SerializeField]
     private SpriteRenderer characterSelectSprite;
     [SerializeField]
-    private Transform allySpawnTrans;
+    private Transform allySpawnTrans, spiritSpawnTrans;
     [SerializeField]    // Character Sprites
     private Sprite badgerSprite, beaverSprite, foxSprite, opossumSprite, otterSprite, skunkSprite;
     [SerializeField]    // Ally Prefabs
-    private GameObject squirrelPrefab;  // TODO: add the rest
+    private GameObject squirrelPrefab, frogPrefab, ratPrefab, newtPrefab, toadPrefab, porcupinePrefab, hamsterPrefab;  // TODO: add the rest
     [SerializeField]    // Spirit Prefabs
-    private GameObject earthSpiritPrefab;  // TODO: add the rest
+    private GameObject earthSpiritPrefab, airSpiritPrefab, fireSpiritPrefab, waterSpiritPrefab, darkSpiritPrefab, lightSpiritPrefab;  // TODO: add the rest
 
     // Set at Start
     private Character chosenCharacter;
@@ -161,10 +161,30 @@ public class CharacterManager : MonoBehaviour
 
     private GameObject GetAllyPrefab(string allyType)
     {
-        return allyType switch
+        return allyType.ToLower() switch
         {
-            "Squirrel" => squirrelPrefab,
+            "squirrel" => squirrelPrefab,
+            "frog" => frogPrefab,
+            "rat" => ratPrefab,
+            "newt" => newtPrefab,
+            "toad" => toadPrefab,
+            "porcupine" => porcupinePrefab,
+            "hamster" => hamsterPrefab,
             _ => squirrelPrefab,
+        };
+    }
+
+    private GameObject GetSpiritPrefab(string spiritType)
+    {
+        return spiritType.ToLower() switch
+        {
+            "earth" => earthSpiritPrefab,
+            "air" => airSpiritPrefab,
+            "fire" => fireSpiritPrefab,
+            "water" => waterSpiritPrefab,
+            "dark" => darkSpiritPrefab,
+            "light" => lightSpiritPrefab,
+            _ => earthSpiritPrefab,
         };
     }
 
@@ -185,6 +205,25 @@ public class CharacterManager : MonoBehaviour
 
             newAlly.SetHealth(initialHealth);
             allyObject = newAlly.gameObject;
+        }
+    }
+
+    public void SummonSpirit(string spiritTypeToSummon)
+    {
+        if(spiritObject != null)
+        {
+            // TODO: buff the current spirit
+        }
+        else
+        {
+            GameObject newSpirit = Instantiate(
+                GetSpiritPrefab(spiritTypeToSummon),
+                spiritSpawnTrans.position,
+                Quaternion.identity,
+                GameManager.instance.Player.transform
+            );
+
+            spiritObject = newSpirit;
         }
     }
 }
