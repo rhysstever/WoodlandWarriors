@@ -93,8 +93,31 @@ public class DeckManager : MonoBehaviour
         DrawCards(currentHandSize);
     }
 
+    public void DrawCards(int numberOfCardsToDraw)
+    {
+        // Add the given number of cards from the deck into the hand
+        for(int i = 0; i < numberOfCardsToDraw; i++)
+        {
+            // Get the card from the deck, add it to the hand, and remove it from the deck
+            CardData card = GetRandomCardFromDeck();
+            hand.Add(card);
+
+            // Spawn the card in the scene
+            SpawnCard(playableCardPrefab, hand[i], cardParentTrans);
+        }
+
+        CenterHand();
+    }
+
     private CardData GetRandomCardFromDeck()
     {
+        if(CharacterManager.instance.ChosenCharacter == Character.Otter)
+        {
+            // If the chosen character is Otter, all cards have an equal chance of being drawn, so return a random card from the deck
+            int randomDeckIndex = UnityEngine.Random.Range(0, deck.Count);
+            return deck[randomDeckIndex];
+        }
+
         // Chances: Slot -> # / 18 (4 + 4 + 3 + 3 + 2 + 2)
         // Main Hand -> 4 / 18
         // Off Hand -> 4 / 18
@@ -113,22 +136,6 @@ public class DeckManager : MonoBehaviour
             < 16 => CardManager.instance.GetCurrentCardData(Slot.Spirit),
             _ => CardManager.instance.GetCurrentCardData(Slot.Drink),
         };
-    }
-
-    public void DrawCards(int numberOfCardsToDraw)
-    {
-        // Add the given number of cards from the deck into the hand
-        for(int i = 0; i < numberOfCardsToDraw; i++)
-        {
-            // Get the card from the deck, add it to the hand, and remove it from the deck
-            CardData card = GetRandomCardFromDeck();
-            hand.Add(card);
-
-            // Spawn the card in the scene
-            SpawnCard(playableCardPrefab, hand[i], cardParentTrans);
-        }
-
-        CenterHand();
     }
 
     private GameObject SpawnCard(GameObject cardPrefab, CardData cardData, Transform parent)

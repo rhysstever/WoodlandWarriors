@@ -107,13 +107,13 @@ public class CharacterManager : MonoBehaviour
     {
         return character switch
         {
-            Character.Badger => "Balanced deck with both attacking and defending",
-            Character.Beaver => "Defensive deck that outlasts enemies with blocking and healing.",
-            Character.Fox => "Technical deck with a focus on spells and buffs.",
-            Character.Opossum => "Mixed deck using allies and spells.",
-            Character.Otter => "Aggressive deck with many buffs and attacks.",
-            Character.Skunk => "Intricate deck with allies and healing.",
-            _ => "",
+            Character.Badger => "Physical attacks deal more damage",
+            Character.Beaver => "Starts with higher max health",
+            Character.Fox => "Spells deal more damage",
+            Character.Opossum => "Summons are tougher",
+            Character.Otter => "Cards draw with an equal chance",
+            Character.Skunk => "Damaging effects linger on enemies longer",
+            _ => string.Format("Error! No deck description for {0} character", character),
         };
     }
 

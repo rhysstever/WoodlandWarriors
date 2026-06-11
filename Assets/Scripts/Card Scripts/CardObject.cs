@@ -46,7 +46,9 @@ public class CardObject : MonoBehaviour
             Slot.Drink => "DRK",
             _ => "???"
         };
-        cardDescriptionText.text = cardData.Description;
+
+        // Updates to the card description based on any character buffs
+        cardDescriptionText.text = UpdateCardDescription(cardData.Description);
 
         Sprite cardArtSprite = CardManager.instance.GetCardArtSprite(cardData.Name);
         if(cardArtSprite != null)
@@ -66,6 +68,62 @@ public class CardObject : MonoBehaviour
             // Set card base image
             cardBaseImage.gameObject.SetActive(true);
             cardBaseImage.sprite = cardBaseSprite;
+        }
+    }
+
+    private string UpdateCardDescription(string description)
+    {
+        switch(CharacterManager.instance.ChosenCharacter)
+        {
+            case Character.Badger:
+                if(cardData.Slot == Slot.MainHand)
+                {
+                    return IncrementTextNumber(description, "Attack for ");
+                }
+                return description;
+            case Character.Fox:
+                if(cardData.Slot == Slot.Spell)
+                {
+                    return IncrementTextNumber(description, "Attack for ");
+                }
+                break;
+            case Character.Opossum:
+                if(cardData.Slot == Slot.Ally)
+                {
+                    return IncrementTextNumber(description, "with ");
+                }
+                break;
+            case Character.Skunk:
+                return IncrementTextNumber(IncrementTextNumber(description, "Poison for"), "Burn for");
+            default:
+                return description;
+        }
+
+        return description;
+    }
+
+    private string IncrementTextNumber(string text, string prefix)
+    {
+        int numIndex = text.IndexOf(prefix);
+        if(numIndex != -1)
+        {
+            int startIndex = numIndex + prefix.Length;
+            string numStr = text.Substring(startIndex, 1);
+            if(int.TryParse(numStr, out int num))
+            {
+                num++;
+                return text[..startIndex] + num.ToString() + text[(startIndex + 1)..];
+            }
+            else
+            {
+                Debug.LogWarning($"Failed to parse number from text: {text}");
+                return text;
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Failed to find prefix '{prefix}' in text: {text}");
+            return text;
         }
     }
 

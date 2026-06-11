@@ -98,7 +98,7 @@ public class CardManager : MonoBehaviour
             new CardData("Spike Shield", Slot.OffHand, Rarity.Basic, TargetType.Self, "Defend for 3. Spike for 2"),
             //new CardData("Tome", Slot.OffHand, Rarity.Common, TargetType.Self, "Some magic... nothing yet"),
             new CardData("Tower Shield", Slot.OffHand, Rarity.Uncommon, TargetType.Self, "Defend for 5"),
-            //new CardData("Arcane Focus", Slot.OffHand, Rarity.Rare, TargetType.Self, "Some magic... nothing yet"),
+            //new CardData("Arcane Focus", Slot.OffHand, Rarity.Uncommon, TargetType.Self, "Some magic... nothing yet"),
 
             // Ally cards
             new CardData("Squirrel", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Squirrel with 1 health. Attacks for 1"),
@@ -198,10 +198,18 @@ public class CardManager : MonoBehaviour
                 break;
             case "Burn":
                 amount = int.Parse(action.Split(" ")[2]);
+                if(CharacterManager.instance.ChosenCharacter == Character.Skunk)
+                {
+                    amount++;
+                }
                 target.GiveBurn(amount);
                 break;
             case "Poison":
                 amount = int.Parse(action.Split(" ")[2]);
+                if(CharacterManager.instance.ChosenCharacter == Character.Skunk)
+                {
+                    amount++;
+                }
                 target.GivePoison(amount);
                 break;
             case "Spike":
@@ -226,6 +234,10 @@ public class CardManager : MonoBehaviour
                 string[] trimmedAction = action.Split(".")[0].Split(" ");
                 string allyName = trimmedAction[2];
                 int allyHealth = int.Parse(trimmedAction[4]);
+                if(CharacterManager.instance.ChosenCharacter == Character.Opossum)
+                {
+                    allyHealth++;
+                }
                 CharacterManager.instance.SummonAlly(allyName, allyHealth);
                 break;
             default:
@@ -259,6 +271,15 @@ public class CardManager : MonoBehaviour
         }
 
         int amount = int.Parse(attackParts[0].Split(" ")[2]);
+
+        if(CharacterManager.instance.ChosenCharacter == Character.Badger && slot == Slot.MainHand)
+        {
+            amount++;
+        }
+        else if(CharacterManager.instance.ChosenCharacter == Character.Fox && slot == Slot.Spell)
+        {
+            amount++;
+        }
 
         cardAttackCoroutine = ProcessCardAttack(amount, target, slot, attackCount, isAttackAOE, isAttackRandom);
         StartCoroutine(cardAttackCoroutine);
