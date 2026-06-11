@@ -18,7 +18,7 @@ public class DeckManager : MonoBehaviour
     private GameObject playableCardPrefab, selectableCardPrefab, displayCardPrefab;
 
     // Set in script
-    private List<CardData> deck, hand, discard;
+    private List<CardData> deck, hand;
     private int currentHandSize;
     private CardData currentCardSelection;
     private float playableCardPosXMin, playableCardPosXMax;
@@ -40,7 +40,6 @@ public class DeckManager : MonoBehaviour
 
         deck = new List<CardData>();
         hand = new List<CardData>();
-        discard = new List<CardData>();
     }
 
     void Start()
@@ -57,7 +56,6 @@ public class DeckManager : MonoBehaviour
     {
         deck = GenerateDeck();
         hand.Clear();
-        discard.Clear();
         fieldCollider.gameObject.SetActive(true);
         GameManager.instance.ChangeCombatState(CombatState.PlayerTurn);
     }
@@ -72,11 +70,7 @@ public class DeckManager : MonoBehaviour
 
             if(cardData != null)
             {
-                int cardCount = CharacterManager.instance.GetSlotCardCountOfChosenCharacter(slot);
-                for(int i = 0; i < cardCount; i++)
-                {
-                    cards.Add(cardData);
-                }
+                cards.Add(cardData);
             }
             else
             {
@@ -87,14 +81,9 @@ public class DeckManager : MonoBehaviour
         return cards;
     }
 
-    public void DiscardHand()
+    public void ClearHand()
     {
         RemoveAllCardsFromScene();
-
-        // Create a list copy of the cards still in hand,
-        // add them to the discard list and clear the hand list
-        List<CardData> remainingCardsInHand = hand.ToList();
-        discard.AddRange(remainingCardsInHand);
         hand.Clear();
     }
 
@@ -104,37 +93,42 @@ public class DeckManager : MonoBehaviour
         DrawCards(currentHandSize);
     }
 
+    private CardData GetRandomCardFromDeck()
+    {
+        // Chances: Slot -> # / 18 (4 + 4 + 3 + 3 + 2 + 2)
+        // Main Hand -> 4 / 18
+        // Off Hand -> 4 / 18
+        // Ally -> 3 / 18
+        // Spell -> 3 / 18
+        // Spirit -> 2 / 18
+        // Drink -> 2 / 18
+
+        int randomNum = UnityEngine.Random.Range(0, 18);
+        return randomNum switch
+        {
+            < 4 => CardManager.instance.GetCurrentCardData(Slot.MainHand),
+            < 8 => CardManager.instance.GetCurrentCardData(Slot.OffHand),
+            < 11 => CardManager.instance.GetCurrentCardData(Slot.Ally),
+            < 14 => CardManager.instance.GetCurrentCardData(Slot.Spell),
+            < 16 => CardManager.instance.GetCurrentCardData(Slot.Spirit),
+            _ => CardManager.instance.GetCurrentCardData(Slot.Drink),
+        };
+    }
+
     public void DrawCards(int numberOfCardsToDraw)
     {
         // Add the given number of cards from the deck into the hand
         for(int i = 0; i < numberOfCardsToDraw; i++)
         {
-            if(deck.Count == 0)
-            {
-                // If the deck is empty, move the discard pile into the deck
-                ShuffleDiscardPileIntoDeck();
-            }
-
-            // Get a random index of the deck list
-            int newIndex = UnityEngine.Random.Range(0, deck.Count);
-
             // Get the card from the deck, add it to the hand, and remove it from the deck
-            CardData card = deck[newIndex];
+            CardData card = GetRandomCardFromDeck();
             hand.Add(card);
-            deck.RemoveAt(newIndex);
 
             // Spawn the card in the scene
             SpawnCard(playableCardPrefab, hand[i], cardParentTrans);
         }
 
         CenterHand();
-    }
-
-    public void ShuffleDiscardPileIntoDeck()
-    {
-        List<CardData> cardsInDiscardPile = discard.ToList();
-        deck.AddRange(cardsInDiscardPile);
-        discard.Clear();
     }
 
     private GameObject SpawnCard(GameObject cardPrefab, CardData cardData, Transform parent)
@@ -292,21 +286,14 @@ public class DeckManager : MonoBehaviour
 
     public void DisplayDeckCards(Transform viewDeckCardParent)
     {
-        for(int i = 0; i < viewDeckCardParent.childCount; i += 2)
+        for(int i = 0; i < viewDeckCardParent.childCount; i++)
         {
-            Slot slot = (Slot)(i / 2);
-
+            Slot slot = (Slot)i;
             // Spawn display card for each slot
             Transform child = viewDeckCardParent.GetChild(i);
             CardData cardDataToDisplay = CardManager.instance.GetCurrentCardData(slot);
 
             SpawnCard(displayCardPrefab, cardDataToDisplay, child.position, child);
-
-            // Update text for the card count
-            if(viewDeckCardParent.GetChild(i + 1).TryGetComponent<TMP_Text>(out var textObj))
-            {
-                textObj.text = string.Format("x {0}", CharacterManager.instance.GetSlotCardCountOfChosenCharacter(slot));
-            }
         }
     }
 }

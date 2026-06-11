@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(playerEffectsCoroutine);
                 break;
             case CombatState.EnemyTurn:
-                DeckManager.instance.DiscardHand();
+                DeckManager.instance.ClearHand();
                 enemyEffectsCoroutine = EnemyManager.instance.ProcessEffectsOnEnemies();
                 StartCoroutine(enemyEffectsCoroutine);
                 break;
@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
                 ChangeGameState(GameState.CardSelection);
                 break;
             case CombatState.None:
-                DeckManager.instance.DiscardHand();
+                DeckManager.instance.ClearHand();
                 break;
         }
     }

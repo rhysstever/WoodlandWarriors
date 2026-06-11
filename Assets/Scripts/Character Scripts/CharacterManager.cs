@@ -89,48 +89,6 @@ public class CharacterManager : MonoBehaviour
         UIManager.instance.UpdateCharacterSelectInfo(character);
     }
 
-    public int GetSlotCardCountOfChosenCharacter(Slot slotType)
-    {
-        return slotType switch
-        {
-            Slot.MainHand => GetCharacterDeckStructure(chosenCharacter)[0],
-            Slot.OffHand => GetCharacterDeckStructure(chosenCharacter)[1],
-            Slot.Ally => GetCharacterDeckStructure(chosenCharacter)[2],
-            Slot.Spirit => GetCharacterDeckStructure(chosenCharacter)[3],
-            Slot.Spell => GetCharacterDeckStructure(chosenCharacter)[4],
-            Slot.Drink => GetCharacterDeckStructure(chosenCharacter)[5],
-            _ => 0,
-        };
-    }
-
-    public int[] GetCharacterDeckStructure(Character character)
-    {
-        return character switch
-        {
-            // Slot order:
-            // Main Hand, Off Hand, Ally, Spirit, Spell, Drink
-            Character.Badger => new int[] { 
-                4, 4, 3, 3, 2, 2 
-            },
-            Character.Beaver => new int[] { 
-                3, 4, 3, 2, 2, 4 
-            },
-            Character.Fox => new int[] { 
-                3, 2, 2, 4, 4, 3 
-            },
-            Character.Opossum => new int[] { 
-                2, 3, 4, 3, 4, 2
-            },
-            Character.Otter => new int[] { 
-                4, 2, 2, 4, 3, 3 
-            },
-            Character.Skunk => new int[] { 
-                2, 3, 4, 2, 3, 4 
-            },
-            _ => null,
-        };
-    }
-
     public Sprite GetCharacterSprite(Character character)
     {
         return character switch
