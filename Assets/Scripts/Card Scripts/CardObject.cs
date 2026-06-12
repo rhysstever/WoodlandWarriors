@@ -9,9 +9,9 @@ public class CardObject : MonoBehaviour
     [SerializeField]
     protected Canvas canvas;
     [SerializeField]
-    protected GameObject cardSelectionRing, cardToBePlayedRing, cardArtSpriteObject;
+    protected GameObject cardSelectionRing, cardToBePlayedRing;
     [SerializeField]
-    private Image cardBaseImage;
+    private Image cardBaseImage, cardArtImage;
     [SerializeField]
     private TMP_Text cardNameText, cardSlotText, cardDescriptionText;
 
@@ -62,12 +62,12 @@ public class CardObject : MonoBehaviour
         if(cardArtSprite != null)
         {
             // Set card art image
-            cardArtSpriteObject.SetActive(true);
-            cardArtSpriteObject.GetComponent<SpriteRenderer>().sprite = cardArtSprite;
+            cardArtImage.gameObject.SetActive(true);
+            cardArtImage.sprite = cardArtSprite;
         }
         else
         {
-            cardArtSpriteObject.SetActive(false);
+            cardArtImage.gameObject.SetActive(false);
         }
 
         Sprite cardBaseSprite = CardManager.instance.GetCardBaseSprite(cardData.Slot, cardData.Rarity);
