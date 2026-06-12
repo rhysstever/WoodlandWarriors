@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +9,9 @@ public class CardObject : MonoBehaviour
     [SerializeField]
     protected Canvas canvas;
     [SerializeField]
-    protected GameObject cardSelectionRing, cardToBePlayedRing;
+    protected GameObject cardSelectionRing, cardToBePlayedRing, cardArtSpriteObject;
     [SerializeField]
-    private Image cardBaseImage, cardArtImage;
+    private Image cardBaseImage;
     [SerializeField]
     private TMP_Text cardNameText, cardSlotText, cardDescriptionText;
 
@@ -61,12 +62,12 @@ public class CardObject : MonoBehaviour
         if(cardArtSprite != null)
         {
             // Set card art image
-            cardArtImage.gameObject.SetActive(true);
-            cardArtImage.sprite = cardArtSprite;
+            cardArtSpriteObject.SetActive(true);
+            cardArtSpriteObject.GetComponent<SpriteRenderer>().sprite = cardArtSprite;
         }
         else
         {
-            cardArtImage.gameObject.SetActive(false);
+            cardArtSpriteObject.SetActive(false);
         }
 
         Sprite cardBaseSprite = CardManager.instance.GetCardBaseSprite(cardData.Slot, cardData.Rarity);
