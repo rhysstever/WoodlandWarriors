@@ -286,11 +286,11 @@ public class UIManager : MonoBehaviour
             "\nSpell: {5}" +
             "\nDrink: {6}",
             CharacterManager.instance.ChosenCharacter,
-            CardManager.instance.GetCurrentCardData(Slot.MainHand).Name,
-            CardManager.instance.GetCurrentCardData(Slot.OffHand).Name,
+            CardManager.instance.GetCurrentCardData(Slot.Physical).Name,
+            CardManager.instance.GetCurrentCardData(Slot.Defense).Name,
             CardManager.instance.GetCurrentCardData(Slot.Ally).Name,
             spiritText,
-            CardManager.instance.GetCurrentCardData(Slot.Spell).Name,
+            CardManager.instance.GetCurrentCardData(Slot.Magical).Name,
             CardManager.instance.GetCurrentCardData(Slot.Drink).Name);
     }
 }

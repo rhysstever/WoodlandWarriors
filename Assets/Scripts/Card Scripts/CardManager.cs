@@ -79,25 +79,25 @@ public class CardManager : MonoBehaviour
             // Summon: "Summon a [NAME] with X health. ..."
 
             // Main hand cards
-            new CardData("Shortsword", Slot.MainHand, Rarity.Basic, TargetType.Unit, "Attack for 1"),
-            new CardData("Wand", Slot.MainHand, Rarity.Basic, TargetType.None, "Burn 1"),
-            new CardData("Staff", Slot.MainHand, Rarity.Basic, TargetType.None, "Burn 2"),
-            new CardData("Mace", Slot.MainHand, Rarity.Basic, TargetType.AOE, "Attack for 3, to all"),
-            new CardData("Flail", Slot.MainHand, Rarity.Uncommon, TargetType.None, "Attack for 2, randomly, 3 times"),
-            new CardData("Flaming Arrow", Slot.MainHand, Rarity.Basic, TargetType.Unit, "Attack for 2. Burn for 2"),
-            new CardData("Spear", Slot.MainHand, Rarity.Uncommon, TargetType.Unit, "Attack for 6"),
-            new CardData("Trident", Slot.MainHand, Rarity.Uncommon, TargetType.Unit, "Attack for 4. Heal for 4"),
-            new CardData("Scythe", Slot.MainHand, Rarity.Uncommon, TargetType.Unit, "Attack for 3. Poison for 3"),
+            new CardData("Shortsword", Slot.Physical, Rarity.Basic, TargetType.Unit, "Attack for 1"),
+            new CardData("Wand", Slot.Physical, Rarity.Basic, TargetType.None, "Burn 1"),
+            new CardData("Staff", Slot.Physical, Rarity.Basic, TargetType.None, "Burn 2"),
+            new CardData("Mace", Slot.Physical, Rarity.Basic, TargetType.AOE, "Attack for 3, to all"),
+            new CardData("Flail", Slot.Physical, Rarity.Uncommon, TargetType.None, "Attack for 2, randomly, 3 times"),
+            new CardData("Flaming Arrow", Slot.Physical, Rarity.Basic, TargetType.Unit, "Attack for 2. Burn for 2"),
+            new CardData("Spear", Slot.Physical, Rarity.Uncommon, TargetType.Unit, "Attack for 6"),
+            new CardData("Trident", Slot.Physical, Rarity.Uncommon, TargetType.Unit, "Attack for 4. Heal for 4"),
+            new CardData("Scythe", Slot.Physical, Rarity.Uncommon, TargetType.Unit, "Attack for 3. Poison for 3"),
 
-            // Off hand cards
-            new CardData("Wooden Shield", Slot.OffHand, Rarity.Basic, TargetType.Self, "Defend for 1"),
-            new CardData("Buckler", Slot.OffHand, Rarity.Basic, TargetType.Self, "Defend for 2"),
-            new CardData("Dagger", Slot.OffHand, Rarity.Basic, TargetType.Unit, "Attack for 1"),
-            new CardData("Quiver", Slot.OffHand, Rarity.Basic, TargetType.Unit, "Attack for 1, randomly"),
+            // Defense cards
+            new CardData("Wooden Shield", Slot.Defense, Rarity.Basic, TargetType.Self, "Defend for 1"),
+            new CardData("Buckler", Slot.Defense, Rarity.Basic, TargetType.Self, "Defend for 2"),
+            new CardData("Dagger", Slot.Defense, Rarity.Basic, TargetType.Unit, "Attack for 1"),
+            new CardData("Quiver", Slot.Defense, Rarity.Basic, TargetType.Unit, "Attack for 1, randomly"),
             //new CardData("Scroll", Slot.OffHand, Rarity.Common, TargetType.Self, "Some magic... nothing yet"),
-            new CardData("Spike Shield", Slot.OffHand, Rarity.Basic, TargetType.Self, "Defend for 3. Spike for 2"),
+            new CardData("Spike Shield", Slot.Defense, Rarity.Basic, TargetType.Self, "Defend for 3. Spike for 2"),
             //new CardData("Tome", Slot.OffHand, Rarity.Common, TargetType.Self, "Some magic... nothing yet"),
-            new CardData("Tower Shield", Slot.OffHand, Rarity.Uncommon, TargetType.Self, "Defend for 5"),
+            new CardData("Tower Shield", Slot.Defense, Rarity.Uncommon, TargetType.Self, "Defend for 5"),
             //new CardData("Arcane Focus", Slot.OffHand, Rarity.Uncommon, TargetType.Self, "Some magic... nothing yet"),
 
             // Ally cards
@@ -119,13 +119,13 @@ public class CardManager : MonoBehaviour
             new CardData("Light Spirit", Slot.Spirit, Rarity.Uncommon, TargetType.Unit, "Buff Healing by 1"),
 
             // Spell cards
-            new CardData("Arcane Bolt", Slot.Spell, Rarity.Basic, TargetType.None, "Attack for 1, randomly"),
-            new CardData("Fireball", Slot.Spell, Rarity.Basic, TargetType.Unit, "Burn for 3"),
-            new CardData("Life Drain", Slot.Spell, Rarity.Basic, TargetType.Unit, "Attack for 2. Heal for 2"),
-            new CardData("Lightning Strike", Slot.Spell, Rarity.Uncommon, TargetType.None, "Attack for 4, randomly"),
-            new CardData("Heal", Slot.Spell, Rarity.Uncommon, TargetType.Self, "Heal for 5"),
-            new CardData("Blizzard", Slot.Spell, Rarity.Uncommon, TargetType.AOE, "Attack for 3, to all"),
-            new CardData("Curse", Slot.Spell, Rarity.Uncommon, TargetType.Unit, "Poison for 5"),
+            new CardData("Arcane Bolt", Slot.Magical, Rarity.Basic, TargetType.None, "Attack for 1, randomly"),
+            new CardData("Fireball", Slot.Magical, Rarity.Basic, TargetType.Unit, "Burn for 3"),
+            new CardData("Life Drain", Slot.Magical, Rarity.Basic, TargetType.Unit, "Attack for 2. Heal for 2"),
+            new CardData("Lightning Strike", Slot.Magical, Rarity.Uncommon, TargetType.None, "Attack for 4, randomly"),
+            new CardData("Heal", Slot.Magical, Rarity.Uncommon, TargetType.Self, "Heal for 5"),
+            new CardData("Blizzard", Slot.Magical, Rarity.Uncommon, TargetType.AOE, "Attack for 3, to all"),
+            new CardData("Curse", Slot.Magical, Rarity.Uncommon, TargetType.Unit, "Poison for 5"),
 
             // Drink cards
             new CardData("Cup", Slot.Drink, Rarity.Basic, TargetType.Self, "Heal for 1"),
@@ -272,11 +272,11 @@ public class CardManager : MonoBehaviour
 
         int amount = int.Parse(attackParts[0].Split(" ")[2]);
 
-        if(CharacterManager.instance.ChosenCharacter == Character.Badger && slot == Slot.MainHand)
+        if(CharacterManager.instance.ChosenCharacter == Character.Badger && slot == Slot.Physical)
         {
             amount++;
         }
-        else if(CharacterManager.instance.ChosenCharacter == Character.Fox && slot == Slot.Spell)
+        else if(CharacterManager.instance.ChosenCharacter == Character.Fox && slot == Slot.Magical)
         {
             amount++;
         }
@@ -494,11 +494,11 @@ public class CardManager : MonoBehaviour
     {
         return slotType switch
         {
-            Slot.MainHand => mainHand,
-            Slot.OffHand => offHand,
+            Slot.Physical => mainHand,
+            Slot.Defense => offHand,
             Slot.Ally => ally,
             Slot.Spirit => spirit,
-            Slot.Spell => spell,
+            Slot.Magical => spell,
             Slot.Drink => drink,
             _ => null,
         };
@@ -508,23 +508,23 @@ public class CardManager : MonoBehaviour
     {
         return (rarity, slotType) switch
         {
-            (Rarity.Basic, Slot.MainHand) => cardBaseAttack,
-            (Rarity.Basic, Slot.OffHand) => cardBaseDefend,
+            (Rarity.Basic, Slot.Physical) => cardBaseAttack,
+            (Rarity.Basic, Slot.Defense) => cardBaseDefend,
             (Rarity.Basic, Slot.Ally) => cardBaseAlly,
             (Rarity.Basic, Slot.Spirit) => cardBaseSpirit,
-            (Rarity.Basic, Slot.Spell) => cardBaseSpell,
+            (Rarity.Basic, Slot.Magical) => cardBaseSpell,
             (Rarity.Basic, Slot.Drink) => cardBaseDrink,
-            (Rarity.Uncommon, Slot.MainHand) => cardBaseUncommonAttack,
-            (Rarity.Uncommon, Slot.OffHand) => cardBaseUncommonDefend,
+            (Rarity.Uncommon, Slot.Physical) => cardBaseUncommonAttack,
+            (Rarity.Uncommon, Slot.Defense) => cardBaseUncommonDefend,
             (Rarity.Uncommon, Slot.Ally) => cardBaseUncommonAlly,
             (Rarity.Uncommon, Slot.Spirit) => cardBaseUncommonSpirit,
-            (Rarity.Uncommon, Slot.Spell) => cardBaseUncommonSpell,
+            (Rarity.Uncommon, Slot.Magical) => cardBaseUncommonSpell,
             (Rarity.Uncommon, Slot.Drink) => cardBaseUncommonDrink,
-            (Rarity.Rare, Slot.MainHand) => cardBaseRareAttack,
-            (Rarity.Rare, Slot.OffHand) => cardBaseRareDefend,
+            (Rarity.Rare, Slot.Physical) => cardBaseRareAttack,
+            (Rarity.Rare, Slot.Defense) => cardBaseRareDefend,
             (Rarity.Rare, Slot.Ally) => cardBaseRareAlly,
             (Rarity.Rare, Slot.Spirit) => cardBaseRareSpirit,
-            (Rarity.Rare, Slot.Spell) => cardBaseRareSpell,
+            (Rarity.Rare, Slot.Magical) => cardBaseRareSpell,
             (Rarity.Rare, Slot.Drink) => cardBaseRareDrink,
             _ => null
         };
@@ -549,10 +549,10 @@ public class CardManager : MonoBehaviour
     {
         switch(newCardData.Slot)
         {
-            case Slot.MainHand:
+            case Slot.Physical:
                 mainHand = newCardData;
                 break;
-            case Slot.OffHand:
+            case Slot.Defense:
                 offHand = newCardData;
                 break;
             case Slot.Ally:
@@ -561,7 +561,7 @@ public class CardManager : MonoBehaviour
             case Slot.Spirit:
                 spirit = newCardData;
                 break;
-            case Slot.Spell:
+            case Slot.Magical:
                 spell = newCardData;
                 break;
             case Slot.Drink:
@@ -576,11 +576,11 @@ public class CardManager : MonoBehaviour
     public void Reset()
     {
         // Setup starter slots
-        mainHand = GetStarterCardData(Slot.MainHand);
-        offHand = GetStarterCardData(Slot.OffHand);
+        mainHand = GetStarterCardData(Slot.Physical);
+        offHand = GetStarterCardData(Slot.Defense);
         ally = GetStarterCardData(Slot.Ally);
         spirit = GetStarterCardData(Slot.Spirit);
-        spell = GetStarterCardData(Slot.Spell);
+        spell = GetStarterCardData(Slot.Magical);
         drink = GetStarterCardData(Slot.Drink);
     }
 }

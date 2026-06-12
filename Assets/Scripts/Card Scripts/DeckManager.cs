@@ -129,10 +129,10 @@ public class DeckManager : MonoBehaviour
         int randomNum = UnityEngine.Random.Range(0, 18);
         return randomNum switch
         {
-            < 4 => CardManager.instance.GetCurrentCardData(Slot.MainHand),
-            < 8 => CardManager.instance.GetCurrentCardData(Slot.OffHand),
+            < 4 => CardManager.instance.GetCurrentCardData(Slot.Physical),
+            < 8 => CardManager.instance.GetCurrentCardData(Slot.Defense),
             < 11 => CardManager.instance.GetCurrentCardData(Slot.Ally),
-            < 14 => CardManager.instance.GetCurrentCardData(Slot.Spell),
+            < 14 => CardManager.instance.GetCurrentCardData(Slot.Magical),
             < 16 => CardManager.instance.GetCurrentCardData(Slot.Spirit),
             _ => CardManager.instance.GetCurrentCardData(Slot.Drink),
         };

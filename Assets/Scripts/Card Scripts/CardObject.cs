@@ -45,11 +45,11 @@ public class CardObject : MonoBehaviour
         cardNameText.text = cardData.Name;
         cardSlotText.text = cardData.Slot switch
         {
-            Slot.MainHand => "ATK",
-            Slot.OffHand => "DEF",
+            Slot.Physical => "PHY",
+            Slot.Defense => "DEF",
             Slot.Ally => "ALY",
-            Slot.Spell => "SPL",
-            Slot.Spirit => "SPR",
+            Slot.Magical => "MAG",
+            Slot.Spirit => "SPI",
             Slot.Drink => "DRK",
             _ => "???"
         };
@@ -83,13 +83,13 @@ public class CardObject : MonoBehaviour
         switch(CharacterManager.instance.ChosenCharacter)
         {
             case Character.Badger:
-                if(cardData.Slot == Slot.MainHand)
+                if(cardData.Slot == Slot.Physical)
                 {
                     return IncrementTextNumber(description, "Attack for ");
                 }
                 return description;
             case Character.Fox:
-                if(cardData.Slot == Slot.Spell)
+                if(cardData.Slot == Slot.Magical)
                 {
                     return IncrementTextNumber(description, "Attack for ");
                 }

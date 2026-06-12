@@ -1,9 +1,9 @@
 public enum Slot
 {
-    MainHand,
-    OffHand,
+    Physical,
+    Defense,
     Ally,
-    Spell,
+    Magical,
     Spirit,
     Drink
 }
