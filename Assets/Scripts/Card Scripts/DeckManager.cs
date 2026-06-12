@@ -88,6 +88,7 @@ public class DeckManager : MonoBehaviour
     public void DealHand()
     {
         DrawCards(numCardsDrawnAtPlayerTurnStart);
+        // TODO: enable end turn button
     }
 
     public void DrawCards(int numberOfCardsToDraw)

@@ -80,8 +80,8 @@ public class CardManager : MonoBehaviour
 
             // Main hand cards
             new CardData("Shortsword", Slot.Physical, Rarity.Basic, TargetType.Unit, "Attack for 1"),
-            new CardData("Wand", Slot.Physical, Rarity.Basic, TargetType.None, "Burn 1"),
-            new CardData("Staff", Slot.Physical, Rarity.Basic, TargetType.None, "Burn 2"),
+            new CardData("Wand", Slot.Physical, Rarity.Basic, TargetType.None, "Burn for 1, randomly"),
+            new CardData("Staff", Slot.Physical, Rarity.Basic, TargetType.Unit, "Burn for 2"),
             new CardData("Mace", Slot.Physical, Rarity.Basic, TargetType.AOE, "Attack for 3, to all"),
             new CardData("Flail", Slot.Physical, Rarity.Uncommon, TargetType.None, "Attack for 2, randomly, 3 times"),
             new CardData("Flaming Arrow", Slot.Physical, Rarity.Basic, TargetType.Unit, "Attack for 2. Burn for 2"),
@@ -198,22 +198,23 @@ public class CardManager : MonoBehaviour
     {
         string firstWord = action.Split(" ")[0];
         int amount;
+        string[] attackParts = action.Split(", ");
 
         switch(firstWord.ToLower())
         {
             case "attack":
-                ParseAttack(action, target, slot);
+                ParseAttack(attackParts, target, slot);
                 break;
             case "defend":
-                amount = int.Parse(action.Split(" ")[2]);
+                amount = int.Parse(attackParts[0].Split(" ")[2]);
                 GameManager.instance.Player.GiveDefense(amount);
                 break;
             case "heal":
-                amount = int.Parse(action.Split(" ")[2]);
+                amount = int.Parse(attackParts[0].Split(" ")[2]);
                 GameManager.instance.Player.Heal(amount);
                 break;
             case "burn":
-                amount = int.Parse(action.Split(" ")[2]);
+                amount = int.Parse(attackParts[0].Split(" ")[2]);
                 if(CharacterManager.instance.ChosenCharacter == Character.Skunk)
                 {
                     amount++;
@@ -225,7 +226,7 @@ public class CardManager : MonoBehaviour
                 target.GiveBurn(amount);
                 break;
             case "poison":
-                amount = int.Parse(action.Split(" ")[2]);
+                amount = int.Parse(attackParts[0].Split(" ")[2]);
                 if(CharacterManager.instance.ChosenCharacter == Character.Skunk)
                 {
                     amount++;
@@ -237,11 +238,11 @@ public class CardManager : MonoBehaviour
                 target.GivePoison(amount);
                 break;
             case "spike":
-                amount = int.Parse(action.Split(" ")[2]);
+                amount = int.Parse(attackParts[0].Split(" ")[2]);
                 GameManager.instance.Player.GiveSpike(amount);
                 break;
             case "draw":
-                amount = int.Parse(action.Split(" ")[1]);
+                amount = int.Parse(attackParts[0].Split(" ")[1]);
                 DeckManager.instance.DrawCards(amount);
                 break;
             case "cleanse":
@@ -270,10 +271,8 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    private void ParseAttack(string action, Enemy target, Slot slot)
+    private void ParseAttack(string[] attackParts, Enemy target, Slot slot)
     {
-        string[] attackParts = action.Split(", ");
-
         // Figure out if the attack is AOE, random, and/or multi
         bool isAttackAOE = false;
         bool isAttackRandom = false;

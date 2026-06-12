@@ -131,20 +131,6 @@ public class UIManager : MonoBehaviour
     public void UpdateCombatUI(CombatState combatState)
     {
         endTurnButton.interactable = combatState == CombatState.PlayerTurn;
-
-        switch(combatState)
-        {
-            case CombatState.Start:
-                break;
-            case CombatState.PlayerTurn:
-                break;
-            case CombatState.EnemyTurn:
-                break;
-            case CombatState.End:
-                break;
-            case CombatState.None:
-                break;
-        }
     }
 
     public void UpdateCharacterSelectInfo()
