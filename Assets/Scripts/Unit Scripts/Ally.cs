@@ -1,8 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class Ally : MonoBehaviour
 {
     [SerializeField]
+    private TMP_Text lifeText;
+
     private int maxHealth, currentHealth;
 
     public int MaxHealth { get { return maxHealth; } }
@@ -17,14 +20,16 @@ public class Ally : MonoBehaviour
     {
         maxHealth = health;
         currentHealth = health;
+        UpdateLifeUIText();
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        UpdateLifeUIText();
+
         if (currentHealth <= 0)
         {
-
             Destroy(gameObject);
         }
     }
@@ -33,5 +38,10 @@ public class Ally : MonoBehaviour
     {
         maxHealth += healthIncrease;
         currentHealth += healthIncrease;
+    }
+
+    protected void UpdateLifeUIText()
+    {
+        lifeText.text = currentHealth.ToString();
     }
 }

@@ -214,6 +214,13 @@ public class EnemyManager : MonoBehaviour
         return currentWaveNum == enemyWaves.Count - 1;
     }
 
+    public Enemy GetRandomEnemy()
+    {
+        List<Enemy> currentEnemies = GetCurrentEnemies();
+        int randomEnemyIndex = UnityEngine.Random.Range(0, currentEnemies.Count);
+        return currentEnemies[randomEnemyIndex];
+    }
+
     public List<Enemy> GetCurrentEnemies()
     {
         return enemies.GetComponentsInChildren<Enemy>().ToList();

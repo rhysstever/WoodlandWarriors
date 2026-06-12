@@ -22,6 +22,7 @@ public enum CombatState
     None,
     Start,
     PlayerTurn,
+    AllyTurn,
     EnemyTurn,
     End
 }
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
     private int currentAreaIndex;
     private int currentStageIndex;
 
-    private IEnumerator playerEffectsCoroutine, enemyEffectsCoroutine;
+    private IEnumerator playerEffectsCoroutine, enemyEffectsCoroutine, allyTurnCoroutine;
 
     // Properties
     public Player Player { get { return player; } }
@@ -147,8 +148,19 @@ public class GameManager : MonoBehaviour
                 playerEffectsCoroutine = player.ProcessEffects();
                 StartCoroutine(playerEffectsCoroutine);
                 break;
-            case CombatState.EnemyTurn:
+            case CombatState.AllyTurn:
                 DeckManager.instance.ClearHand();
+                if(CharacterManager.instance.AllyObject != null)
+                {
+                    allyTurnCoroutine = CharacterManager.instance.ProcessAllyTurn();
+                    StartCoroutine(allyTurnCoroutine);
+                }
+                else
+                {
+                    ChangeCombatState(CombatState.EnemyTurn);
+                }
+                break;
+            case CombatState.EnemyTurn:
                 enemyEffectsCoroutine = EnemyManager.instance.ProcessEffectsOnEnemies();
                 StartCoroutine(enemyEffectsCoroutine);
                 break;

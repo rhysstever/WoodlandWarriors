@@ -101,14 +101,14 @@ public class CardManager : MonoBehaviour
             //new CardData("Arcane Focus", Slot.OffHand, Rarity.Uncommon, TargetType.Self, "Some magic... nothing yet"),
 
             // Ally cards
-            new CardData("Squirrel", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Squirrel with 1 health. Attacks for 1"),
-            new CardData("Frog", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Frog with 1 health. Heals for 1"),
-            new CardData("Rat", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Rat with 1 health. Poison for 1"),
-            new CardData("Newt", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Newt with 1 health. Burn for 1"),
+            new CardData("Squirrel", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Squirrel with 1 health.\nOn its turn: Attack for 1, randomly"),
+            new CardData("Frog", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Frog with 1 health.\nOn its turn: Heal for 1"),
+            new CardData("Rat", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Rat with 1 health.\nOn its turn: Poison for 1"),
+            new CardData("Newt", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Newt with 1 health.\nOn its turn: Burn for 1"),
             //new CardData("Bunny", Slot.Ally, Rarity.Rare, TargetType.Self, "Summon 1. Some magic... nothing yet"),
-            new CardData("Toad", Slot.Ally, Rarity.Uncommon, TargetType.Self, "Summon a Toad with 1 health. Heal for 1. Poison for 1"),
-            new CardData("Porcupine", Slot.Ally, Rarity.Uncommon, TargetType.Self, "Summon a Porcupine with 1 health. Spike for 1"),
-            new CardData("Hamster", Slot.Ally, Rarity.Uncommon, TargetType.Self, "Summon a Hamster with 1 health. Draw 1 card"),
+            new CardData("Toad", Slot.Ally, Rarity.Uncommon, TargetType.Self, "Summon a Toad with 1 health.\nOn its turn: Heal for 1. Poison for 1"),
+            new CardData("Porcupine", Slot.Ally, Rarity.Uncommon, TargetType.Self, "Summon a Porcupine with 1 health.\nOn its turn: Spike for 1"),
+            new CardData("Hamster", Slot.Ally, Rarity.Uncommon, TargetType.Self, "Summon a Hamster with 1 health.\nOn its turn: Draw 1 card"),
 
             // Spirit cards
             new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, TargetType.Self, "Buff Defense by 1"),
@@ -149,16 +149,29 @@ public class CardManager : MonoBehaviour
 
     public void Play(int cardIndex, Enemy targetEnemy)
     {
-        cardPlayCoroutine = ProcessCard(cardIndex, targetEnemy);
+        CardData cardData = DeckManager.instance.GetCardDataAtIndex(cardIndex);
+        cardPlayCoroutine = ProcessCard(cardData, targetEnemy, false);
+        StartCoroutine(cardPlayCoroutine);
+        DeckManager.instance.RemoveCard(cardIndex);
+    }
+
+    public void PlayAllyEffect(CardData cardData)
+    {
+        cardPlayCoroutine = ProcessCard(cardData, null, true);
         StartCoroutine(cardPlayCoroutine);
     }
 
-    private IEnumerator ProcessCard(int cardIndex, Enemy targetEnemy)
+    private IEnumerator ProcessCard(CardData cardData, Enemy targetEnemy, bool isAllyAction)
     {
-        CardData cardData = DeckManager.instance.GetCardDataAtIndex(cardIndex);
+        // If the ally's action is being processed, only read the description after "On its turn: ..."
+        string description = cardData.Description;
+        if(isAllyAction)
+        {
+            description = cardData.Description[(cardData.Description.IndexOf("On its turn: ") + "On its turn: ".Length)..];
+        }
 
         WaitForSeconds actionDelayWait = new WaitForSeconds(0.5f);
-        List<string> actions = cardData.Description.Split(". ").ToList();
+        List<string> actions = description.Split(". ").ToList();
         int actionIndex = 0;
         // Apply a small delay before performing each action
         while(actionIndex < actions.Count)
@@ -167,14 +180,14 @@ public class CardManager : MonoBehaviour
             PerformCardAction(actions[actionIndex], targetEnemy, cardData.Slot);
             actionIndex++;
 
-            if(cardData.Slot == Slot.Ally)
+            // When playing a card for Ally, only perform the first action (summon or buff the ally)
+            if(!isAllyAction && cardData.Slot == Slot.Ally)
             {
                 break;
             } 
         }
 
-        // Remove card and reset targetting
-        DeckManager.instance.RemoveCard(cardIndex);
+        // Reset targetting
         TargettingManager.instance.Reset();
 
         // Check if combat is over
@@ -186,54 +199,62 @@ public class CardManager : MonoBehaviour
         string firstWord = action.Split(" ")[0];
         int amount;
 
-        switch(firstWord)
+        switch(firstWord.ToLower())
         {
-            case "Attack":
+            case "attack":
                 ParseAttack(action, target, slot);
                 break;
-            case "Defend":
+            case "defend":
                 amount = int.Parse(action.Split(" ")[2]);
                 GameManager.instance.Player.GiveDefense(amount);
                 break;
-            case "Heal":
+            case "heal":
                 amount = int.Parse(action.Split(" ")[2]);
                 GameManager.instance.Player.Heal(amount);
                 break;
-            case "Burn":
+            case "burn":
                 amount = int.Parse(action.Split(" ")[2]);
                 if(CharacterManager.instance.ChosenCharacter == Character.Skunk)
                 {
                     amount++;
+                }
+                if(target == null)
+                {
+                    target = EnemyManager.instance.GetRandomEnemy();
                 }
                 target.GiveBurn(amount);
                 break;
-            case "Poison":
+            case "poison":
                 amount = int.Parse(action.Split(" ")[2]);
                 if(CharacterManager.instance.ChosenCharacter == Character.Skunk)
                 {
                     amount++;
                 }
+                if(target == null)
+                {
+                    target = EnemyManager.instance.GetRandomEnemy();
+                }
                 target.GivePoison(amount);
                 break;
-            case "Spike":
+            case "spike":
                 amount = int.Parse(action.Split(" ")[2]);
                 GameManager.instance.Player.GiveSpike(amount);
                 break;
-            case "Draw":
+            case "draw":
                 amount = int.Parse(action.Split(" ")[1]);
                 DeckManager.instance.DrawCards(amount);
                 break;
-            case "Cleanse":
+            case "cleanse":
                 GameManager.instance.Player.Cleanse();
                 break;
-            case "Buff":
+            case "buff":
                 string spiritName = GetCurrentCardData(Slot.Spirit).Name.Split(' ')[0];
                 CharacterManager.instance.SummonSpirit(spiritName);
                 amount = int.Parse(action.Split(" ")[3]);
                 string type = action.Split(" ")[1];
                 ParseBuff(amount, type);
                 break;
-            case "Summon":
+            case "summon":
                 string[] trimmedAction = action.Split(".")[0].Split(" ");
                 string allyName = trimmedAction[2];
                 int allyHealth = int.Parse(trimmedAction[4]);
@@ -353,9 +374,8 @@ public class CardManager : MonoBehaviour
 
     private void AttackRandomEnemy(int damage)
     {
-        List<Enemy> currentEnemies = EnemyManager.instance.GetCurrentEnemies();
-        int randomEnemyIndex = UnityEngine.Random.Range(0, currentEnemies.Count);
-        AttackSingleEnemy(damage, currentEnemies[randomEnemyIndex]);
+        Enemy randomEnemy = EnemyManager.instance.GetRandomEnemy();
+        AttackSingleEnemy(damage, randomEnemy);
     }
 
     private void AttackSingleEnemy(int amount, Enemy enemy)

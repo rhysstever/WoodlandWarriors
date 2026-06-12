@@ -58,6 +58,7 @@ public class Unit : MonoBehaviour
         currentPoisonBuff = 0;
         currentSpikeBuff = 0;
 
+        CharacterManager.instance.ResetSummons();
         RemoveEffectsUI();
         UpdateDefenseUIText();
     }

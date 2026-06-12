@@ -169,6 +169,19 @@ public class DeckManager : MonoBehaviour
         return hand[index];
     }
 
+    public CardData GetCardDataBySlot(Slot slot)
+    {
+        foreach(CardData cardData in deck)
+        { 
+            if(cardData.Slot == slot)
+            {
+                return cardData;
+            }
+        }
+
+        return null;
+    }
+
     public void RemoveCard(int index)
     {
         // Hide and Destroy the card game object

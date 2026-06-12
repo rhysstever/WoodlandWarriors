@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum Character
@@ -68,8 +70,7 @@ public class CharacterManager : MonoBehaviour
     public void ChooseCharacter(Character character)
     {
         chosenCharacter = character;
-        allyObject = null;
-        spiritObject = null;
+        ResetSummons();
         HideCharacterSelectIcons();
         ClearCharacterSelectInfo();
         GameManager.instance.StartGame();
@@ -182,6 +183,37 @@ public class CharacterManager : MonoBehaviour
             );
 
             spiritObject = newSpirit;
+        }
+    }
+
+    public IEnumerator ProcessAllyTurn()
+    {
+        WaitForSeconds allyActionDelayWait = new WaitForSeconds(1);
+
+        yield return allyActionDelayWait;
+        CardData allyCardToPlay = DeckManager.instance.GetCardDataBySlot(Slot.Ally);
+
+        if(allyCardToPlay != null)
+        {
+            CardManager.instance.PlayAllyEffect(allyCardToPlay);
+            yield return allyActionDelayWait;
+        }
+
+        GameManager.instance.ChangeCombatState(CombatState.EnemyTurn);
+    }
+
+    public void ResetSummons()
+    {
+        if(allyObject != null)
+        {
+            Destroy(allyObject);
+            allyObject = null;
+        }
+
+        if(spiritObject != null)
+        {
+            Destroy(spiritObject);
+            spiritObject = null;
         }
     }
 }

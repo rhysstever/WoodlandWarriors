@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
         closeGameInfoButton.onClick.AddListener(() => HideGameInfo());
         viewDeckButton.onClick.AddListener(() => ShowDeckInfo());
         closeViewDeckButton.onClick.AddListener(() => HideDeckInfo());
-        endTurnButton.onClick.AddListener(() => GameManager.instance.ChangeCombatState(CombatState.EnemyTurn));
+        endTurnButton.onClick.AddListener(() => GameManager.instance.ChangeCombatState(CombatState.AllyTurn));
         selectCardButton.onClick.AddListener(() => {
             DeckManager.instance.AddSelectedCardToDeck();
             GameManager.instance.GoToNextStage();
