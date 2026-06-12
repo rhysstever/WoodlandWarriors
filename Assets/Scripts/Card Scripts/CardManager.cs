@@ -176,6 +176,9 @@ public class CardManager : MonoBehaviour
         // Remove card and reset targetting
         DeckManager.instance.RemoveCard(cardIndex);
         TargettingManager.instance.Reset();
+
+        // Check if combat is over
+        EnemyManager.instance.CheckIfWaveIsOver();
     }
 
     private void PerformCardAction(string action, Enemy target, Slot slot)

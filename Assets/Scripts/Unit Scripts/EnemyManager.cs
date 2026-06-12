@@ -113,7 +113,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public bool IsWaveOver()
+    private bool IsWaveOver()
     {
         // Check all enemies and if none have health, the wave is over
         return enemies.GetComponentsInChildren<Enemy>().Where(enemy => enemy.CurrentLife > 0).ToList().Count == 0;
