@@ -242,7 +242,7 @@ public class EnemyManager : MonoBehaviour
             }
             else
             {
-                enemies[enemyIndex].Process();
+                enemies[enemyIndex].MarkProcessed();
             }
             enemyIndex++;
         }

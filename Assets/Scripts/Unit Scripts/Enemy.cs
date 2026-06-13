@@ -65,7 +65,7 @@ public class Enemy : Unit
         hasBeenProcessed = false;
     }
 
-    public void Process()
+    public void MarkProcessed()
     {
         hasBeenProcessed = true;
     }

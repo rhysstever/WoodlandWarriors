@@ -136,7 +136,6 @@ public class GameManager : MonoBehaviour
     public void ChangeCombatState(CombatState newCombatState)
     {
         currentCombatState = newCombatState;
-        UIManager.instance.UpdateCombatUI(newCombatState);
 
         switch(newCombatState)
         {

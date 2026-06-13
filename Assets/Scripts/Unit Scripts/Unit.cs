@@ -266,6 +266,7 @@ public class Unit : MonoBehaviour
         if(GameManager.instance.CurrentCombatState == CombatState.PlayerTurn)
         {
             DeckManager.instance.DealHand();
+            UIManager.instance.EnableEndTurnButton();
             yield return effectTriggerToDamageDelayWait;
             EnemyManager.instance.GetCurrentEnemies().ForEach(e => e.UpdateNextActionUI());
         }
@@ -273,7 +274,7 @@ public class Unit : MonoBehaviour
         Enemy enemyComp = gameObject.GetComponent<Enemy>();
         if(enemyComp != null)
         {
-            enemyComp.Process();
+            enemyComp.MarkProcessed();
         }
     }
 
