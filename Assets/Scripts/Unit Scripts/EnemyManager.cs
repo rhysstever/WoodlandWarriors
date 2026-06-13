@@ -88,6 +88,12 @@ public class EnemyManager : MonoBehaviour
     {
         WaitForSeconds enemyDelayWait = new WaitForSeconds(1);
         WaitForSeconds endOfEnemyTurnsDelayWait = new WaitForSeconds(1);
+        WaitForSeconds turnBannerDelayWait = new WaitForSeconds(UIManager.instance.TurnBannerVisibleTime);
+
+        UIManager.instance.ToggleEnemyTurnBanner(true);
+        yield return turnBannerDelayWait;
+        UIManager.instance.ToggleEnemyTurnBanner(false);
+
         int enemyIndex = 0;
         while(enemyIndex < enemies.Count && GameManager.instance.Player.CurrentLife > 0)
         {

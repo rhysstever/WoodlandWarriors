@@ -44,6 +44,7 @@ public class Enemy : Unit
     public override void Reset()
     {
         base.Reset();
+        HideNextActionUI();
         round = 0;
         hasBeenProcessed = false;
     }

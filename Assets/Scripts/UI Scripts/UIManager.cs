@@ -15,13 +15,17 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject gameInfoUIParent, viewDeckUIParent, viewDeckCardsUIParent;
     [SerializeField]
+    private GameObject playerTurnBanner, enemyTurnBanner;
+    [SerializeField]
     private Button mainMenuToCharacterSelectButton, quitButton, gameInfoButton, closeGameInfoButton, viewDeckButton, closeViewDeckButton, endTurnButton, selectCardButton, skipButton, drinkWellButton, gameEndToMainMenuButton;
     [SerializeField]
     private TMP_Text characterSelectInfoText, gameAreaStageText, gameEndHeaderText, gameEndDeckInfoText;
 
     private bool isSubMenuShowing;
+    private float turnBannerVisibleTime;
 
     public bool IsSubMenuShowing { get { return isSubMenuShowing; } }
+    public float TurnBannerVisibleTime { get { return turnBannerVisibleTime; } }
 
     private void Awake()
     {
@@ -37,6 +41,10 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        turnBannerVisibleTime = 2f;
+        TogglePlayerTurnBanner(false);
+        ToggleEnemyTurnBanner(false);
+
         // Set up button listeners
         mainMenuToCharacterSelectButton.onClick.AddListener(() => {
             mainMenuButtonsParent.SetActive(false);
@@ -134,6 +142,16 @@ public class UIManager : MonoBehaviour
     public void EnableEndTurnButton()
     {
         endTurnButton.interactable = true;
+    }
+
+    public void TogglePlayerTurnBanner(bool isActive)
+    {
+        playerTurnBanner.SetActive(isActive);
+    }
+
+    public void ToggleEnemyTurnBanner(bool isActive)
+    {
+        enemyTurnBanner.SetActive(isActive);
     }
 
     public void UpdateCharacterSelectInfo()

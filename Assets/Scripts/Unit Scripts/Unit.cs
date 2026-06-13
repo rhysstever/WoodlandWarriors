@@ -237,6 +237,7 @@ public class Unit : MonoBehaviour
     {
         WaitForSeconds betweenEffectsDelayWait = new WaitForSeconds(1);
         WaitForSeconds effectTriggerToDamageDelayWait = new WaitForSeconds(0.5f);
+        WaitForSeconds turnBannerDelayWait = new WaitForSeconds(UIManager.instance.TurnBannerVisibleTime);
 
         if(currentBurn > 0)
         {
@@ -263,14 +264,19 @@ public class Unit : MonoBehaviour
             UpdateEffectsUI();
         }
 
+        // If it is the player's turn, set up for the beginning of it
         if(GameManager.instance.CurrentCombatState == CombatState.PlayerTurn)
         {
+            UIManager.instance.TogglePlayerTurnBanner(true);
+            yield return turnBannerDelayWait;
+            UIManager.instance.TogglePlayerTurnBanner(false);
             DeckManager.instance.DealHand();
             UIManager.instance.EnableEndTurnButton();
             yield return effectTriggerToDamageDelayWait;
             EnemyManager.instance.GetCurrentEnemies().ForEach(e => e.UpdateNextActionUI());
         }
 
+        // If this Unit is an enemy, mark it processed
         Enemy enemyComp = gameObject.GetComponent<Enemy>();
         if(enemyComp != null)
         {
