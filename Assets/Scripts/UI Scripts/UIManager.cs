@@ -42,8 +42,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         turnBannerVisibleTime = 2f;
-        TogglePlayerTurnBanner(false);
-        ToggleEnemyTurnBanner(false);
+        Reset();
 
         // Set up button listeners
         mainMenuToCharacterSelectButton.onClick.AddListener(() => {
@@ -137,6 +136,13 @@ public class UIManager : MonoBehaviour
                 nonCombatUIParent.SetActive(false);
                 break;
         }
+    }
+
+    private void Reset()
+    {
+        TogglePlayerTurnBanner(false);
+        ToggleEnemyTurnBanner(false);
+        endTurnButton.interactable = false;
     }
 
     public void EnableEndTurnButton()

@@ -970,6 +970,7 @@ MonoBehaviour:
   actionIconSpriteSpike: {fileID: -1863859237976802683, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   actionIconSpriteSummon: {fileID: 7576617242518483205, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   effectUIPrefab: {fileID: 1780603026050417366, guid: 2a0b69699ae040e49a74655431735a28, type: 3}
+  effectBuffUIPrefab: {fileID: 1780603026050417366, guid: 336817319dd30b9499f99bfa3c17e17b, type: 3}
 --- !u!114 &231419617
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class CardManager : MonoBehaviour
     [SerializeField]    // Action icon sprites
     private Sprite actionIconSpriteAttack, actionIconSpriteDefend, actionIconSpriteHeal, actionIconSpriteFire, actionIconSpritePoison, actionIconSpriteSpike, actionIconSpriteSummon;
     [SerializeField]
-    private GameObject effectUIPrefab;
+    private GameObject effectUIPrefab, effectBuffUIPrefab;
 
     // Set in script
     private List<CardData> cardLibrary;
@@ -34,6 +34,7 @@ public class CardManager : MonoBehaviour
     private CardData mainHand, offHand, spirit, ally, spell, drink;
 
     public GameObject EffectUIPrefab { get { return effectUIPrefab; } }
+    public GameObject EffectBuffUIPrefab { get { return effectBuffUIPrefab; } }
 
     private void Awake()
     {
@@ -558,6 +559,7 @@ public class CardManager : MonoBehaviour
         {
             "attack" => actionIconSpriteAttack,
             "defend" => actionIconSpriteDefend,
+            "defense" => actionIconSpriteDefend,
             "heal" => actionIconSpriteHeal,
             "burn" => actionIconSpriteFire,
             "poison" => actionIconSpritePoison,

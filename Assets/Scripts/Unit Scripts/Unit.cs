@@ -26,11 +26,16 @@ public class Unit : MonoBehaviour
     protected int maxLife;
 
     // Instantiated in code
-    protected int currentLife, currentDefense, currentBurn, currentPoison, currentSpike, 
-        currentAttackBuff, currentDefenseBuff, currentHealingBuff, currentBurnBuff, currentPoisonBuff, currentSpikeBuff;
+    protected int currentLife, currentDefense;
+    protected UnitEffects unitEffects;
     private float effectOffset;
 
     public int CurrentLife { get { return currentLife; } }
+
+    protected virtual void Awake()
+    {
+        unitEffects = new UnitEffects();
+    }
 
     protected virtual void Start()
     {
@@ -47,16 +52,7 @@ public class Unit : MonoBehaviour
     public void PostCombatReset()
     {
         currentDefense = 0;
-        currentBurn = 0;
-        currentPoison = 0;
-        currentSpike = 0;
-
-        currentAttackBuff = 0;
-        currentDefenseBuff = 0;
-        currentHealingBuff = 0;
-        currentBurnBuff = 0;
-        currentPoisonBuff = 0;
-        currentSpikeBuff = 0;
+        unitEffects.ResetAllEffects();
 
         CharacterManager.instance.ResetSummons();
         RemoveEffectsUI();
@@ -104,10 +100,10 @@ public class Unit : MonoBehaviour
         // If the damage type is an attack or spell, there is an attacker, and the unit has spikes,
         // reflect spike damage to the attacker
         if((damageType == DamageType.Attack || damageType == DamageType.Spell)
-            && attacker != null && currentSpike > 0)
+            && attacker != null && unitEffects.GetEffectAmount("Spike") > 0)
         {
             AudioManager.instance.PlaySpikesAudio();
-            attacker.TakeDamage(currentSpike + currentSpikeBuff, DamageType.Spike);
+            attacker.TakeDamage(unitEffects.GetEffectAmount("Spike") + unitEffects.GetEffectAmount("Buff Spike"), DamageType.Spike);
         }
         // Update life UI text
         UpdateLifeUIText();
@@ -121,18 +117,14 @@ public class Unit : MonoBehaviour
         }
 
         AudioManager.instance.PlayHealAudio();
-        currentLife += amount + currentHealingBuff;
+        currentLife += amount + unitEffects.GetEffectAmount("Buff Healing");
         if(currentLife > maxLife)
         {
             currentLife = maxLife;
         }
         // Cure poison when healing
-        currentPoison -= amount;
+        unitEffects.UpdateEffectAmount("Poison", -amount);
         UpdateEffectsUI();
-        if(currentPoison < 0)
-        {
-            currentPoison = 0;
-        }
         // Update life UI text
         UpdateLifeUIText();
     }
@@ -145,7 +137,7 @@ public class Unit : MonoBehaviour
         }
 
         AudioManager.instance.PlayGiveDefenseAudio();
-        currentDefense += amount + currentDefenseBuff;
+        currentDefense += amount + unitEffects.GetEffectAmount("Buff Defense");
         UpdateDefenseUIText();
     }
 
@@ -163,7 +155,7 @@ public class Unit : MonoBehaviour
         }
 
         AudioManager.instance.PlayBurnAudio();
-        currentBurn += amount + currentBurnBuff;
+        unitEffects.UpdateEffectAmount("Burn", amount);
         UpdateEffectsUI();
     }
 
@@ -175,7 +167,7 @@ public class Unit : MonoBehaviour
         }
 
         AudioManager.instance.PlayPoisonAudio();
-        currentPoison += amount + currentPoisonBuff;
+        unitEffects.UpdateEffectAmount("Poison", amount);
         UpdateEffectsUI();
     }
 
@@ -187,50 +179,55 @@ public class Unit : MonoBehaviour
         }
 
         AudioManager.instance.PlaySpikesAudio();
-        currentSpike += amount + currentSpikeBuff;
+        unitEffects.UpdateEffectAmount("Spike", amount);
         UpdateEffectsUI();
     }
 
     public void Cleanse()
     {
-        currentPoison = 0;
-        currentBurn = 0;
+        unitEffects.Cleanse();
         UpdateEffectsUI();
     }
 
     public void BuffAttack(int amount)
     {
-        currentAttackBuff += amount;
+        unitEffects.UpdateEffectAmount("Buff Attack", amount);
+        UpdateEffectsUI();
     }
 
     public void BuffDefense(int amount)
     {
-        currentDefenseBuff += amount;
+        unitEffects.UpdateEffectAmount("Buff Defense", amount);
+        UpdateEffectsUI();
     }
 
     public void BuffHealing(int amount)
     {
-        currentHealingBuff += amount;
+        unitEffects.UpdateEffectAmount("Buff Healing", amount);
+        UpdateEffectsUI();
     }
 
     public void BuffBurn(int amount)
     {
-        currentBurnBuff += amount;
+        unitEffects.UpdateEffectAmount("Buff Burn", amount);
+        UpdateEffectsUI();
     }
 
     public void BuffPoison(int amount)
     {
-        currentPoisonBuff += amount;
+        unitEffects.UpdateEffectAmount("Buff Poison", amount);
+        UpdateEffectsUI();
     }
 
     public void BuffSpike(int amount)
     {
-        currentSpikeBuff += amount;
+        unitEffects.UpdateEffectAmount("Buff Spike", amount);
+        UpdateEffectsUI();
     }
 
     public bool HasEffectsToProcess()
     {
-        return currentBurn > 0 || currentPoison > 0;
+        return unitEffects.hasAfflictiveEffects();
     }
 
     public IEnumerator ProcessEffects()
@@ -239,19 +236,19 @@ public class Unit : MonoBehaviour
         WaitForSeconds effectTriggerToDamageDelayWait = new WaitForSeconds(0.5f);
         WaitForSeconds turnBannerDelayWait = new WaitForSeconds(UIManager.instance.TurnBannerVisibleTime);
 
-        if(currentBurn > 0)
+        if(unitEffects.GetEffectAmount("Burn") > 0)
         {
             AudioManager.instance.PlayBurnAudio();
             unitSpriteRenderer.color = ParticlesManager.instance.BurnColor;
             // TODO: Activate burn visual effect
             yield return effectTriggerToDamageDelayWait;
             unitSpriteRenderer.color = ParticlesManager.instance.ResetColor;
-            TakeDamage(currentBurn, null, DamageType.Burn);
-            currentBurn--;
+            TakeDamage(unitEffects.GetEffectAmount("Burn"), null, DamageType.Burn);
+            unitEffects.UpdateEffectAmount("Burn", -1);
             UpdateEffectsUI();
         }
 
-        if(currentPoison > 0)
+        if(unitEffects.GetEffectAmount("Poison") > 0)
         {
             yield return betweenEffectsDelayWait;
             AudioManager.instance.PlayPoisonAudio();
@@ -259,8 +256,8 @@ public class Unit : MonoBehaviour
             // TODO: Activate poison visual effect
             yield return effectTriggerToDamageDelayWait;
             unitSpriteRenderer.color = ParticlesManager.instance.ResetColor;
-            TakeDamage(currentPoison, null, DamageType.Poison);
-            currentPoison--;
+            TakeDamage(unitEffects.GetEffectAmount("Poison"), null, DamageType.Poison);
+            unitEffects.UpdateEffectAmount("Poison", -1);
             UpdateEffectsUI();
         }
 
@@ -315,29 +312,35 @@ public class Unit : MonoBehaviour
         RemoveEffectsUI();
         int effectsCount = 0;
 
-        // Create Effect UI elements
-        if(currentBurn > 0)
+        foreach(Effect effect in unitEffects.GetAllEffects())
         {
-            CreateNewEffectUIObject(currentBurn, "Burn", effectsCount);
-            effectsCount++;
-        }
-        if(currentPoison > 0)
-        {
-            CreateNewEffectUIObject(currentPoison, "Poison", effectsCount);
-            effectsCount++;
-        }
-        if(currentSpike > 0)
-        {
-            CreateNewEffectUIObject(currentSpike, "Spike", effectsCount);
-            effectsCount++;
+            if(effect.Amount > 0)
+            {
+                Debug.Log(string.Format("Effect: {0} is at {1}", effect.EffectName, effect.Amount));
+
+                if(effect.EffectName.Contains("Buff"))
+                {
+                    CreateNewEffectUIObject(effect.Amount, effect.EffectName["Buff ".Length..], effectsCount, true);
+                }
+                else
+                {
+                    CreateNewEffectUIObject(effect.Amount, effect.EffectName, effectsCount, false);
+                }
+                effectsCount++;
+            }
         }
     }
 
-    private void CreateNewEffectUIObject(int amount, string effectName, int currentEffectsCount)
+    private void CreateNewEffectUIObject(int amount, string effectName, int currentEffectsCount, bool isBuffEffect)
     {
         Vector2 position = effectTrans1.localPosition;
         position.x += effectOffset * currentEffectsCount;
-        GameObject effectObject = Instantiate(CardManager.instance.EffectUIPrefab, effectsParent.transform);
+        GameObject prefab = CardManager.instance.EffectUIPrefab;
+        if(isBuffEffect)
+        {
+            prefab = CardManager.instance.EffectBuffUIPrefab;
+        }
+        GameObject effectObject = Instantiate(prefab, effectsParent.transform);
         effectObject.transform.localPosition = position;
         effectObject.GetComponent<EffectUIObject>().UpdateEffectUIObject(amount, CardManager.instance.GetActionSprite(effectName));
     }

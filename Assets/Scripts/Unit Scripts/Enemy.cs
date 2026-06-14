@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -101,7 +100,7 @@ public class Enemy : Unit
         {
             case "Attack":
                 AudioManager.instance.PlayAttackAudio();
-                GameManager.instance.Player.TakeDamage(actionAmount + currentAttackBuff, this, DamageType.Attack);
+                GameManager.instance.Player.TakeDamage(actionAmount + unitEffects.GetEffectAmount("Buff Attack"), this, DamageType.Attack);
                 break;
             case "Heal":
                 Heal(actionAmount);
