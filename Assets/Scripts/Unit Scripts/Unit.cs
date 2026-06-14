@@ -264,10 +264,10 @@ public class Unit : MonoBehaviour
         // If it is the player's turn, set up for the beginning of it
         if(GameManager.instance.CurrentCombatState == CombatState.PlayerTurn)
         {
+            DeckManager.instance.DealHand();
             UIManager.instance.TogglePlayerTurnBanner(true);
             yield return turnBannerDelayWait;
             UIManager.instance.TogglePlayerTurnBanner(false);
-            DeckManager.instance.DealHand();
             UIManager.instance.EnableEndTurnButton();
             yield return effectTriggerToDamageDelayWait;
             EnemyManager.instance.GetCurrentEnemies().ForEach(e => e.UpdateNextActionUI());
