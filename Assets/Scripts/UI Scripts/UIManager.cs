@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        turnBannerVisibleTime = 2f;
+        turnBannerVisibleTime = 1f;
         Reset();
 
         // Set up button listeners
@@ -202,7 +202,6 @@ public class UIManager : MonoBehaviour
         isSubMenuShowing = true;
         viewDeckUIParent.SetActive(true);
         viewDeckButton.gameObject.SetActive(false);
-
         UpdateButtonInteractability(false);
 
         DeckManager.instance.DisplayDeckCards(viewDeckCardsUIParent.transform);
@@ -213,7 +212,6 @@ public class UIManager : MonoBehaviour
         isSubMenuShowing = false;
         viewDeckUIParent.SetActive(false);
         viewDeckButton.gameObject.SetActive(true);
-
         UpdateButtonInteractability(true);
 
         // Destroy displayed cards

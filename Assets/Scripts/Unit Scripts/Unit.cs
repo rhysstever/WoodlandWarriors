@@ -316,8 +316,6 @@ public class Unit : MonoBehaviour
         {
             if(effect.Amount > 0)
             {
-                Debug.Log(string.Format("Effect: {0} is at {1}", effect.EffectName, effect.Amount));
-
                 if(effect.EffectName.Contains("Buff"))
                 {
                     CreateNewEffectUIObject(effect.Amount, effect.EffectName["Buff ".Length..], effectsCount, true);

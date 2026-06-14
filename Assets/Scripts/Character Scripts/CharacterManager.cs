@@ -197,6 +197,7 @@ public class CharacterManager : MonoBehaviour
         {
             CardManager.instance.PlayAllyEffect(allyCardToPlay);
             yield return allyActionDelayWait;
+            yield return allyActionDelayWait;
         }
 
         GameManager.instance.ChangeCombatState(CombatState.EnemyTurn);
