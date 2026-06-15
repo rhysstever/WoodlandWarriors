@@ -38,6 +38,7 @@ public class Ally : MonoBehaviour
     {
         maxHealth += healthIncrease;
         currentHealth += healthIncrease;
+        UpdateLifeUIText();
     }
 
     protected void UpdateLifeUIText()
