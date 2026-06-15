@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        turnBannerVisibleTime = 1f;
+        turnBannerVisibleTime = 1.5f;
         Reset();
 
         // Set up button listeners
@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
         viewDeckButton.onClick.AddListener(() => ShowDeckInfo());
         closeViewDeckButton.onClick.AddListener(() => HideDeckInfo());
         endTurnButton.onClick.AddListener(() => {
-            endTurnButton.interactable = false;
+            endTurnButton.gameObject.SetActive(false);
             GameManager.instance.ChangeCombatState(CombatState.AllyTurn);
         });
         selectCardButton.onClick.AddListener(() => {
@@ -117,7 +117,7 @@ public class UIManager : MonoBehaviour
                 combatUIParent.SetActive(true);
                 nonCombatUIParent.SetActive(false);
 
-                endTurnButton.gameObject.SetActive(true);
+                endTurnButton.gameObject.SetActive(false);
                 break;
             case GameState.CardSelection:
                 nonCombatUIParent.SetActive(true);
@@ -145,9 +145,9 @@ public class UIManager : MonoBehaviour
         endTurnButton.interactable = false;
     }
 
-    public void EnableEndTurnButton()
+    public void ShowEndTurnButton()
     {
-        endTurnButton.interactable = true;
+        endTurnButton.gameObject.SetActive(true);
     }
 
     public void TogglePlayerTurnBanner(bool isActive)
