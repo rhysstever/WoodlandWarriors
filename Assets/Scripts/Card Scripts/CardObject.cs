@@ -55,8 +55,7 @@ public class CardObject : MonoBehaviour
             _ => "???"
         };
 
-        // Updates to the card description based on any character buffs
-        cardDescriptionText.text = UpdateCardDescription(cardData.Description);
+        cardDescriptionText.text = cardData.Description;
 
         Sprite cardArtSprite = CardManager.instance.GetCardArtSprite(cardData.Name);
         if(cardArtSprite != null)
@@ -79,6 +78,7 @@ public class CardObject : MonoBehaviour
         }
     }
 
+    // ======== TODO: Update card descriptions based on character buffs and spirit buffs ==========
     private string UpdateCardDescription(string description)
     {
         switch(CharacterManager.instance.ChosenCharacter)
@@ -134,6 +134,45 @@ public class CardObject : MonoBehaviour
             return text;
         }
     }
+
+    private int GetUpdatedNumber(int baseNum, string text, Slot slot)
+    {
+        UnitEffects playerEffects = GameManager.instance.Player.UnitEffects;
+        Character chosenCharacter = CharacterManager.instance.ChosenCharacter;
+
+        if(text == "Attack" && slot == Slot.Physical)
+        {
+            int currentAttackBuff = playerEffects.GetEffectAmount("Buff Attack");
+            baseNum += currentAttackBuff;
+            if(chosenCharacter == Character.Badger)
+            {
+                baseNum++;
+            }
+        }
+        else if(text == "Attack" && slot == Slot.Magical)
+        {
+            if(chosenCharacter == Character.Fox)
+            {
+                baseNum++;
+            }
+        }
+        else if(slot == Slot.Ally && chosenCharacter == Character.Opossum)
+        {
+            baseNum++;
+        }
+        else if(text == "Defend" || text == "Burn" || text == "Poison" || text == "Spike")
+        {
+            int currentBuff = playerEffects.GetEffectAmount("Buff " + text);
+            baseNum += currentBuff;
+            if((text == "Burn" || text == "Poison") && chosenCharacter == Character.Skunk)
+            {
+                baseNum++;
+            }
+        }
+
+        return baseNum;
+    }
+    // ========================
 
     protected virtual void Select()
     {

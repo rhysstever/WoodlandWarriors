@@ -31,6 +31,7 @@ public class Unit : MonoBehaviour
     private float effectOffset;
 
     public int CurrentLife { get { return currentLife; } }
+    public UnitEffects UnitEffects { get { return unitEffects; } }
 
     protected virtual void Awake()
     {

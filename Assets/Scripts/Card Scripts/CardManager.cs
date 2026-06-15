@@ -113,11 +113,11 @@ public class CardManager : MonoBehaviour
 
             // Spirit cards
             new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, TargetType.Self, "Buff Defense by 1"),
-            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, TargetType.None, "Buff Attacks by 1"),
-            new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, TargetType.Unit, "Buff Burn by 1"),
+            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, TargetType.Self, "Buff Attacks by 1"),
+            new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, TargetType.Self, "Buff Burn by 1"),
             new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, TargetType.Self, "Buff Poison by 1"),
-            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, TargetType.Unit, "Buff Spike by 1"),
-            new CardData("Light Spirit", Slot.Spirit, Rarity.Uncommon, TargetType.Unit, "Buff Healing by 1"),
+            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, TargetType.Self, "Buff Spike by 1"),
+            new CardData("Light Spirit", Slot.Spirit, Rarity.Uncommon, TargetType.Self, "Buff Healing by 1"),
 
             // Spell cards
             new CardData("Arcane Bolt", Slot.Magical, Rarity.Basic, TargetType.None, "Attack for 1, randomly"),
