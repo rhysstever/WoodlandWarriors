@@ -60,6 +60,8 @@ public class CardManager : MonoBehaviour
     #region Card Creation
     private List<CardData> CardCreation()
     {
+        // Reminder: First card of each slot will be there starter card 
+
         List<CardData> cards = new() {
             // Main hand cards
             new CardData("Shortsword", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 1, TargetType.Foe) }),
@@ -100,26 +102,20 @@ public class CardManager : MonoBehaviour
 
             // Ally cards
             new CardData("Squirrel", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Squirrel", new List<Action> { 
-                    new Action(ActionType.Attack, 1, TargetType.RandomFoe) 
-                }) 
+                new Summon(ActionType.Summon, 1, "Squirrel", new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }) 
             }),
             new CardData("Frog", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Frog", new List<Action> { 
-                    new Action(ActionType.Heal, 1, TargetType.Player) 
-                }) 
+                new Summon(ActionType.Summon, 1, "Frog", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Player) }) 
             }),
             new CardData("Rat", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Rat", new List<Action> { 
-                    new Action(ActionType.Poison, 1, TargetType.RandomFoe) 
-                }) 
+                new Summon(ActionType.Summon, 1, "Rat", new List<Action> { new Action(ActionType.Poison, 1, TargetType.RandomFoe) }) 
             }),
             new CardData("Newt", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Newt", new List<Action> { 
-                    new Action(ActionType.Burn, 1, TargetType.RandomFoe) 
-                }) 
+                new Summon(ActionType.Summon, 1, "Newt", new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) }) 
             }),
-            //new CardData("Bunny", Slot.Ally, Rarity.Uncommon, new List<Action> { new Summon(ActionType.Summon, 1, "Bunny", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Self) }) }),
+            //new CardData("Bunny", Slot.Ally, Rarity.Uncommon, new List<Action> {
+            //    new Summon(ActionType.Summon, 1, "Bunny", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Self) })
+            //}),
             new CardData("Toad", Slot.Ally, Rarity.Uncommon, new List<Action> { 
                 new Summon(ActionType.Summon, 1, "Toad", new List<Action> {
                     new Action(ActionType.Heal, 1, TargetType.Player),
@@ -127,19 +123,15 @@ public class CardManager : MonoBehaviour
                 }) 
             }),
             new CardData("Porcupine", Slot.Ally, Rarity.Uncommon, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Porcupine", new List<Action> { 
-                    new Action(ActionType.Spike, 1, TargetType.Player) 
-                }) 
+                new Summon(ActionType.Summon, 1, "Porcupine", new List<Action> { new Action(ActionType.Spike, 1, TargetType.Player) }) 
             }),
             new CardData("Hamster", Slot.Ally, Rarity.Uncommon, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Hamster", new List<Action> { 
-                    new Action(ActionType.Draw, 1, TargetType.None) 
-                }) 
+                new Summon(ActionType.Summon, 1, "Hamster", new List<Action> { new Action(ActionType.Draw, 1, TargetType.None) }) 
             }),
 
             // Spirit cards
-            new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Defend, 1) }),
             new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Attack, 1) }),
+            new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Defend, 1) }),
             new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Burn, 1) }),
             new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Poison, 1) }),
             new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Spike, 1) }),

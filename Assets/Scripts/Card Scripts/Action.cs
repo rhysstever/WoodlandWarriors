@@ -64,8 +64,6 @@ public class Action
         // Gain Spikes: "Spike for X"
         // Draw Cards: "Draw X cards"
         // Cleanse Debuffs: "Cleanse"
-        // Buff: "Buff X by Y"
-        // Summon: "Summon a [NAME] with X health. ..."
         string description = "";
 
         switch(actionType)
@@ -130,6 +128,8 @@ public class Buff : Action
 
     public override string GetActionDescription()
     {
+        // ===== Description Format =====
+        // Buff: "Buff X by Y"
         return string.Format("Buff {0} by {1}", actionType, amount);
     }
 }
@@ -151,7 +151,9 @@ public class Summon : Action
 
     public override string GetActionDescription()
     {
-        string description = string.Format("Summon a {0} for {1} health. On its turn:", summonName, amount);
+        // ===== Description Format =====
+        // Summon: "Summon a [NAME] with X health. ..."
+        string description = string.Format("Summon a {0} for {1} health. \n\nOn its turn:", summonName, amount);
 
         foreach(Action action in summonActions)
         {
