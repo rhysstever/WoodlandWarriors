@@ -29,7 +29,7 @@ public class InteractableCardObject : CardObject
     void Update()
     {
         // If this card targets, enable it if this is the current targetting card and there is no target
-        if(cardData.TargetType == TargetType.Unit)
+        if(cardData.DoesCardTarget)
         {
             cardToBePlayedRing.SetActive(
                 TargettingManager.instance.CardTargetting == gameObject &&
@@ -50,7 +50,7 @@ public class InteractableCardObject : CardObject
         // When the card is first hovered over, if the player is not already targetting,
         if(TargettingManager.instance.CardTargetting == null)
         {
-            if(cardData.TargetType == TargetType.Unit)
+            if(cardData.DoesCardTarget)
             {
                 // If this card targets, move it up
                 transform.position += (Vector3)hoverOffset;
@@ -72,8 +72,8 @@ public class InteractableCardObject : CardObject
         // If this card targets, but the player is not currently targetting,
         // OR this card does not target and is not being dragged,
         // Deselect it
-        if((cardData.TargetType == TargetType.Unit && TargettingManager.instance.CardTargetting == null)
-            || (cardData.TargetType != TargetType.Unit && !isBeingDragged))
+        if((cardData.DoesCardTarget && TargettingManager.instance.CardTargetting == null)
+            || (!cardData.DoesCardTarget && !isBeingDragged))
         {
             Deselect();
         }
@@ -88,7 +88,7 @@ public class InteractableCardObject : CardObject
         }
 
         // Also, if this card targets, start targetting it
-        if(cardData.TargetType == TargetType.Unit)
+        if(cardData.DoesCardTarget)
         {
             TargettingManager.instance.StartTargetting(gameObject);
             cardToBePlayedRing.SetActive(true);
@@ -105,7 +105,7 @@ public class InteractableCardObject : CardObject
     private void OnMouseDrag()
     {
         // If the card does not target, drag it
-        if(cardData.TargetType != TargetType.Unit)
+        if(!cardData.DoesCardTarget)
         {
             // When dragging, move the card to the mouse's position, and account for an offset
             transform.position = TargettingManager.instance.GetMousePosition() + dragOffset;
@@ -115,7 +115,7 @@ public class InteractableCardObject : CardObject
     private void OnMouseUp()
     {
         // When Card is being dropped
-        if(cardData.TargetType == TargetType.Unit)
+        if(cardData.DoesCardTarget)
         {
             // If the card targets and has one, play it with the current target
             if(TargettingManager.instance.CardTargetting != null && TargettingManager.instance.Target != null)
@@ -167,7 +167,7 @@ public class InteractableCardObject : CardObject
         base.Deselect();
 
         // If the card targets, stop targetting
-        if(cardData.TargetType == TargetType.Unit)
+        if(cardData.DoesCardTarget)
         {
             TargettingManager.instance.StopTargetting();
         }
@@ -184,7 +184,7 @@ public class InteractableCardObject : CardObject
     {
         // If the card does not target AND it has collided with the
         // field's collider, it is in the field (ready to be played)
-        if(cardData.TargetType != TargetType.Unit && collision.collider == cardFieldCollider)
+        if(!cardData.DoesCardTarget && collision.collider == cardFieldCollider)
         {
             isInField = true;
             cardToBePlayedRing.SetActive(true);
@@ -195,7 +195,7 @@ public class InteractableCardObject : CardObject
     {
         // If the card does not target AND it has left the field's
         // collider, it is no longer in the field (cannot be played)
-        if(cardData.TargetType != TargetType.Unit && collision.collider == cardFieldCollider)
+        if(!cardData.DoesCardTarget && collision.collider == cardFieldCollider)
         {
             isInField = false;
             cardToBePlayedRing.SetActive(false);

@@ -83,10 +83,10 @@ public class AudioManager : MonoBehaviour
     {
         switch(slot)
         {
-            case Slot.Physical:
+            case Slot.MainHand:
                 PlayAttackAudio();
                 break;
-            case Slot.Magical:
+            case Slot.Spell:
                 PlaySpellAttackAudio();
                 break;
             case Slot.Ally:

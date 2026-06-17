@@ -46,16 +46,16 @@ public class CardObject : MonoBehaviour
         cardNameText.text = cardData.Name;
         cardSlotText.text = cardData.Slot switch
         {
-            Slot.Physical => "PHY",
-            Slot.Defense => "DEF",
+            Slot.MainHand => "PHY",
+            Slot.OffHand => "DEF",
             Slot.Ally => "ALY",
-            Slot.Magical => "MAG",
+            Slot.Spell => "MAG",
             Slot.Spirit => "SPI",
             Slot.Drink => "DRK",
             _ => "???"
         };
 
-        cardDescriptionText.text = cardData.Description;
+        cardDescriptionText.text = cardData.GetCardDescription();
 
         Sprite cardArtSprite = CardManager.instance.GetCardArtSprite(cardData.Name);
         if(cardArtSprite != null)
@@ -84,13 +84,13 @@ public class CardObject : MonoBehaviour
         switch(CharacterManager.instance.ChosenCharacter)
         {
             case Character.Badger:
-                if(cardData.Slot == Slot.Physical)
+                if(cardData.Slot == Slot.MainHand)
                 {
                     return IncrementTextNumber(description, "Attack for ");
                 }
                 return description;
             case Character.Fox:
-                if(cardData.Slot == Slot.Magical)
+                if(cardData.Slot == Slot.Spell)
                 {
                     return IncrementTextNumber(description, "Attack for ");
                 }
@@ -140,7 +140,7 @@ public class CardObject : MonoBehaviour
         UnitEffects playerEffects = GameManager.instance.Player.UnitEffects;
         Character chosenCharacter = CharacterManager.instance.ChosenCharacter;
 
-        if(text == "Attack" && slot == Slot.Physical)
+        if(text == "Attack" && slot == Slot.MainHand)
         {
             int currentAttackBuff = playerEffects.GetEffectAmount("Buff Attack");
             baseNum += currentAttackBuff;
@@ -149,7 +149,7 @@ public class CardObject : MonoBehaviour
                 baseNum++;
             }
         }
-        else if(text == "Attack" && slot == Slot.Magical)
+        else if(text == "Attack" && slot == Slot.Spell)
         {
             if(chosenCharacter == Character.Fox)
             {

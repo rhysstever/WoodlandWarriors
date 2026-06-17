@@ -1,0 +1,160 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public enum ActionType
+{
+    Attack,
+    Defend,
+    Heal,
+    Burn,
+    Poison,
+    Spike,
+    Draw,
+    Cleanse,
+    Summon
+}
+
+public enum TargetType
+{
+    None,
+    Player,
+    Ally,
+    AllAllies,
+    Foe,
+    RandomFoe,
+    AllFoes,
+}
+
+public class Action
+{
+    protected ActionType actionType;
+    protected int amount;
+    protected int times;
+    protected TargetType targetType;
+    protected bool doesActionTarget;
+
+    public ActionType ActionType { get { return actionType; } }
+    public int Amount { get { return amount; } }
+    public int Times { get { return times; } }
+    public TargetType TargetType { get { return targetType; } }
+    public bool DoesActionTarget { get { return doesActionTarget; } }
+
+    public Action(ActionType actionType, int amount, TargetType targetType, int times)
+    {
+        this.actionType = actionType;
+        this.amount = amount;
+        this.times = times;
+        this.targetType = targetType;
+        doesActionTarget = targetType == TargetType.Ally || targetType == TargetType.Foe;
+    }
+
+    public Action(ActionType actionType, int amount, TargetType targetType) : this(actionType, amount, targetType, 1)
+    {
+        
+    }
+
+    public virtual string GetActionDescription()
+    {
+        // ===== Description Format =====
+        // Normal Attack: "Attack for X"
+        // Heal: "Heal for X"
+        // Gain defense: "Defend for X"
+        // Burn: "Burn for X"
+        // Poison: "Poison for X"
+        // Gain Spikes: "Spike for X"
+        // Draw Cards: "Draw X cards"
+        // Cleanse Debuffs: "Cleanse"
+        // Buff: "Buff X by Y"
+        // Summon: "Summon a [NAME] with X health. ..."
+        string description = "";
+
+        switch(actionType)
+        {
+            case ActionType.Attack:
+                description += string.Format("Attack for {0}", amount);
+                break;
+            case ActionType.Defend:
+                description += string.Format("Defend for {0}", amount);
+                break;
+            case ActionType.Heal:
+                description += string.Format("Heal for {0}", amount);
+                break;
+            case ActionType.Burn:
+                description += string.Format("Burn for {0}", amount);
+                break;
+            case ActionType.Poison:
+                description += string.Format("Poison for {0}", amount);
+                break;
+            case ActionType.Spike:
+                description += string.Format("Gain {0} spikes", amount);
+                break;
+            case ActionType.Draw:
+                description += string.Format("Draw {0} cards", amount);
+                break;
+            case ActionType.Cleanse:
+                description += "Cleanse";
+                break;
+            default:
+                break;
+        }
+
+        switch(targetType)
+        {
+            case TargetType.AllAllies:
+                description += ", to all";
+                break;
+            case TargetType.AllFoes:
+                description += ", to all";
+                break;
+            case TargetType.RandomFoe:
+                description += ", randomly";
+                break;
+
+        }
+
+        if(times > 1)
+        {
+            description += string.Format(", {0} times", times);
+        }
+
+        return description;
+    }
+}
+
+public class Buff : Action
+{
+    public Buff(ActionType buffType, int amount, TargetType targetType) : base(buffType, amount, targetType)
+    {
+
+    }
+
+    public override string GetActionDescription()
+    {
+        return string.Format("Buff {0} by {1}", actionType, amount);
+    }
+}
+
+public class Summon : Action
+{
+    protected string summonName;
+    protected List<Action> summonActions;
+
+    public Summon(ActionType actionType, int amount, TargetType targetType, string summonName, List<Action> summonActions) : base(actionType, amount, targetType)
+    {
+        this.summonName = summonName;
+        this.summonActions = summonActions;
+    }
+
+    public override string GetActionDescription()
+    {
+        string description = string.Format("Summon a {0} for {1} health. On its turn:", summonName, amount);
+
+        foreach(Action action in summonActions)
+        {
+            description += string.Format(" {0}", action.GetActionDescription());
+        }
+
+        return description;
+    }
+}

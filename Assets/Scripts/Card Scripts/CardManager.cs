@@ -64,78 +64,93 @@ public class CardManager : MonoBehaviour
     private List<CardData> CardCreation()
     {
         List<CardData> cards = new() {
-            // ===== Description Format =====
-            // Normal Attack: "Attack for X"
-            // Random Attack: "Attack for X, randomly"
-            // AOE Attack: "Attack for X, to all"
-            // Multi Attack: "Attack for X, Y times"
-            // Heal: "Heal for X"
-            // Gain defense: "Defend for X"
-            // Burn: "Burn for X"
-            // Poison: "Poison for X"
-            // Gain Spikes: "Spike for X"
-            // Draw Cards: "Draw X cards"   // TODO: implement drawing
-            // Cleanse Debuffs: "Cleanse"
-            // Buff: "Buff X by Y"
-            // Summon: "Summon a [NAME] with X health. ..."
-
             // Main hand cards
-            new CardData("Shortsword", Slot.Physical, Rarity.Basic, TargetType.Unit, "Attack for 1"),
-            new CardData("Wand", Slot.Physical, Rarity.Basic, TargetType.None, "Burn for 1, randomly"),
-            new CardData("Staff", Slot.Physical, Rarity.Basic, TargetType.Unit, "Burn for 2"),
-            new CardData("Mace", Slot.Physical, Rarity.Basic, TargetType.AOE, "Attack for 3, to all"),
-            new CardData("Flail", Slot.Physical, Rarity.Uncommon, TargetType.None, "Attack for 2, randomly, 3 times"),
-            new CardData("Flaming Arrow", Slot.Physical, Rarity.Basic, TargetType.Unit, "Attack for 2. Burn for 2"),
-            new CardData("Spear", Slot.Physical, Rarity.Uncommon, TargetType.Unit, "Attack for 6"),
-            new CardData("Trident", Slot.Physical, Rarity.Uncommon, TargetType.Unit, "Attack for 4. Heal for 4"),
-            new CardData("Scythe", Slot.Physical, Rarity.Uncommon, TargetType.Unit, "Attack for 3. Poison for 3"),
+            new CardData("Shortsword", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 1, TargetType.Foe) }),
+            new CardData("Wand", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) }),
+            new CardData("Staff", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 2, TargetType.Foe) }),
+            new CardData("Mace", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 3, TargetType.AllFoes) }),
+            new CardData("Flail", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 2, TargetType.RandomFoe, 3) }),
+            new CardData("Flaming Arrow", Slot.MainHand, Rarity.Basic, new List<Action> {
+                new Action(ActionType.Attack, 2, TargetType.Foe),
+                new Action(ActionType.Burn, 2, TargetType.Foe),
+            }),
+            new CardData("Spear", Slot.MainHand, Rarity.Uncommon, new List<Action> { new Action(ActionType.Attack, 6, TargetType.Foe) }),
+            new CardData("Trident", Slot.MainHand, Rarity.Uncommon, new List<Action> {
+                new Action(ActionType.Attack, 4, TargetType.Foe),
+                new Action(ActionType.Heal, 4, TargetType.Player)
+            }),
+            new CardData("Scythe", Slot.MainHand, Rarity.Uncommon, new List<Action> {
+                new Action(ActionType.Attack, 3, TargetType.Foe),
+                new Action(ActionType.Poison, 3, TargetType.Foe)
+            }),
 
-            // Defense cards
-            new CardData("Wooden Shield", Slot.Defense, Rarity.Basic, TargetType.Self, "Defend for 1"),
-            new CardData("Buckler", Slot.Defense, Rarity.Basic, TargetType.Self, "Defend for 2"),
-            new CardData("Dagger", Slot.Defense, Rarity.Basic, TargetType.Unit, "Attack for 1"),
-            new CardData("Quiver", Slot.Defense, Rarity.Basic, TargetType.Unit, "Attack for 1, randomly"),
-            //new CardData("Scroll", Slot.OffHand, Rarity.Common, TargetType.Self, "Some magic... nothing yet"),
-            new CardData("Spike Shield", Slot.Defense, Rarity.Basic, TargetType.Self, "Defend for 3. Spike for 2"),
-            //new CardData("Tome", Slot.OffHand, Rarity.Common, TargetType.Self, "Some magic... nothing yet"),
-            new CardData("Tower Shield", Slot.Defense, Rarity.Uncommon, TargetType.Self, "Defend for 5"),
-            //new CardData("Arcane Focus", Slot.OffHand, Rarity.Uncommon, TargetType.Self, "Some magic... nothing yet"),
+            // Off hand cards
+            new CardData("Wooden Shield", Slot.OffHand, Rarity.Basic, new List<Action> { new Action(ActionType.Defend, 1, TargetType.Player) }),
+            new CardData("Buckler", Slot.OffHand, Rarity.Basic, new List<Action> { new Action(ActionType.Defend, 2, TargetType.Player) }),
+            new CardData("Cloak and Dagger", Slot.OffHand, Rarity.Basic, new List<Action> {
+                new Action(ActionType.Defend, 1, TargetType.Player),
+                new Action(ActionType.Attack, 1, TargetType.Foe)
+            }),
+            new CardData("Quiver", Slot.OffHand, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }),
+            //new CardData("Scroll", Slot.OffHand, Rarity.Basic, new List<CardAction> {}),
+            new CardData("Spike Shield", Slot.OffHand, Rarity.Uncommon, new List<Action> {
+                new Action(ActionType.Defend, 3, TargetType.Player),
+                new Action(ActionType.Spike, 1, TargetType.Player)
+            }),
+            //new CardData("Tome", Slot.OffHand, Rarity.Uncommon, new List<CardAction> {}),
+            new CardData("Tower Shield", Slot.OffHand, Rarity.Uncommon, new List<Action> { new Action(ActionType.Defend, 5, TargetType.Player) }),
+            //new CardData("Arcane Focus", Slot.OffHand, Rarity.Uncommon, new List<CardAction> {}),
 
             // Ally cards
-            new CardData("Squirrel", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Squirrel with 1 health.\nOn its turn: Attack for 1, randomly"),
-            new CardData("Frog", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Frog with 1 health.\nOn its turn: Heal for 1"),
-            new CardData("Rat", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Rat with 1 health.\nOn its turn: Poison for 1, randomly"),
-            new CardData("Newt", Slot.Ally, Rarity.Basic, TargetType.Self, "Summon a Newt with 1 health.\nOn its turn: Burn for 1, randomly"),
-            //new CardData("Bunny", Slot.Ally, Rarity.Rare, TargetType.Self, "Summon 1. Some magic... nothing yet"),
-            new CardData("Toad", Slot.Ally, Rarity.Uncommon, TargetType.Self, "Summon a Toad with 1 health.\nOn its turn: Heal for 1. Poison for 1"),
-            new CardData("Porcupine", Slot.Ally, Rarity.Uncommon, TargetType.Self, "Summon a Porcupine with 1 health.\nOn its turn: Spike for 1"),
-            new CardData("Hamster", Slot.Ally, Rarity.Uncommon, TargetType.Self, "Summon a Hamster with 1 health.\nOn its turn: Draw 1 card"),
+            new CardData("Squirrel", Slot.Ally, Rarity.Basic, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Squirrel", new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }) }),
+            new CardData("Frog", Slot.Ally, Rarity.Basic, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Frog", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Player) }) }),
+            new CardData("Rat", Slot.Ally, Rarity.Basic, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Rat", new List<Action> { new Action(ActionType.Poison, 1, TargetType.RandomFoe) }) }),
+            new CardData("Newt", Slot.Ally, Rarity.Basic, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Newt", new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) }) }),
+            //new CardData("Bunny", Slot.Ally, Rarity.Uncommon, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Bunny", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Self) }) }),
+            new CardData("Toad", Slot.Ally, Rarity.Uncommon, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Toad", new List<Action> {
+                new Action(ActionType.Heal, 1, TargetType.Player),
+                new Action(ActionType.Poison, 1, TargetType.RandomFoe)
+            }) }),
+            new CardData("Porcupine", Slot.Ally, Rarity.Uncommon, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Porcupine", new List<Action> { new Action(ActionType.Spike, 1, TargetType.Player) }) }),
+            new CardData("Hamster", Slot.Ally, Rarity.Uncommon, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Hamster", new List<Action> { new Action(ActionType.Draw, 1, TargetType.None) }) }),
 
             // Spirit cards
-            new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, TargetType.Self, "Buff Defense by 1"),
-            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, TargetType.Self, "Buff Attacks by 1"),
-            new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, TargetType.Self, "Buff Burn by 1"),
-            new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, TargetType.Self, "Buff Poison by 1"),
-            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, TargetType.Self, "Buff Spike by 1"),
-            new CardData("Light Spirit", Slot.Spirit, Rarity.Uncommon, TargetType.Self, "Buff Healing by 1"),
+            new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Defend, 1, TargetType.Player) }),
+            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Attack, 1, TargetType.Player) }),
+            new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Burn, 1, TargetType.Player) }),
+            new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Poison, 1, TargetType.Player) }),
+            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Spike, 1, TargetType.Player) }),
+            new CardData("Light Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Heal, 1, TargetType.Player) }),
 
             // Spell cards
-            new CardData("Arcane Bolt", Slot.Magical, Rarity.Basic, TargetType.None, "Attack for 1, randomly"),
-            new CardData("Fireball", Slot.Magical, Rarity.Basic, TargetType.Unit, "Burn for 3"),
-            new CardData("Life Drain", Slot.Magical, Rarity.Basic, TargetType.Unit, "Attack for 2. Heal for 2"),
-            new CardData("Lightning Strike", Slot.Magical, Rarity.Uncommon, TargetType.None, "Attack for 4, randomly"),
-            new CardData("Heal", Slot.Magical, Rarity.Uncommon, TargetType.Self, "Heal for 5"),
-            new CardData("Blizzard", Slot.Magical, Rarity.Uncommon, TargetType.AOE, "Attack for 3, to all"),
-            new CardData("Curse", Slot.Magical, Rarity.Uncommon, TargetType.Unit, "Poison for 5"),
+            new CardData("Fireball", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 3, TargetType.Foe) }),
+            new CardData("Arcane Bolt", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }),
+            new CardData("Life Drain", Slot.Spell, Rarity.Basic, new List<Action> {
+                new Action(ActionType.Attack, 2, TargetType.Foe),
+                new Action(ActionType.Heal, 1, TargetType.Player)
+            }),
+            new CardData("Lightning Strike", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Attack, 4, TargetType.RandomFoe) }),
+            new CardData("Heal", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Heal, 5, TargetType.Ally) }),
+            new CardData("Blizzard", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Attack, 3, TargetType.AllFoes) }),
+            new CardData("Curse", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Poison, 5, TargetType.Foe) }),
 
             // Drink cards
-            new CardData("Cup", Slot.Drink, Rarity.Basic, TargetType.Self, "Heal for 1"),
-            new CardData("Pouch", Slot.Drink, Rarity.Basic, TargetType.Self, "Draw 1 card"),
-            new CardData("Tankard", Slot.Drink, Rarity.Basic, TargetType.None, "Heal for 1. Attack for 1, randomly"),
-            new CardData("Goblet", Slot.Drink, Rarity.Basic, TargetType.Self, "Heal for 2"),
-            new CardData("Potion", Slot.Drink, Rarity.Uncommon, TargetType.Self, "Heal for 4"),
-            new CardData("Flagon", Slot.Drink, Rarity.Uncommon, TargetType.Unit, "Heal for 1. Poison for 2"),
-            new CardData("Chalice", Slot.Drink, Rarity.Uncommon, TargetType.Self, "Heal for 1. Cleanse")
+            new CardData("Cup", Slot.Drink, Rarity.Basic, new List<Action> { new Action(ActionType.Heal, 1, TargetType.Player) }),
+            new CardData("Pouch", Slot.Drink, Rarity.Basic, new List<Action> { new Action(ActionType.Draw, 1, TargetType.Player) }),
+            new CardData("Tankard", Slot.Drink, Rarity.Basic, new List<Action> {
+                new Action(ActionType.Heal, 1, TargetType.None),
+                new Action(ActionType.Attack, 1, TargetType.RandomFoe)
+            }),
+            new CardData("Goblet", Slot.Drink, Rarity.Basic, new List<Action> { new Action(ActionType.Heal, 2, TargetType.Player) }),
+            new CardData("Potion", Slot.Drink, Rarity.Uncommon, new List<Action> { new Action(ActionType.Heal, 4, TargetType.Player) }),
+            new CardData("Flagon", Slot.Drink, Rarity.Uncommon, new List<Action> {
+                new Action(ActionType.Heal, 1, TargetType.Player),
+                new Action(ActionType.Poison, 2, TargetType.Foe)
+            }),
+            new CardData("Chalice", Slot.Drink, Rarity.Uncommon, new List<Action> {
+                new Action(ActionType.Heal, 1, TargetType.Player),
+                new Action(ActionType.Cleanse, 0, TargetType.Player)
+            }),
         };
 
         return cards;
@@ -165,10 +180,10 @@ public class CardManager : MonoBehaviour
     private IEnumerator ProcessCard(CardData cardData, Enemy targetEnemy, bool isAllyAction)
     {
         // If the ally's action is being processed, only read the description after "On its turn: ..."
-        string description = cardData.Description;
+        string description = cardData.GetCardDescription();
         if(isAllyAction)
         {
-            description = cardData.Description[(cardData.Description.IndexOf("On its turn: ") + "On its turn: ".Length)..];
+            description = cardData.GetCardDescription()[(cardData.GetCardDescription().IndexOf("On its turn: ") + "On its turn: ".Length)..];
         }
 
         WaitForSeconds actionDelayWait = new WaitForSeconds(0.5f);
@@ -296,11 +311,11 @@ public class CardManager : MonoBehaviour
 
         int amount = int.Parse(attackParts[0].Split(" ")[2]);
 
-        if(CharacterManager.instance.ChosenCharacter == Character.Badger && slot == Slot.Physical)
+        if(CharacterManager.instance.ChosenCharacter == Character.Badger && slot == Slot.MainHand)
         {
             amount++;
         }
-        else if(CharacterManager.instance.ChosenCharacter == Character.Fox && slot == Slot.Magical)
+        else if(CharacterManager.instance.ChosenCharacter == Character.Fox && slot == Slot.Spell)
         {
             amount++;
         }
@@ -313,10 +328,10 @@ public class CardManager : MonoBehaviour
     {
         switch(type)
         {
-            case "Attacks":
+            case "Attack":
                 GameManager.instance.Player.BuffAttack(amount);
                 break;
-            case "Defense":
+            case "Defend":
                 GameManager.instance.Player.BuffDefense(amount);
                 break;
             case "Healing":
@@ -517,11 +532,11 @@ public class CardManager : MonoBehaviour
     {
         return slotType switch
         {
-            Slot.Physical => mainHand,
-            Slot.Defense => offHand,
+            Slot.MainHand => mainHand,
+            Slot.OffHand => offHand,
             Slot.Ally => ally,
             Slot.Spirit => spirit,
-            Slot.Magical => spell,
+            Slot.Spell => spell,
             Slot.Drink => drink,
             _ => null,
         };
@@ -531,23 +546,23 @@ public class CardManager : MonoBehaviour
     {
         return (rarity, slotType) switch
         {
-            (Rarity.Basic, Slot.Physical) => cardBaseAttack,
-            (Rarity.Basic, Slot.Defense) => cardBaseDefend,
+            (Rarity.Basic, Slot.MainHand) => cardBaseAttack,
+            (Rarity.Basic, Slot.OffHand) => cardBaseDefend,
             (Rarity.Basic, Slot.Ally) => cardBaseAlly,
             (Rarity.Basic, Slot.Spirit) => cardBaseSpirit,
-            (Rarity.Basic, Slot.Magical) => cardBaseSpell,
+            (Rarity.Basic, Slot.Spell) => cardBaseSpell,
             (Rarity.Basic, Slot.Drink) => cardBaseDrink,
-            (Rarity.Uncommon, Slot.Physical) => cardBaseUncommonAttack,
-            (Rarity.Uncommon, Slot.Defense) => cardBaseUncommonDefend,
+            (Rarity.Uncommon, Slot.MainHand) => cardBaseUncommonAttack,
+            (Rarity.Uncommon, Slot.OffHand) => cardBaseUncommonDefend,
             (Rarity.Uncommon, Slot.Ally) => cardBaseUncommonAlly,
             (Rarity.Uncommon, Slot.Spirit) => cardBaseUncommonSpirit,
-            (Rarity.Uncommon, Slot.Magical) => cardBaseUncommonSpell,
+            (Rarity.Uncommon, Slot.Spell) => cardBaseUncommonSpell,
             (Rarity.Uncommon, Slot.Drink) => cardBaseUncommonDrink,
-            (Rarity.Rare, Slot.Physical) => cardBaseRareAttack,
-            (Rarity.Rare, Slot.Defense) => cardBaseRareDefend,
+            (Rarity.Rare, Slot.MainHand) => cardBaseRareAttack,
+            (Rarity.Rare, Slot.OffHand) => cardBaseRareDefend,
             (Rarity.Rare, Slot.Ally) => cardBaseRareAlly,
             (Rarity.Rare, Slot.Spirit) => cardBaseRareSpirit,
-            (Rarity.Rare, Slot.Magical) => cardBaseRareSpell,
+            (Rarity.Rare, Slot.Spell) => cardBaseRareSpell,
             (Rarity.Rare, Slot.Drink) => cardBaseRareDrink,
             _ => null
         };
@@ -573,10 +588,10 @@ public class CardManager : MonoBehaviour
     {
         switch(newCardData.Slot)
         {
-            case Slot.Physical:
+            case Slot.MainHand:
                 mainHand = newCardData;
                 break;
-            case Slot.Defense:
+            case Slot.OffHand:
                 offHand = newCardData;
                 break;
             case Slot.Ally:
@@ -585,7 +600,7 @@ public class CardManager : MonoBehaviour
             case Slot.Spirit:
                 spirit = newCardData;
                 break;
-            case Slot.Magical:
+            case Slot.Spell:
                 spell = newCardData;
                 break;
             case Slot.Drink:
@@ -600,11 +615,11 @@ public class CardManager : MonoBehaviour
     public void Reset()
     {
         // Setup starter slots
-        mainHand = GetStarterCardData(Slot.Physical);
-        offHand = GetStarterCardData(Slot.Defense);
+        mainHand = GetStarterCardData(Slot.MainHand);
+        offHand = GetStarterCardData(Slot.OffHand);
         ally = GetStarterCardData(Slot.Ally);
         spirit = GetStarterCardData(Slot.Spirit);
-        spell = GetStarterCardData(Slot.Magical);
+        spell = GetStarterCardData(Slot.Spell);
         drink = GetStarterCardData(Slot.Drink);
     }
 }

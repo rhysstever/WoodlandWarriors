@@ -32,8 +32,8 @@ public class CardSelectionCardObject : CardObject
         // If this card targets, but the player is not currently targetting,
         // OR this card does not target and is not being dragged,
         // Deselect it
-        if((cardData.TargetType == TargetType.Unit && TargettingManager.instance.CardTargetting == null)
-            || (cardData.TargetType != TargetType.Unit && !isBeingDragged))
+        if((cardData.DoesCardTarget && TargettingManager.instance.CardTargetting == null)
+            || (!cardData.DoesCardTarget && !isBeingDragged))
         {
             Deselect();
         }
