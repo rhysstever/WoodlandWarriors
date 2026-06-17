@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 
 public enum ActionType
 {
@@ -18,6 +16,7 @@ public enum ActionType
 public enum TargetType
 {
     None,
+    Self,
     Player,
     Ally,
     AllAllies,
@@ -124,7 +123,7 @@ public class Action
 
 public class Buff : Action
 {
-    public Buff(ActionType buffType, int amount, TargetType targetType) : base(buffType, amount, targetType)
+    public Buff(ActionType buffType, int amount) : base(buffType, amount, TargetType.Self)
     {
 
     }
@@ -140,7 +139,11 @@ public class Summon : Action
     protected string summonName;
     protected List<Action> summonActions;
 
-    public Summon(ActionType actionType, int amount, TargetType targetType, string summonName, List<Action> summonActions) : base(actionType, amount, targetType)
+    public string SummonName { get { return summonName; } }
+    public List<Action> SummonActions { get { return summonActions; } }
+
+    public Summon(ActionType actionType, int amount, string summonName, List<Action> summonActions)
+        : base(actionType, amount, TargetType.None)
     {
         this.summonName = summonName;
         this.summonActions = summonActions;

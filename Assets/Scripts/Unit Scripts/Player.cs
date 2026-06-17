@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Player : Unit
 {
-    protected int currentGold;
-
     [SerializeField]
     private SpriteRenderer characterSpriteRenderer;
 
@@ -24,7 +22,6 @@ public class Player : Unit
             maxLife += 10;
         }
 
-        currentGold = 0;
         base.Reset();
     }
 
@@ -56,31 +53,6 @@ public class Player : Unit
             AudioManager.instance.PlayDeathAudio();
             GameManager.instance.ChangeMenuState(MenuState.GameEnd);
         }
-    }
-
-    public bool CanAfford(int amount)
-    {
-        return currentGold >= amount;
-    }
-
-    public void SpendGold(int amount)
-    {
-        if(amount < 0 || !CanAfford(amount))
-        {
-            return;
-        }
-
-        currentGold -= amount;
-    }
-
-    public void GiveGold(int amount)
-    {
-        if(amount < 0)
-        {
-            return;
-        }
-
-        currentGold += amount;
     }
 
     public void HealFull()

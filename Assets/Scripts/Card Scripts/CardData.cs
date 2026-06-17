@@ -29,6 +29,7 @@ public class CardData
     public string Name { get { return name; } }
     public Slot Slot { get { return slot; } }
     public Rarity Rarity { get { return rarity; } }
+    public List<Action> Actions { get { return actions; } }
     public bool DoesCardTarget { get { return doesCardTarget; } }
 
     public CardData(string name, Slot slot, Rarity rarity, List<Action> actions)

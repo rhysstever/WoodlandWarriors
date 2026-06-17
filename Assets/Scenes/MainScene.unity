@@ -875,6 +875,7 @@ GameObject:
   - component: {fileID: 231419613}
   - component: {fileID: 231419615}
   - component: {fileID: 231419616}
+  - component: {fileID: 231419624}
   - component: {fileID: 231419621}
   - component: {fileID: 231419617}
   - component: {fileID: 231419618}
@@ -1129,6 +1130,18 @@ MonoBehaviour:
   takeDamageColor: {r: 1, g: 0.4575472, b: 0.4575472, a: 1}
   burnColor: {r: 1, g: 0.80566037, b: 0.514151, a: 1}
   poisonColor: {r: 0.5637544, g: 1, b: 0.504717, a: 1}
+--- !u!114 &231419624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231419612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcdf427ddfdd21049b0580c17dc68065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &287315100
 GameObject:
   m_ObjectHideFlags: 0

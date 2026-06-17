@@ -1,9 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ActionManager : MonoBehaviour
 {
     // Singleton
     public static ActionManager instance = null;
+
+    private IEnumerator actionCoroutine;
 
     private void Awake()
     {
@@ -14,6 +18,166 @@ public class ActionManager : MonoBehaviour
         else if(instance != this)
         {
             Destroy(gameObject);
+        }
+    }
+
+    public void PerformActions(List<Action> actions, Unit actor, Unit target)
+    {
+        actionCoroutine = ProcessActions(actions, actor, target);
+        StartCoroutine(actionCoroutine);
+    }
+
+    private IEnumerator ProcessActions(List<Action> actions, Unit actor, Unit target)
+    {
+        WaitForSeconds actionDelayWait = new WaitForSeconds(0.25f);
+        WaitForSeconds timesDelayWait = new WaitForSeconds(0.75f);
+        foreach(Action action in actions)
+        {
+            bool isBuff = action.GetActionDescription().Split(" ")[0] == "Buff";
+            yield return actionDelayWait;
+
+            // Repeat action if it triggers multiple times
+            for(int i = 0; i < action.Times; i++)
+            {
+                yield return timesDelayWait;
+                // Check if the action show hit all enemies
+                if((action.TargetType == TargetType.AllFoes && actor is Player)
+                    || (action.TargetType == TargetType.AllAllies && actor is Enemy))
+                {
+                    EnemyManager.instance.GetCurrentEnemies().ForEach(enemy => {
+                        if(isBuff)
+                        {
+                            ProcessBuff(action, enemy);
+                        }
+                        else
+                        {
+                            ProcessAction(action, actor, enemy);
+                        }
+                    });
+                }
+                else
+                {
+                    target = UpdateTarget(action.TargetType, actor, target);
+                    if(isBuff)
+                    {
+                        ProcessBuff(action, target);
+                    }
+                    else
+                    {
+                        ProcessAction(action, actor, target);
+                    }
+                }
+            }
+        }
+
+        // Reset targetting
+        TargettingManager.instance.Reset();
+
+        // Check if combat is over
+        EnemyManager.instance.CheckIfWaveIsOver();
+    }
+
+    private Unit UpdateTarget(TargetType actionTargetType, Unit actor, Unit target)
+    {
+        switch(actionTargetType)
+        {
+            case TargetType.None:
+                return null;
+            case TargetType.Self:
+                return actor;
+            case TargetType.Player:
+                return GameManager.instance.Player;
+            case TargetType.RandomFoe:
+                if(actor is Enemy)
+                {
+                    // TODO - Get random between player and ally
+                    return GameManager.instance.Player;
+                }
+                else
+                {
+                    return EnemyManager.instance.GetRandomEnemy();
+                }
+            case TargetType.AllAllies:
+            case TargetType.AllFoes:
+            case TargetType.Ally:
+            case TargetType.Foe:
+                if((actor is Player && target is Player)
+                    || (actor is Enemy && target is Enemy))
+                {
+                    Debug.Log("Warning! Both the actor and player are the same type!");
+                }
+                break;
+        }
+
+        return target;
+    }
+
+    private void ProcessAction(Action action, Unit actor, Unit target) 
+    {
+        switch(action.ActionType)
+        {
+            case ActionType.Attack:
+                target.TakeDamage(action.Amount, actor, DamageType.Attack);
+                break;
+            case ActionType.Defend:
+                target.GiveDefense(action.Amount);
+                break;
+            case ActionType.Heal:
+                target.GiveDefense(action.Amount);
+                break;
+            case ActionType.Burn:
+                target.GiveBurn(action.Amount);
+                break;
+            case ActionType.Poison:
+                target.GivePoison(action.Amount);
+                break;
+            case ActionType.Spike:
+                target.GiveSpike(action.Amount);
+                break;
+            case ActionType.Draw:
+                if(action.TargetType == TargetType.Player)
+                {
+                    DeckManager.instance.DrawCards(action.Amount);
+                }
+                break;
+            case ActionType.Cleanse:
+                target.Cleanse();
+                break;
+            case ActionType.Summon:
+                if(action.TargetType == TargetType.None)
+                {
+                    Summon summon = action as Summon;
+                    CharacterManager.instance.SummonAlly(summon);
+                }
+                break;
+        }
+    }
+
+    private void ProcessBuff(Action action, Unit target)
+    {
+        switch(action.ActionType)
+        {
+            case ActionType.Attack:
+                target.BuffAttack(action.Amount);
+                break;
+            case ActionType.Defend:
+                target.BuffDefense(action.Amount);
+                break;
+            case ActionType.Heal:
+                target.BuffHealing(action.Amount);
+                break;
+            case ActionType.Burn:
+                target.BuffBurn(action.Amount);
+                break;
+            case ActionType.Poison:
+                target.BuffPoison(action.Amount);
+                break;
+            case ActionType.Spike:
+                target.BuffSpike(action.Amount);
+                break;
+            default:
+                Debug.Log(string.Format("Error! No buff for type: {0}", action.ActionType));
+                break;
         }
     }
 }

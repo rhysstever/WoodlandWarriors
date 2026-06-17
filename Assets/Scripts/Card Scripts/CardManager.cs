@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,8 +26,6 @@ public class CardManager : MonoBehaviour
     private List<CardData> cardLibrary;
     private Dictionary<Rarity, float> rarityPercentages;
     private List<Sprite> cardArtList;
-
-    private IEnumerator cardPlayCoroutine, cardAttackCoroutine;
 
     // Slots
     private CardData mainHand, offHand, spirit, ally, spell, drink;
@@ -102,29 +99,55 @@ public class CardManager : MonoBehaviour
             //new CardData("Arcane Focus", Slot.OffHand, Rarity.Uncommon, new List<CardAction> {}),
 
             // Ally cards
-            new CardData("Squirrel", Slot.Ally, Rarity.Basic, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Squirrel", new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }) }),
-            new CardData("Frog", Slot.Ally, Rarity.Basic, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Frog", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Player) }) }),
-            new CardData("Rat", Slot.Ally, Rarity.Basic, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Rat", new List<Action> { new Action(ActionType.Poison, 1, TargetType.RandomFoe) }) }),
-            new CardData("Newt", Slot.Ally, Rarity.Basic, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Newt", new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) }) }),
-            //new CardData("Bunny", Slot.Ally, Rarity.Uncommon, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Bunny", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Self) }) }),
-            new CardData("Toad", Slot.Ally, Rarity.Uncommon, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Toad", new List<Action> {
-                new Action(ActionType.Heal, 1, TargetType.Player),
-                new Action(ActionType.Poison, 1, TargetType.RandomFoe)
-            }) }),
-            new CardData("Porcupine", Slot.Ally, Rarity.Uncommon, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Porcupine", new List<Action> { new Action(ActionType.Spike, 1, TargetType.Player) }) }),
-            new CardData("Hamster", Slot.Ally, Rarity.Uncommon, new List<Action> { new Summon(ActionType.Summon, 1, TargetType.None, "Hamster", new List<Action> { new Action(ActionType.Draw, 1, TargetType.None) }) }),
+            new CardData("Squirrel", Slot.Ally, Rarity.Basic, new List<Action> { 
+                new Summon(ActionType.Summon, 1, "Squirrel", new List<Action> { 
+                    new Action(ActionType.Attack, 1, TargetType.RandomFoe) 
+                }) 
+            }),
+            new CardData("Frog", Slot.Ally, Rarity.Basic, new List<Action> { 
+                new Summon(ActionType.Summon, 1, "Frog", new List<Action> { 
+                    new Action(ActionType.Heal, 1, TargetType.Player) 
+                }) 
+            }),
+            new CardData("Rat", Slot.Ally, Rarity.Basic, new List<Action> { 
+                new Summon(ActionType.Summon, 1, "Rat", new List<Action> { 
+                    new Action(ActionType.Poison, 1, TargetType.RandomFoe) 
+                }) 
+            }),
+            new CardData("Newt", Slot.Ally, Rarity.Basic, new List<Action> { 
+                new Summon(ActionType.Summon, 1, "Newt", new List<Action> { 
+                    new Action(ActionType.Burn, 1, TargetType.RandomFoe) 
+                }) 
+            }),
+            //new CardData("Bunny", Slot.Ally, Rarity.Uncommon, new List<Action> { new Summon(ActionType.Summon, 1, "Bunny", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Self) }) }),
+            new CardData("Toad", Slot.Ally, Rarity.Uncommon, new List<Action> { 
+                new Summon(ActionType.Summon, 1, "Toad", new List<Action> {
+                    new Action(ActionType.Heal, 1, TargetType.Player),
+                    new Action(ActionType.Poison, 1, TargetType.RandomFoe)
+                }) 
+            }),
+            new CardData("Porcupine", Slot.Ally, Rarity.Uncommon, new List<Action> { 
+                new Summon(ActionType.Summon, 1, "Porcupine", new List<Action> { 
+                    new Action(ActionType.Spike, 1, TargetType.Player) 
+                }) 
+            }),
+            new CardData("Hamster", Slot.Ally, Rarity.Uncommon, new List<Action> { 
+                new Summon(ActionType.Summon, 1, "Hamster", new List<Action> { 
+                    new Action(ActionType.Draw, 1, TargetType.None) 
+                }) 
+            }),
 
             // Spirit cards
-            new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Defend, 1, TargetType.Player) }),
-            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Attack, 1, TargetType.Player) }),
-            new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Burn, 1, TargetType.Player) }),
-            new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Poison, 1, TargetType.Player) }),
-            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Spike, 1, TargetType.Player) }),
-            new CardData("Light Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Heal, 1, TargetType.Player) }),
+            new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Defend, 1) }),
+            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Attack, 1) }),
+            new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Burn, 1) }),
+            new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Poison, 1) }),
+            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Spike, 1) }),
+            new CardData("Light Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Heal, 1) }),
 
             // Spell cards
-            new CardData("Fireball", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 3, TargetType.Foe) }),
             new CardData("Arcane Bolt", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }),
+            new CardData("Fireball", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 3, TargetType.Foe) }),
             new CardData("Life Drain", Slot.Spell, Rarity.Basic, new List<Action> {
                 new Action(ActionType.Attack, 2, TargetType.Foe),
                 new Action(ActionType.Heal, 1, TargetType.Player)
@@ -157,7 +180,6 @@ public class CardManager : MonoBehaviour
     }
     #endregion Card Creation
 
-    #region Card Actions
     public void Play(GameObject cardObject)
     {
         Play(cardObject, null);
@@ -166,250 +188,9 @@ public class CardManager : MonoBehaviour
     public void Play(GameObject cardObject, Enemy targetEnemy)
     {
         CardData cardData = cardObject.GetComponent<CardObject>().CardData;
-        cardPlayCoroutine = ProcessCard(cardData, targetEnemy, false);
-        StartCoroutine(cardPlayCoroutine);
+        ActionManager.instance.PerformActions(cardData.Actions, GameManager.instance.Player, targetEnemy);
         DeckManager.instance.RemoveCard(cardObject);
     }
-
-    public void PlayAllyEffect(CardData cardData)
-    {
-        cardPlayCoroutine = ProcessCard(cardData, null, true);
-        StartCoroutine(cardPlayCoroutine);
-    }
-
-    private IEnumerator ProcessCard(CardData cardData, Enemy targetEnemy, bool isAllyAction)
-    {
-        // If the ally's action is being processed, only read the description after "On its turn: ..."
-        string description = cardData.GetCardDescription();
-        if(isAllyAction)
-        {
-            description = cardData.GetCardDescription()[(cardData.GetCardDescription().IndexOf("On its turn: ") + "On its turn: ".Length)..];
-        }
-
-        WaitForSeconds actionDelayWait = new WaitForSeconds(0.5f);
-        List<string> actions = description.Split(". ").ToList();
-        int actionIndex = 0;
-        // Apply a small delay before performing each action
-        while(actionIndex < actions.Count)
-        {
-            yield return actionDelayWait;
-            PerformCardAction(actions[actionIndex], targetEnemy, cardData.Slot);
-            actionIndex++;
-
-            // When playing a card for Ally, only perform the first action (summon or buff the ally)
-            if(!isAllyAction && cardData.Slot == Slot.Ally)
-            {
-                break;
-            } 
-        }
-
-        // Reset targetting
-        TargettingManager.instance.Reset();
-
-        // Check if combat is over
-        EnemyManager.instance.CheckIfWaveIsOver();
-    }
-
-    private void PerformCardAction(string action, Enemy target, Slot slot)
-    {
-        string firstWord = action.Split(" ")[0];
-        int amount;
-        string[] attackParts = action.Split(", ");
-
-        switch(firstWord.ToLower())
-        {
-            case "attack":
-                ParseAttack(attackParts, target, slot);
-                break;
-            case "defend":
-                amount = int.Parse(attackParts[0].Split(" ")[2]);
-                GameManager.instance.Player.GiveDefense(amount);
-                break;
-            case "heal":
-                amount = int.Parse(attackParts[0].Split(" ")[2]);
-                GameManager.instance.Player.Heal(amount);
-                break;
-            case "burn":
-                amount = int.Parse(attackParts[0].Split(" ")[2]);
-                if(CharacterManager.instance.ChosenCharacter == Character.Skunk)
-                {
-                    amount++;
-                }
-                if(target == null)
-                {
-                    target = EnemyManager.instance.GetRandomEnemy();
-                }
-                target.GiveBurn(amount);
-                break;
-            case "poison":
-                amount = int.Parse(attackParts[0].Split(" ")[2]);
-                if(CharacterManager.instance.ChosenCharacter == Character.Skunk)
-                {
-                    amount++;
-                }
-                if(target == null)
-                {
-                    target = EnemyManager.instance.GetRandomEnemy();
-                }
-                target.GivePoison(amount);
-                break;
-            case "spike":
-                amount = int.Parse(attackParts[0].Split(" ")[2]);
-                GameManager.instance.Player.GiveSpike(amount);
-                break;
-            case "draw":
-                amount = int.Parse(attackParts[0].Split(" ")[1]);
-                DeckManager.instance.DrawCards(amount);
-                break;
-            case "cleanse":
-                GameManager.instance.Player.Cleanse();
-                break;
-            case "buff":
-                string spiritName = GetCurrentCardData(Slot.Spirit).Name.Split(' ')[0];
-                CharacterManager.instance.SummonSpirit(spiritName);
-                amount = int.Parse(action.Split(" ")[3]);
-                string type = action.Split(" ")[1];
-                ParseBuff(amount, type);
-                break;
-            case "summon":
-                string[] trimmedAction = action.Split(".")[0].Split(" ");
-                string allyName = trimmedAction[2];
-                int allyHealth = int.Parse(trimmedAction[4]);
-                if(CharacterManager.instance.ChosenCharacter == Character.Opossum)
-                {
-                    allyHealth++;
-                }
-                CharacterManager.instance.SummonAlly(allyName, allyHealth);
-                break;
-            default:
-                Debug.Log(string.Format("Error! No action found for: {0}", action));
-                break;
-        }
-    }
-
-    private void ParseAttack(string[] attackParts, Enemy target, Slot slot)
-    {
-        // Figure out if the attack is AOE, random, and/or multi
-        bool isAttackAOE = false;
-        bool isAttackRandom = false;
-        int attackCount = 1;
-        for(int i = 1; i < attackParts.Length; i++)
-        {
-            if(attackParts[i].Contains("to all"))
-            {
-                isAttackAOE = true;
-            }
-            else if(attackParts[i].Contains("randomly"))
-            {
-                isAttackRandom = true;
-            }
-            else if(attackParts[i].Contains("times"))
-            {
-                attackCount = int.Parse(attackParts[i].Split(" ")[0]);
-            }
-        }
-
-        int amount = int.Parse(attackParts[0].Split(" ")[2]);
-
-        if(CharacterManager.instance.ChosenCharacter == Character.Badger && slot == Slot.MainHand)
-        {
-            amount++;
-        }
-        else if(CharacterManager.instance.ChosenCharacter == Character.Fox && slot == Slot.Spell)
-        {
-            amount++;
-        }
-
-        cardAttackCoroutine = ProcessCardAttack(amount, target, slot, attackCount, isAttackAOE, isAttackRandom);
-        StartCoroutine(cardAttackCoroutine);
-    }
-
-    private void ParseBuff(int amount, string type)
-    {
-        switch(type)
-        {
-            case "Attack":
-                GameManager.instance.Player.BuffAttack(amount);
-                break;
-            case "Defend":
-                GameManager.instance.Player.BuffDefense(amount);
-                break;
-            case "Healing":
-                GameManager.instance.Player.BuffHealing(amount);
-                break;
-            case "Burn":
-                GameManager.instance.Player.BuffBurn(amount);
-                break;
-            case "Poison":
-                GameManager.instance.Player.BuffPoison(amount);
-                break;
-            case "Spike":
-                GameManager.instance.Player.BuffSpike(amount);
-                break;
-            default:
-                Debug.Log(string.Format("Error! No buff found for: {0}", type));
-                break;
-        }
-    }
-
-    private IEnumerator ProcessCardAttack(int amount, Enemy target, Slot slot, int attackCount, bool isAOE, bool isRandom)
-    {
-        WaitForSeconds attackDelayWait = new WaitForSeconds(0.75f);
-        int attackIndex = 0;
-        // Apply a small delay before performing each attack
-        while(attackIndex < attackCount)
-        {
-            if(attackIndex > 0)
-            {
-                yield return attackDelayWait;
-            }
-            AudioManager.instance.PlaySlotAttackAudio(slot);
-            if(isAOE)
-            {
-                AttackEveryEnemy(amount);
-            }
-            else if(isRandom)
-            {
-                AttackRandomEnemy(amount);
-            }
-            else
-            {
-                AttackSingleEnemy(amount, target);
-            }
-            attackIndex++;
-        }
-    }
-
-    private void AttackEveryEnemy(int damage)
-    {
-        EnemyManager.instance.GetCurrentEnemies().ForEach(enemy => {
-            AttackSingleEnemy(damage, enemy);
-        });
-    }
-
-    private void AttackRandomEnemy(int damage)
-    {
-        Enemy randomEnemy = EnemyManager.instance.GetRandomEnemy();
-        AttackSingleEnemy(damage, randomEnemy);
-    }
-
-    private void AttackSingleEnemy(int amount, Enemy enemy)
-    {
-        if(enemy == null)
-        {
-            Debug.Log("Error: No target to attack!");
-            return;
-        }
-
-        if(amount < 1)
-        {
-            Debug.Log(string.Format("Error: Not enough damage ({0})", amount));
-            return;
-        }
-
-        enemy.TakeDamage(amount, GameManager.instance.Player, DamageType.Attack);
-    }
-    #endregion Card Actions
 
     private List<Sprite> LoadCardArtSprites()
     {

@@ -147,22 +147,23 @@ public class CharacterManager : MonoBehaviour
         };
     }
 
-    public void SummonAlly(string allyTypeToSummon, int initialHealth)
+    public void SummonAlly(Summon summonAction)
     {
         if(allyObject != null)
         {
-            allyObject.GetComponent<Ally>().Buff(initialHealth);
+            allyObject.GetComponent<Ally>().Buff(summonAction.Amount);
         }
         else
         {
             Ally newAlly = Instantiate(
-                GetAllyPrefab(allyTypeToSummon),
+                GetAllyPrefab(summonAction.SummonName),
                 allySpawnTrans.position,
                 Quaternion.identity,
                 GameManager.instance.Player.transform
             ).GetComponent<Ally>();
 
-            newAlly.SetHealth(initialHealth);
+            newAlly.SetHealth(summonAction.Amount);
+            newAlly.SetActions(summonAction.SummonActions);
             allyObject = newAlly.gameObject;
         }
     }
@@ -195,7 +196,9 @@ public class CharacterManager : MonoBehaviour
 
         if(allyCardToPlay != null)
         {
-            CardManager.instance.PlayAllyEffect(allyCardToPlay);
+            // TODO: Check actor and target 
+            ActionManager.instance.PerformActions(
+                allyObject.GetComponent<Ally>().Actions, GameManager.instance.Player, null);
             yield return allyActionDelayWait;
             yield return allyActionDelayWait;
         }
