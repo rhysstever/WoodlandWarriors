@@ -8,50 +8,50 @@ public class UnitEffects
 
     public UnitEffects()
     {
-        Effect burnBuffEffect = new Effect("Buff Burn", 0, false);
-        Effect poisonBuffEffect = new Effect("Buff Poison", 0, false);
-        Effect spikeBuffEffect = new Effect("Buff Spike", 0, false);
+        Effect burnBuffEffect = new Effect(new Buff(ActionType.Burn, 0), false);
+        Effect poisonBuffEffect = new Effect(new Buff(ActionType.Poison, 0), false);
+        Effect spikeBuffEffect = new Effect(new Buff(ActionType.Spike, 0), false);
 
         effects = new List<Effect>
         {
-            new Effect("Buff Attack", 0, false),
-            new Effect("Buff Defense", 0, false),
-            new Effect("Buff Healing", 0, false),
+            new Effect(new Buff(ActionType.Attack, 0), false),
+            new Effect(new Buff(ActionType.Defend, 0), false),
+            new Effect(new Buff(ActionType.Heal, 0), false),
             burnBuffEffect,
             poisonBuffEffect,
             spikeBuffEffect,
-            new Effect("Burn", 0, true, burnBuffEffect),
-            new Effect("Poison", 0, true, poisonBuffEffect),
-            new Effect("Spike", 0, false, spikeBuffEffect),
+            new Effect(new Action(ActionType.Burn, 0, TargetType.Self), true, burnBuffEffect),
+            new Effect(new Action(ActionType.Poison, 0, TargetType.Self), true, poisonBuffEffect),
+            new Effect(new Action(ActionType.Spike, 0, TargetType.Self), false, spikeBuffEffect),
         };
     }
 
-    public bool UpdateEffectAmount(string effectName, int amount)
+    public bool UpdateEffectAmount(ActionType effectType, int amount, bool isBuff = false)
     {
         foreach(Effect effect in effects)
         {
-            if(effect.EffectName == effectName)
+            if(effect.Action as Buff != null && effect.Action.ActionType == effectType)
             {
                 effect.UpdateAmount(amount);
                 return true;
             }
         }
 
-        Debug.Log(string.Format("Warning! Effect {0} not found", effectName));
+        Debug.Log(string.Format("Warning! No effect of type {0} found. Is it a buff? {1}", effectType, isBuff));
         return false;
     }
 
-    public int GetEffectAmount(string effectName)
+    public int GetEffectAmount(ActionType effectType, bool isBuff = false)
     {
         foreach(Effect effect in effects)
         {
-            if(effect.EffectName == effectName)
+            if(effect.Action as Buff != null && effect.Action.ActionType == effectType)
             {
-                return effect.Amount;
+                return effect.Action.Amount;
             }
         }
 
-        Debug.Log(string.Format("Warning! Effect {0} not found", effectName));
+        Debug.Log(string.Format("Warning! No effect of type {0} found. Is it a buff? {1}", effectType, isBuff));
         return 0;
     }
 
@@ -68,7 +68,7 @@ public class UnitEffects
 
     public bool hasAfflictiveEffects()
     {
-        return effects.Where(effect => effect.IsAffliction).Where(effect => effect.Amount > 0).Any();
+        return effects.Where(effect => effect.IsAffliction).Where(effect => effect.Action.Amount > 0).Any();
     }
 
     public List<Effect> GetAllEffects()

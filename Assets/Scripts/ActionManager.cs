@@ -21,6 +21,11 @@ public class ActionManager : MonoBehaviour
         }
     }
 
+    public void PerformAction(Action action, Unit actor, Unit target)
+    {
+        PerformActions(new List<Action> { action }, actor, target);
+    }
+
     public void PerformActions(List<Action> actions, Unit actor, Unit target)
     {
         actionCoroutine = ProcessActions(actions, actor, target);
@@ -156,7 +161,19 @@ public class ActionManager : MonoBehaviour
                 if(action.TargetType == TargetType.None)
                 {
                     Summon summon = action as Summon;
-                    CharacterManager.instance.SummonAlly(summon);
+                    for(int i = 0; i < action.Amount; i++)
+                    {
+                        if(actor is Enemy)
+                        {
+                            GameObject enemySummonPrefab = EnemyManager.instance.GetEnemyPrefabByName(summon.SummonName);
+                            Debug.Log(enemySummonPrefab.name);
+                            EnemyManager.instance.SpawnSummon(enemySummonPrefab);
+                        }
+                        else
+                        {
+                            CharacterManager.instance.SummonAlly(summon);
+                        }
+                    }
                 }
                 break;
         }

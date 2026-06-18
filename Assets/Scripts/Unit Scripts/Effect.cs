@@ -1,47 +1,58 @@
 public class Effect
 {
-    private string effectName;
-    private int effectAmount;
+    private Action action;
     private bool isAffliction;
     private Effect buffingEffect;
 
-    public string EffectName { get { return effectName; } }
-    public int Amount { get { return effectAmount; } } 
     public bool IsAffliction { get { return isAffliction; } }
+    public Action Action { get { return action; } }
 
-    public Effect(string effectName, int effectAmount, bool isAffliction, Effect buffingEffect)
+    public Effect(Action action, bool isAffliction, Effect buffingEffect)
     {
-        this.effectName = effectName;
-        this.effectAmount = effectAmount;
         this.isAffliction = isAffliction;
+        this.action = action;
         this.buffingEffect = buffingEffect;
     }
 
-    public Effect(string effectName, int effectAmount, bool isAffliction)
+    public Effect(Action action, bool isAffliction)
     {
-        this.effectName = effectName;
-        this.effectAmount = effectAmount;
         this.isAffliction = isAffliction;
+        this.action = action;
         this.buffingEffect = null;
     }
 
     public void UpdateAmount(int amount)
     {
-        effectAmount += amount;
-
+        int totalAmount = Action.Amount + amount;
         if(buffingEffect != null)
         {
-            effectAmount += buffingEffect.Amount;
+            totalAmount += buffingEffect.Action.Amount;
         }
 
-        if(effectAmount < 0)
+        if(totalAmount < 0)
         {
-            effectAmount = 0;
+            totalAmount = 0;
+        }
+
+        if(action is Buff)
+        {
+            action = new Buff(action.ActionType, totalAmount);
+        }
+        else
+        {
+            action = new Action(action.ActionType, totalAmount, action.TargetType);
         }
     }
 
     public void Reset()
     {
-        effectAmount = 0;
+        if(action is Buff)
+        {
+            action = new Buff(action.ActionType, 0);
+        }
+        else
+        {
+            action = new Action(action.ActionType, 0, action.TargetType);
+        }
     }
 }

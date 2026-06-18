@@ -76,14 +76,14 @@ public class Action
                     {
                         descriptionAmount++;
                     }
-                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Attack");
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.Attack, true);
                 }
                 description += string.Format("Attack for {0}", descriptionAmount);
                 break;
             case ActionType.Defend:
                 if(unit != null)
                 {
-                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Defense");
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.Defend, true);
                 }
                 description += string.Format("Defend for {0}", descriptionAmount);
                 break;
@@ -94,7 +94,7 @@ public class Action
                     {
                         descriptionAmount++;
                     }
-                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Healing");
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.Heal, true);
                 }
                 description += string.Format("Heal for {0}", descriptionAmount);
                 break;
@@ -105,7 +105,7 @@ public class Action
                     {
                         descriptionAmount++;
                     }
-                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Burn");
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.Burn, true);
                 }
                 description += string.Format("Burn for {0}", descriptionAmount);
                 break;
@@ -116,14 +116,14 @@ public class Action
                     {
                         descriptionAmount++;
                     }
-                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Poison");
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.Poison, true);
                 }
                 description += string.Format("Poison for {0}", descriptionAmount);
                 break;
             case ActionType.Spike:
                 if(unit != null)
                 {
-                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Spike");
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.Spike, true);
                 }
                 description += string.Format("Gain {0} spikes", descriptionAmount);
                 break;

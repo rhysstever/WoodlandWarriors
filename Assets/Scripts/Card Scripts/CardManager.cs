@@ -341,18 +341,17 @@ public class CardManager : MonoBehaviour
         };
     }
 
-    public Sprite GetActionSprite(string actionType)
+    public Sprite GetActionSprite(ActionType actionType)
     {
-        return actionType.ToLower() switch
+        return actionType switch
         {
-            "attack" => actionIconSpriteAttack,
-            "defend" => actionIconSpriteDefend,
-            "defense" => actionIconSpriteDefend,
-            "heal" => actionIconSpriteHeal,
-            "burn" => actionIconSpriteFire,
-            "poison" => actionIconSpritePoison,
-            "spike" => actionIconSpriteSpike,
-            "summon" => actionIconSpriteSummon,
+            ActionType.Attack => actionIconSpriteAttack,
+            ActionType.Defend => actionIconSpriteDefend,
+            ActionType.Heal => actionIconSpriteHeal,
+            ActionType.Burn => actionIconSpriteFire,
+            ActionType.Poison => actionIconSpritePoison,
+            ActionType.Spike => actionIconSpriteSpike,
+            ActionType.Summon => actionIconSpriteSummon,
             _ => null
         };
     }
