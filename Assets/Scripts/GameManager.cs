@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
                 break;
             case CombatState.AllyTurn:
                 DeckManager.instance.ClearHand();
-                if(CharacterManager.instance.AllyObject != null)
+                if(CharacterManager.instance.Ally != null)
                 {
                     allyTurnCoroutine = CharacterManager.instance.ProcessAllyTurn();
                     StartCoroutine(allyTurnCoroutine);

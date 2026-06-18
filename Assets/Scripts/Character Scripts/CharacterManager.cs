@@ -33,10 +33,11 @@ public class CharacterManager : MonoBehaviour
 
     // Set at Start
     private Character chosenCharacter;
-    private GameObject allyObject, spiritObject;
+    private Ally ally;
+    private GameObject spiritObject;
 
     public Character ChosenCharacter { get { return chosenCharacter; } }
-    public GameObject AllyObject { get { return allyObject; } }
+    public Ally Ally { get { return ally; } }
     public GameObject SpiritObject { get { return spiritObject; } }
 
     private void Awake()
@@ -155,9 +156,9 @@ public class CharacterManager : MonoBehaviour
             amount++;
         }
 
-        if(allyObject != null)
+        if(ally != null)
         {
-            allyObject.GetComponent<Ally>().Buff(amount);
+            ally.GetComponent<Ally>().Buff(amount);
         }
         else
         {
@@ -170,7 +171,7 @@ public class CharacterManager : MonoBehaviour
 
             newAlly.SetHealth(amount);
             newAlly.SetActions(summonAction.SummonActions);
-            allyObject = newAlly.gameObject;
+            ally = newAlly;
         }
     }
 
@@ -203,7 +204,7 @@ public class CharacterManager : MonoBehaviour
         if(allyCardToPlay != null)
         {
             // TODO: Check actor and target 
-            ActionManager.instance.PerformActions(allyObject.GetComponent<Ally>().Actions, GameManager.instance.Player, null);
+            ActionManager.instance.PerformActions(ally.GetComponent<Ally>().Actions, ally, null);
             yield return allyActionDelayWait;
             yield return allyActionDelayWait;
         }
@@ -213,10 +214,10 @@ public class CharacterManager : MonoBehaviour
 
     public void ResetSummons()
     {
-        if(allyObject != null)
+        if(ally != null)
         {
-            Destroy(allyObject);
-            allyObject = null;
+            Destroy(ally);
+            ally = null;
         }
 
         if(spiritObject != null)

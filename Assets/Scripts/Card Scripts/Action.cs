@@ -55,11 +55,6 @@ public class Action
 
     public virtual string GetActionDescription(Unit unit)
     {
-        if(unit == null)
-        {
-            return "";
-        }
-
         // ===== Description Format =====
         // Normal Attack: "Attack for X"
         // Heal: "Heal for X"
@@ -75,43 +70,61 @@ public class Action
         switch(actionType)
         {
             case ActionType.Attack:
-                if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Badger)
+                if(unit != null)
                 {
-                    descriptionAmount++;
+                    if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Badger)
+                    {
+                        descriptionAmount++;
+                    }
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Attack");
                 }
-                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Attack");
                 description += string.Format("Attack for {0}", descriptionAmount);
                 break;
             case ActionType.Defend:
-                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Defense");
+                if(unit != null)
+                {
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Defense");
+                }
                 description += string.Format("Defend for {0}", descriptionAmount);
                 break;
             case ActionType.Heal:
-                if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Fox)
+                if(unit != null)
                 {
-                    descriptionAmount++;
+                    if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Fox)
+                    {
+                        descriptionAmount++;
+                    }
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Healing");
                 }
-                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Healing");
                 description += string.Format("Heal for {0}", descriptionAmount);
                 break;
             case ActionType.Burn:
-                if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Skunk)
+                if(unit != null)
                 {
-                    descriptionAmount++;
+                    if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Skunk)
+                    {
+                        descriptionAmount++;
+                    }
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Burn");
                 }
-                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Burn");
                 description += string.Format("Burn for {0}", descriptionAmount);
                 break;
             case ActionType.Poison:
-                if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Skunk)
+                if(unit != null)
                 {
-                    descriptionAmount++;
+                    if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Skunk)
+                    {
+                        descriptionAmount++;
+                    }
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Poison");
                 }
-                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Poison");
                 description += string.Format("Poison for {0}", descriptionAmount);
                 break;
             case ActionType.Spike:
-                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Spike");
+                if(unit != null)
+                {
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Spike");
+                }
                 description += string.Format("Gain {0} spikes", descriptionAmount);
                 break;
             case ActionType.Draw:
@@ -182,7 +195,7 @@ public class Summon : Action
         // ===== Description Format =====
         // Summon: "Summon a [NAME] with X health. ..."
         int descriptionAmount = amount;
-        if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Opossum)
+        if(CharacterManager.instance.ChosenCharacter == Character.Opossum)
         {
             descriptionAmount++;
         }

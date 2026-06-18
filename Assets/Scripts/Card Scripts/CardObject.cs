@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -80,7 +79,20 @@ public class CardObject : MonoBehaviour
 
     public void UpdateCardDescription()
     {
-        cardDescriptionText.text = cardData.GetCardDescription(GameManager.instance.Player);
+        Unit unit = null;
+        if(cardData.Slot == Slot.Ally)
+        {
+            if(CharacterManager.instance.Ally != null)
+            {
+                unit = CharacterManager.instance.Ally;
+            }
+        }
+        else
+        {
+            unit = GameManager.instance.Player;
+        }
+
+        cardDescriptionText.text = cardData.GetCardDescription(unit);
     }
 
     protected virtual void Select()

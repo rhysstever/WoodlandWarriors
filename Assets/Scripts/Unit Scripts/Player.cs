@@ -42,12 +42,12 @@ public class Player : Unit
 
     public override void TakeDamage(int amount, Unit attacker, DamageType damageType)
     {
-        if(CharacterManager.instance.AllyObject != null)
+        if(CharacterManager.instance.Ally != null)
         {
             // If the ally exists, only damage the player the amount remaining after the ally is attacked
-            int playerDamageAmount = amount - CharacterManager.instance.AllyObject.GetComponent<Ally>().CurrentLife;
+            int playerDamageAmount = amount - CharacterManager.instance.Ally.GetComponent<Ally>().CurrentLife;
 
-            CharacterManager.instance.AllyObject.GetComponent<Ally>().TakeDamage(amount);
+            CharacterManager.instance.Ally.GetComponent<Ally>().TakeDamage(amount);
             base.TakeDamage(playerDamageAmount, attacker, damageType);
         }
         else
