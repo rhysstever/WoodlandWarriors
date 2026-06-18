@@ -216,7 +216,7 @@ public class CharacterManager : MonoBehaviour
     {
         if(ally != null)
         {
-            Destroy(ally);
+            Destroy(ally.gameObject);
             ally = null;
         }
 
