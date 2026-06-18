@@ -25,6 +25,16 @@ public class Player : Unit
         base.Reset();
     }
 
+    public override void DealDamage(int baseAttack, Unit target, DamageType damageType)
+    {
+        int amount = baseAttack;
+        if(CharacterManager.instance.ChosenCharacter == Character.Badger)
+        {
+            amount++;
+        }
+        base.DealDamage(amount, target, damageType);
+    }
+    
     public override void TakeDamage(int amount, DamageType damageType)
     {
         TakeDamage(amount, null, damageType);
@@ -53,6 +63,16 @@ public class Player : Unit
             AudioManager.instance.PlayDeathAudio();
             GameManager.instance.ChangeMenuState(MenuState.GameEnd);
         }
+    }
+
+    public override void Heal(int baseHeal)
+    {
+        int amount = baseHeal;
+        if(CharacterManager.instance.ChosenCharacter == Character.Fox)
+        {
+            amount++;
+        }
+        base.Heal(amount);
     }
 
     public void HealFull()

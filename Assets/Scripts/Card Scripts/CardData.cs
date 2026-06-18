@@ -41,12 +41,12 @@ public class CardData
         doesCardTarget = actions.Where(action => action.DoesActionTarget).Any();
     }
 
-    public string GetCardDescription()
+    public string GetCardDescription(Unit unit)
     {
         string description = "";
         for(int i = 0; i < actions.Count; i++)
         {
-            description += actions[i].GetActionDescription();
+            description += actions[i].GetActionDescription(unit);
 
             if(i < actions.Count - 1)
             {

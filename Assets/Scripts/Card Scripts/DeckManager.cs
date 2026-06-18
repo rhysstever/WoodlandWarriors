@@ -236,6 +236,14 @@ public class DeckManager : MonoBehaviour
         }
     }
 
+    public void UpdateCurrentHandDescriptions()
+    {
+        for(int i = 0; i < cardParentTrans.childCount; i++)
+        {
+            cardParentTrans.GetChild(i).GetComponent<CardObject>().UpdateCardDescription();
+        }
+    }
+
     public void SetupCardSelection()
     {
         // Hide the field collider

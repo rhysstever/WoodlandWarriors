@@ -149,9 +149,15 @@ public class CharacterManager : MonoBehaviour
 
     public void SummonAlly(Summon summonAction)
     {
+        int amount = summonAction.Amount;
+        if(ChosenCharacter == Character.Opossum)
+        {
+            amount++;
+        }
+
         if(allyObject != null)
         {
-            allyObject.GetComponent<Ally>().Buff(summonAction.Amount);
+            allyObject.GetComponent<Ally>().Buff(amount);
         }
         else
         {
@@ -162,7 +168,7 @@ public class CharacterManager : MonoBehaviour
                 GameManager.instance.Player.transform
             ).GetComponent<Ally>();
 
-            newAlly.SetHealth(summonAction.Amount);
+            newAlly.SetHealth(amount);
             newAlly.SetActions(summonAction.SummonActions);
             allyObject = newAlly.gameObject;
         }
@@ -197,8 +203,7 @@ public class CharacterManager : MonoBehaviour
         if(allyCardToPlay != null)
         {
             // TODO: Check actor and target 
-            ActionManager.instance.PerformActions(
-                allyObject.GetComponent<Ally>().Actions, GameManager.instance.Player, null);
+            ActionManager.instance.PerformActions(allyObject.GetComponent<Ally>().Actions, GameManager.instance.Player, null);
             yield return allyActionDelayWait;
             yield return allyActionDelayWait;
         }

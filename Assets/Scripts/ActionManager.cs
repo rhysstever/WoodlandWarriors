@@ -33,7 +33,7 @@ public class ActionManager : MonoBehaviour
         WaitForSeconds timesDelayWait = new WaitForSeconds(0.75f);
         foreach(Action action in actions)
         {
-            bool isBuff = action.GetActionDescription().Split(" ")[0] == "Buff";
+            bool isBuff = action.GetActionDescription(null).Split(" ")[0] == "Buff";
             yield return actionDelayWait;
 
             // Repeat action if it triggers multiple times
@@ -114,30 +114,39 @@ public class ActionManager : MonoBehaviour
 
     private void ProcessAction(Action action, Unit actor, Unit target) 
     {
+        int amount = action.Amount;
         switch(action.ActionType)
         {
             case ActionType.Attack:
-                target.TakeDamage(action.Amount, actor, DamageType.Attack);
+                actor.DealDamage(amount, target, DamageType.Attack);
                 break;
             case ActionType.Defend:
-                target.GiveDefense(action.Amount);
+                target.GiveDefense(amount);
                 break;
             case ActionType.Heal:
-                target.GiveDefense(action.Amount);
+                target.Heal(amount);
                 break;
             case ActionType.Burn:
-                target.GiveBurn(action.Amount);
+                if(actor is Player && CharacterManager.instance.ChosenCharacter == Character.Skunk)
+                {
+                    amount++;
+                }
+                target.GiveBurn(amount);
                 break;
             case ActionType.Poison:
-                target.GivePoison(action.Amount);
+                if(actor is Player && CharacterManager.instance.ChosenCharacter == Character.Skunk)
+                {
+                    amount++;
+                }
+                target.GivePoison(amount);
                 break;
             case ActionType.Spike:
-                target.GiveSpike(action.Amount);
+                target.GiveSpike(amount);
                 break;
             case ActionType.Draw:
                 if(action.TargetType == TargetType.Player)
                 {
-                    DeckManager.instance.DrawCards(action.Amount);
+                    DeckManager.instance.DrawCards(amount);
                 }
                 break;
             case ActionType.Cleanse:
@@ -179,5 +188,8 @@ public class ActionManager : MonoBehaviour
                 Debug.Log(string.Format("Error! No buff for type: {0}", action.ActionType));
                 break;
         }
+
+        // Update hand
+        DeckManager.instance.UpdateCurrentHandDescriptions();
     }
 }

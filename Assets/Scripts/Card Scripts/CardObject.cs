@@ -55,7 +55,7 @@ public class CardObject : MonoBehaviour
             _ => "???"
         };
 
-        cardDescriptionText.text = cardData.GetCardDescription();
+        UpdateCardDescription();
 
         Sprite cardArtSprite = CardManager.instance.GetCardArtSprite(cardData.Name);
         if(cardArtSprite != null)
@@ -78,101 +78,10 @@ public class CardObject : MonoBehaviour
         }
     }
 
-    // ======== TODO: Update card descriptions based on character buffs and spirit buffs ==========
-    private string UpdateCardDescription(string description)
+    public void UpdateCardDescription()
     {
-        switch(CharacterManager.instance.ChosenCharacter)
-        {
-            case Character.Badger:
-                if(cardData.Slot == Slot.MainHand)
-                {
-                    return IncrementTextNumber(description, "Attack for ");
-                }
-                return description;
-            case Character.Fox:
-                if(cardData.Slot == Slot.Spell)
-                {
-                    return IncrementTextNumber(description, "Attack for ");
-                }
-                break;
-            case Character.Opossum:
-                if(cardData.Slot == Slot.Ally)
-                {
-                    return IncrementTextNumber(description, "with ");
-                }
-                break;
-            case Character.Skunk:
-                return IncrementTextNumber(IncrementTextNumber(description, "Poison for"), "Burn for");
-            default:
-                return description;
-        }
-
-        return description;
+        cardDescriptionText.text = cardData.GetCardDescription(GameManager.instance.Player);
     }
-
-    private string IncrementTextNumber(string text, string prefix)
-    {
-        int numIndex = text.IndexOf(prefix);
-        if(numIndex != -1)
-        {
-            int startIndex = numIndex + prefix.Length;
-            string numStr = text.Substring(startIndex, 1);
-            if(int.TryParse(numStr, out int num))
-            {
-                num++;
-                return text[..startIndex] + num.ToString() + text[(startIndex + 1)..];
-            }
-            else
-            {
-                Debug.LogWarning($"Failed to parse number from text: {text}");
-                return text;
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"Failed to find prefix '{prefix}' in text: {text}");
-            return text;
-        }
-    }
-
-    private int GetUpdatedNumber(int baseNum, string text, Slot slot)
-    {
-        UnitEffects playerEffects = GameManager.instance.Player.UnitEffects;
-        Character chosenCharacter = CharacterManager.instance.ChosenCharacter;
-
-        if(text == "Attack" && slot == Slot.MainHand)
-        {
-            int currentAttackBuff = playerEffects.GetEffectAmount("Buff Attack");
-            baseNum += currentAttackBuff;
-            if(chosenCharacter == Character.Badger)
-            {
-                baseNum++;
-            }
-        }
-        else if(text == "Attack" && slot == Slot.Spell)
-        {
-            if(chosenCharacter == Character.Fox)
-            {
-                baseNum++;
-            }
-        }
-        else if(slot == Slot.Ally && chosenCharacter == Character.Opossum)
-        {
-            baseNum++;
-        }
-        else if(text == "Defend" || text == "Burn" || text == "Poison" || text == "Spike")
-        {
-            int currentBuff = playerEffects.GetEffectAmount("Buff " + text);
-            baseNum += currentBuff;
-            if((text == "Burn" || text == "Poison") && chosenCharacter == Character.Skunk)
-            {
-                baseNum++;
-            }
-        }
-
-        return baseNum;
-    }
-    // ========================
 
     protected virtual void Select()
     {

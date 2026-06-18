@@ -60,6 +60,16 @@ public class Unit : MonoBehaviour
         UpdateDefenseUIText();
     }
 
+    public virtual void DealDamage(int baseAttack, Unit target, DamageType damageType)
+    {
+        int amount = baseAttack + unitEffects.GetEffectAmount("Buff Attack");
+        if(amount < 0)
+        {
+            return;
+        }
+        target.TakeDamage(amount, damageType);
+    }
+
     public virtual void TakeDamage(int amount, DamageType damageType)
     {
         TakeDamage(amount, null, damageType);
@@ -110,8 +120,22 @@ public class Unit : MonoBehaviour
         UpdateLifeUIText();
     }
 
-    public void Heal(int amount)
+    public void GiveDefense(int baseDefense)
     {
+        int amount = baseDefense + unitEffects.GetEffectAmount("Buff Defense");
+        if(amount < 0)
+        {
+            return;
+        }
+
+        AudioManager.instance.PlayGiveDefenseAudio();
+        currentDefense += amount + unitEffects.GetEffectAmount("Buff Defense");
+        UpdateDefenseUIText();
+    }
+
+    public virtual void Heal(int baseHeal)
+    {
+        int amount = baseHeal + unitEffects.GetEffectAmount("Buff Healing");
         if(amount < 0)
         {
             return;
@@ -130,26 +154,15 @@ public class Unit : MonoBehaviour
         UpdateLifeUIText();
     }
 
-    public void GiveDefense(int amount)
-    {
-        if(amount < 0)
-        {
-            return;
-        }
-
-        AudioManager.instance.PlayGiveDefenseAudio();
-        currentDefense += amount + unitEffects.GetEffectAmount("Buff Defense");
-        UpdateDefenseUIText();
-    }
-
     public void ClearDefense()
     {
         currentDefense = 0;
         UpdateDefenseUIText();
     }
 
-    public void GiveBurn(int amount)
+    public void GiveBurn(int baseBurn)
     {
+        int amount = baseBurn + unitEffects.GetEffectAmount("Buff Burn");
         if(amount < 0)
         {
             return;
@@ -160,8 +173,9 @@ public class Unit : MonoBehaviour
         UpdateEffectsUI();
     }
 
-    public void GivePoison(int amount)
+    public void GivePoison(int basePoison)
     {
+        int amount = basePoison + unitEffects.GetEffectAmount("Buff Poison");
         if(amount < 0)
         {
             return;
@@ -172,8 +186,9 @@ public class Unit : MonoBehaviour
         UpdateEffectsUI();
     }
 
-    public void GiveSpike(int amount)
+    public void GiveSpike(int baseSpikes)
     {
+        int amount = baseSpikes + unitEffects.GetEffectAmount("Buff Spike");
         if(amount < 0)
         {
             return;

@@ -53,8 +53,13 @@ public class Action
         
     }
 
-    public virtual string GetActionDescription()
+    public virtual string GetActionDescription(Unit unit)
     {
+        if(unit == null)
+        {
+            return "";
+        }
+
         // ===== Description Format =====
         // Normal Attack: "Attack for X"
         // Heal: "Heal for X"
@@ -65,26 +70,49 @@ public class Action
         // Draw Cards: "Draw X cards"
         // Cleanse Debuffs: "Cleanse"
         string description = "";
+        int descriptionAmount = amount;
 
         switch(actionType)
         {
             case ActionType.Attack:
-                description += string.Format("Attack for {0}", amount);
+                if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Badger)
+                {
+                    descriptionAmount++;
+                }
+                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Attack");
+                description += string.Format("Attack for {0}", descriptionAmount);
                 break;
             case ActionType.Defend:
-                description += string.Format("Defend for {0}", amount);
+                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Defense");
+                description += string.Format("Defend for {0}", descriptionAmount);
                 break;
             case ActionType.Heal:
-                description += string.Format("Heal for {0}", amount);
+                if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Fox)
+                {
+                    descriptionAmount++;
+                }
+                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Healing");
+                description += string.Format("Heal for {0}", descriptionAmount);
                 break;
             case ActionType.Burn:
-                description += string.Format("Burn for {0}", amount);
+                if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Skunk)
+                {
+                    descriptionAmount++;
+                }
+                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Burn");
+                description += string.Format("Burn for {0}", descriptionAmount);
                 break;
             case ActionType.Poison:
-                description += string.Format("Poison for {0}", amount);
+                if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Skunk)
+                {
+                    descriptionAmount++;
+                }
+                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Poison");
+                description += string.Format("Poison for {0}", descriptionAmount);
                 break;
             case ActionType.Spike:
-                description += string.Format("Gain {0} spikes", amount);
+                descriptionAmount += unit.UnitEffects.GetEffectAmount("Buff Spike");
+                description += string.Format("Gain {0} spikes", descriptionAmount);
                 break;
             case ActionType.Draw:
                 description += string.Format("Draw {0} cards", amount);
@@ -126,7 +154,7 @@ public class Buff : Action
 
     }
 
-    public override string GetActionDescription()
+    public override string GetActionDescription(Unit unit)
     {
         // ===== Description Format =====
         // Buff: "Buff X by Y"
@@ -149,15 +177,20 @@ public class Summon : Action
         this.summonActions = summonActions;
     }
 
-    public override string GetActionDescription()
+    public override string GetActionDescription(Unit unit)
     {
         // ===== Description Format =====
         // Summon: "Summon a [NAME] with X health. ..."
-        string description = string.Format("Summon a {0} for {1} health. \n\nOn its turn:", summonName, amount);
+        int descriptionAmount = amount;
+        if(unit is Player && CharacterManager.instance.ChosenCharacter == Character.Opossum)
+        {
+            descriptionAmount++;
+        }
+        string description = string.Format("Summon a {0} for {1} health. \n\nOn its turn:", summonName, descriptionAmount);
 
         foreach(Action action in summonActions)
         {
-            description += string.Format(" {0}", action.GetActionDescription());
+            description += string.Format(" {0}", action.GetActionDescription(unit));
         }
 
         return description;
