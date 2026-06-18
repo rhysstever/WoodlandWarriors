@@ -183,8 +183,8 @@ public class Summon : Action
     public string SummonName { get { return summonName; } }
     public List<Action> SummonActions { get { return summonActions; } }
 
-    public Summon(ActionType actionType, int amount, string summonName, List<Action> summonActions)
-        : base(actionType, amount, TargetType.None)
+    public Summon(int amount, string summonName, List<Action> summonActions)
+        : base(ActionType.Summon, amount, TargetType.None)
     {
         this.summonName = summonName;
         this.summonActions = summonActions;
@@ -207,5 +207,17 @@ public class Summon : Action
         }
 
         return description;
+    }
+}
+
+public class EnemySummon : Action
+{
+    protected EnemyType enemyType;
+
+    public EnemyType EnemyType { get { return enemyType; } }
+
+    public EnemySummon(int amount, EnemyType enemyType) : base(ActionType.Summon, amount, TargetType.None)
+    {
+        this.enemyType = enemyType;
     }
 }

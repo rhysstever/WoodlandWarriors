@@ -608,6 +608,7 @@ MonoBehaviour:
   nextActionText: {fileID: 6089760840660964530}
   nextActionIcon: {fileID: 7565315210742501715}
   nextActionBuffIcon: {fileID: 3248289494563486398}
+  enemyType: 3
   enemySummonPrefab: {fileID: 0}
 --- !u!1 &4277714443026142786
 GameObject:

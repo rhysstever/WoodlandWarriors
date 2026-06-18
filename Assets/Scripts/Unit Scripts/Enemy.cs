@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 
 public class Enemy : Unit
 {
@@ -12,58 +13,30 @@ public class Enemy : Unit
     [SerializeField]
     private GameObject nextActionBuffIcon;
     [SerializeField]
-    private List<Action> actions;
-    [SerializeField]
-    private GameObject enemySummonPrefab;
+    private EnemyType enemyType;
 
+    [SerializeField]
     private int round;
     private int positionIndex;
     private bool hasBeenProcessed;
-    private EnemyType enemyType;
+    private List<Action> actions;
 
     public int Round { get { return round; } }
     public int PositionIndex { get { return positionIndex; } }
     public bool HasBeenProcessed { get { return hasBeenProcessed; } }
     public EnemyType EnemyType { get { return enemyType; } }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        Reset();
+        actions = EnemyManager.instance.GetEnemyActions(enemyType);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
         base.Start();
-        Reset();
-
-        // For certain enemies, if there are multiple enemies, offset their attacks
-        List<Enemy> currentEnemies = EnemyManager.instance.GetCurrentEnemies();
-        if(currentEnemies.Count > 1
-            && gameObject.name.Contains("Boar")
-            && currentEnemies.IndexOf(this) % 2 == 1)
-        {
-            round = 1;
-        }
-
-        if(gameObject.name.Contains("Boar"))
-        {
-            enemyType = EnemyType.Boar;
-        }
-        else if(gameObject.name.Contains("Mushroom"))
-        {
-            enemyType = EnemyType.Mushroom;
-        }
-        else if(gameObject.name.Contains("Fairy"))
-        {
-            enemyType = EnemyType.Fairy;
-        }
-        else if(gameObject.name.Contains("Ent"))
-        {
-            enemyType = EnemyType.Ent;
-        }
-        else if(gameObject.name.Contains("Hag"))
-        {
-            enemyType = EnemyType.Hag;
-        }
-
-        actions = EnemyManager.instance.GetEnemyActions(enemyType);
-
         UpdateNextActionUI();
     }
 
@@ -84,6 +57,12 @@ public class Enemy : Unit
         }
 
         positionIndex = index;
+    }
+
+    public void IncrementStartingRound()
+    {
+        round++;
+        UpdateNextActionUI();
     }
 
     public void IncrementRound()

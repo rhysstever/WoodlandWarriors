@@ -27,7 +27,7 @@ public class EnemyManager : MonoBehaviour
     //oozeEnemyPrefab, batSwarmEnemyPrefab, zombieEnemyPrefab, shadowEnemyPrefab, necromancerEnemyPrefab;
 
     // Instantiated in code
-    private List<Round> enemyWaves;
+    private List<EnemyWave> enemyWaves;
     private int currentWaveNum;
 
     private IEnumerator enemyActionsCoroutine;
@@ -51,14 +51,16 @@ public class EnemyManager : MonoBehaviour
         Reset();
     }
 
-    private List<Round> SetEnemyWaves()
+    private List<EnemyWave> SetEnemyWaves()
     {
-        List<Round> combatRounds = new() {
-            new(new List<GameObject>() { boarEnemyPrefab, boarEnemyPrefab }),
-            new(new List<GameObject>() { mushroomEnemyPrefab, mushroomEnemyPrefab }),
-            new(new List<GameObject>() { fairyEnemyPrefab, fairyEnemyPrefab, fairyEnemyPrefab }),
-            new(new List<GameObject>() { entEnemyPrefab }),
-            new(new List<GameObject>() { hagEnemyPrefab }),
+        List<EnemyWave> combatRounds = new() {
+            // Area 1 enemies
+            new EnemyWave(EnemyType.Boar, 2),
+            new EnemyWave(EnemyType.Mushroom, 2),
+            new EnemyWave(EnemyType.Fairy, 3),
+            new EnemyWave(EnemyType.Ent, 1),
+            new EnemyWave(EnemyType.Hag, 1, true),
+            // Area 2 enemies
             //new(new List<GameObject>() { oozeEnemyPrefab }),
             //new(new List<GameObject>() { batSwarmEnemyPrefab, batSwarmEnemyPrefab, batSwarmEnemyPrefab }),
             //new(new List<GameObject>() { zombieEnemyPrefab, zombieEnemyPrefab }),
@@ -90,6 +92,7 @@ public class EnemyManager : MonoBehaviour
             {
                 new Action(ActionType.Defend, 2, TargetType.Self),
                 new Action(ActionType.Burn, 1, TargetType.Player),
+                new EnemySummon(1, EnemyType.Fairy),
                 new Buff(ActionType.Burn, 1),
                 // TODO: add summon of self
             },
@@ -103,7 +106,7 @@ public class EnemyManager : MonoBehaviour
             },
             EnemyType.Hag => new List<Action>
             {
-                new Summon(ActionType.Summon, 2, "mushroom", GetEnemyActions(EnemyType.Mushroom)),
+                new EnemySummon(2, EnemyType.Mushroom),
                 new Action(ActionType.Defend, 5, TargetType.Self),
                 new Action(ActionType.Burn, 5, TargetType.Player),
                 new Action(ActionType.Poison, 10, TargetType.Player),
@@ -113,20 +116,15 @@ public class EnemyManager : MonoBehaviour
         };
     }
 
-    public GameObject GetEnemyPrefabByName(string enemyName)
+    public GameObject GetEnemyPrefabByType(EnemyType enemyType)
     {
-        return enemyName switch
+        return enemyType switch
         {
-            "BoarEnemy" => boarEnemyPrefab,
-            "Boar" => boarEnemyPrefab,
-            "MushroomEnemy" => mushroomEnemyPrefab,
-            "Mushroom" => mushroomEnemyPrefab,
-            "FairyEnemy" => fairyEnemyPrefab,
-            "Fairy" => fairyEnemyPrefab,
-            "EntEnemy" => entEnemyPrefab,
-            "Ent" => entEnemyPrefab,
-            "HagEnemy" => hagEnemyPrefab,
-            "Hag" => hagEnemyPrefab,
+            EnemyType.Boar => boarEnemyPrefab,
+            EnemyType.Mushroom => mushroomEnemyPrefab,
+            EnemyType.Fairy => fairyEnemyPrefab,
+            EnemyType.Ent => entEnemyPrefab,
+            EnemyType.Hag => hagEnemyPrefab,
             _ => null,
         };
     }
@@ -209,27 +207,36 @@ public class EnemyManager : MonoBehaviour
             return;
         }
 
-        Round round = enemyWaves[currentWaveNum];
-        switch(round.Enemies.Count)
+        EnemyWave wave = enemyWaves[currentWaveNum];
+        GameObject enemyToSpawn = GetEnemyPrefabByType(wave.EnemyType);
+        switch(wave.EnemyCount)
         {
             case 3:
-                // Spawn the first (main) enemy in the middle position
-                SpawnEnemy(round.Enemies[0], 2);
-                // SPawn the remaining 2 enemies on the edge positions
-                SpawnEnemy(round.Enemies[1], 0);
-                SpawnEnemy(round.Enemies[2], 4);
+                // Spawn one enemy in the middle position and
+                // 2 enemies on the edge positions
+                SpawnEnemy(enemyToSpawn, 0).IncrementStartingRound();
+                SpawnEnemy(enemyToSpawn, 2);
+                SpawnEnemy(enemyToSpawn, 4).IncrementStartingRound();
                 break;
             case 2:
                 // Spawn both enemies in the second and fourth positions
-                SpawnEnemy(round.Enemies[0], 1);
-                SpawnEnemy(round.Enemies[1], 3);
+                SpawnEnemy(enemyToSpawn, 1);
+                SpawnEnemy(enemyToSpawn, 3).IncrementStartingRound();
                 break;
             case 1:
-                // Spawn the only enemy in the center spot
-                SpawnEnemy(round.Enemies[0], 2);
+                if(wave.IsSummoningBossWave)
+                {
+                    // Spawn the boss on the edge to prepare for when it summons
+                    SpawnEnemy(enemyToSpawn, 4);
+                }
+                else
+                {
+                    // Spawn the only enemy in the center spot
+                    SpawnEnemy(enemyToSpawn, 2);
+                }
                 break;
             default:
-                Debug.Log(string.Format("Error! Incorrect number of enemies: {0}!", round.Enemies.Count));
+                Debug.Log(string.Format("Error! Incorrect number of enemies: {0}!", wave.EnemyCount));
                 break;
         }
     }
@@ -259,13 +266,15 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy(GameObject enemy, int positionIndex)
+    private Enemy SpawnEnemy(GameObject enemy, int positionIndex)
     {
         Vector2 position = enemySpawnPositions[positionIndex].position;
-        GameObject newSceneEnemy = Instantiate(enemy, position, Quaternion.identity, enemies);
-        newSceneEnemy.name = enemy.name + GetCurrentEnemies().Count;
+        GameObject newEnemyObject = Instantiate(enemy, position, Quaternion.identity, enemies);
+        newEnemyObject.name = enemy.name + positionIndex;
 
-        newSceneEnemy.GetComponent<Enemy>().SetPositionIndex(positionIndex);
+        Enemy newEnemy = newEnemyObject.GetComponent<Enemy>();
+        newEnemy.SetPositionIndex(positionIndex);
+        return newEnemy;
     }
 
     public bool IsLastWave()

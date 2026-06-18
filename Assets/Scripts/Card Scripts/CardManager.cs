@@ -102,31 +102,31 @@ public class CardManager : MonoBehaviour
 
             // Ally cards
             new CardData("Squirrel", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Squirrel", new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }) 
+                new Summon(1, "Squirrel", new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }) 
             }),
             new CardData("Frog", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Frog", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Player) }) 
+                new Summon(1, "Frog", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Player) }) 
             }),
             new CardData("Rat", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Rat", new List<Action> { new Action(ActionType.Poison, 1, TargetType.RandomFoe) }) 
+                new Summon(1, "Rat", new List<Action> { new Action(ActionType.Poison, 1, TargetType.RandomFoe) }) 
             }),
             new CardData("Newt", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Newt", new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) }) 
+                new Summon(1, "Newt", new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) }) 
             }),
             //new CardData("Bunny", Slot.Ally, Rarity.Uncommon, new List<Action> {
-            //    new Summon(ActionType.Summon, 1, "Bunny", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Self) })
+            //    new Summon(1, "Bunny", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Self) })
             //}),
             new CardData("Toad", Slot.Ally, Rarity.Uncommon, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Toad", new List<Action> {
+                new Summon(1, "Toad", new List<Action> {
                     new Action(ActionType.Heal, 1, TargetType.Player),
                     new Action(ActionType.Poison, 1, TargetType.RandomFoe)
                 }) 
             }),
             new CardData("Porcupine", Slot.Ally, Rarity.Uncommon, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Porcupine", new List<Action> { new Action(ActionType.Spike, 1, TargetType.Player) }) 
+                new Summon(1, "Porcupine", new List<Action> { new Action(ActionType.Spike, 1, TargetType.Player) }) 
             }),
             new CardData("Hamster", Slot.Ally, Rarity.Uncommon, new List<Action> { 
-                new Summon(ActionType.Summon, 1, "Hamster", new List<Action> { new Action(ActionType.Draw, 1, TargetType.None) }) 
+                new Summon(1, "Hamster", new List<Action> { new Action(ActionType.Draw, 1, TargetType.None) }) 
             }),
 
             // Spirit cards

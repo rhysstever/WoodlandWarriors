@@ -160,17 +160,17 @@ public class ActionManager : MonoBehaviour
             case ActionType.Summon:
                 if(action.TargetType == TargetType.None)
                 {
-                    Summon summon = action as Summon;
                     for(int i = 0; i < action.Amount; i++)
                     {
                         if(actor is Enemy)
                         {
-                            GameObject enemySummonPrefab = EnemyManager.instance.GetEnemyPrefabByName(summon.SummonName);
-                            Debug.Log(enemySummonPrefab.name);
+                            EnemySummon summon = action as EnemySummon;
+                            GameObject enemySummonPrefab = EnemyManager.instance.GetEnemyPrefabByType(summon.EnemyType);
                             EnemyManager.instance.SpawnSummon(enemySummonPrefab);
                         }
                         else
                         {
+                            Summon summon = action as Summon;
                             CharacterManager.instance.SummonAlly(summon);
                         }
                     }
