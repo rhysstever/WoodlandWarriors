@@ -1,29 +1,25 @@
 using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
 
-public class Ally : MonoBehaviour
+public class Ally : Unit
 {
-    [SerializeField]
-    private TMP_Text lifeText;
-
-    private int maxHealth, currentHealth;
     private List<Action> actions;
 
-    public int MaxHealth { get { return maxHealth; } }
-    public int CurrentHealth { get { return currentHealth; } }
     public List<Action> Actions { get { return actions; } }
 
-    private void Start()
+    protected override void Awake()
     {
-        
+        base.Awake();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
     }
 
     public void SetHealth(int health)
     {
-        maxHealth = health;
-        currentHealth = health;
-        UpdateLifeUIText();
+        maxLife = health;
+        Reset();
     }
 
     public void SetActions(List<Action> actions)
@@ -33,10 +29,10 @@ public class Ally : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        currentLife -= damage;
         UpdateLifeUIText();
 
-        if (currentHealth <= 0)
+        if (currentLife <= 0)
         {
             Destroy(gameObject);
         }
@@ -44,13 +40,13 @@ public class Ally : MonoBehaviour
 
     public void Buff(int healthIncrease)
     {
-        maxHealth += healthIncrease;
-        currentHealth += healthIncrease;
+        maxLife += healthIncrease;
+        currentLife += healthIncrease;
         UpdateLifeUIText();
     }
 
-    protected void UpdateLifeUIText()
+    protected override void UpdateLifeUIText()
     {
-        lifeText.text = currentHealth.ToString();
+        lifeText.text = currentLife.ToString();
     }
 }

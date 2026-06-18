@@ -45,7 +45,7 @@ public class Player : Unit
         if(CharacterManager.instance.AllyObject != null)
         {
             // If the ally exists, only damage the player the amount remaining after the ally is attacked
-            int playerDamageAmount = amount - CharacterManager.instance.AllyObject.GetComponent<Ally>().CurrentHealth;
+            int playerDamageAmount = amount - CharacterManager.instance.AllyObject.GetComponent<Ally>().CurrentLife;
 
             CharacterManager.instance.AllyObject.GetComponent<Ally>().TakeDamage(amount);
             base.TakeDamage(playerDamageAmount, attacker, damageType);

@@ -17,7 +17,9 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private SpriteRenderer unitSpriteRenderer;
     [SerializeField]
-    private TMP_Text lifeText, defenseText;
+    protected TMP_Text lifeText;
+    [SerializeField]
+    private TMP_Text defenseText;
     [SerializeField]
     private GameObject defenseParent, effectsParent;
     [SerializeField]
@@ -108,10 +110,13 @@ public class Unit : MonoBehaviour
             currentLife -= amount;
         }
 
-        // If the damage type is an attack or spell, there is an attacker, and the unit has spikes,
-        // reflect spike damage to the attacker
-        if((damageType == DamageType.Attack || damageType == DamageType.Spell)
-            && attacker != null && unitEffects.GetEffectAmount("Spike") > 0)
+        // Check for Spike Reflection: 
+        // 1) Unit must have spikes
+        // 2) Damage type must be an Attack or Spell
+        // 3) There must be an attacker
+        if(unitEffects.GetEffectAmount("Spike") > 0
+            && (damageType == DamageType.Attack || damageType == DamageType.Spell)
+            && attacker != null)
         {
             AudioManager.instance.PlaySpikesAudio();
             attacker.TakeDamage(unitEffects.GetEffectAmount("Spike") + unitEffects.GetEffectAmount("Buff Spike"), DamageType.Spike);
@@ -296,7 +301,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    protected void UpdateLifeUIText()
+    protected virtual void UpdateLifeUIText()
     {
         lifeText.text = string.Format("{0}/{1}", currentLife, maxLife);
     }
