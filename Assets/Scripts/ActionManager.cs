@@ -29,8 +29,8 @@ public class ActionManager : MonoBehaviour
 
     private IEnumerator ProcessActions(List<Action> actions, Unit actor, Unit target)
     {
-        WaitForSeconds actionDelayWait = new WaitForSeconds(0.25f);
-        WaitForSeconds timesDelayWait = new WaitForSeconds(0.75f);
+        WaitForSeconds actionDelayWait = new WaitForSeconds(0.1f);
+        WaitForSeconds timesDelayWait = new WaitForSeconds(0.25f);
         foreach(Action action in actions)
         {
             bool isBuff = action.GetActionDescription(null).Split(" ")[0] == "Buff";
