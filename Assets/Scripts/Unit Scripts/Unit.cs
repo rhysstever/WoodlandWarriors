@@ -195,6 +195,7 @@ public class Unit : MonoBehaviour
             return;
         }
 
+        Debug.Log("Buffing poison");
         AudioManager.instance.PlayPoisonAudio();
         unitEffects.UpdateEffectAmount(ActionType.Poison, amount);
         UpdateEffectsUI();

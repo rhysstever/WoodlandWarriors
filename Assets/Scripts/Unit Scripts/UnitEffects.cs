@@ -28,9 +28,9 @@ public class UnitEffects
 
     public bool UpdateEffectAmount(ActionType effectType, int amount, bool isBuff = false)
     {
-        foreach(Effect effect in effects)
+        foreach(Effect effect in effects.Where(e => e.Action is Buff == isBuff))
         {
-            if(effect.Action as Buff != null && effect.Action.ActionType == effectType)
+            if(effect.Action.ActionType == effectType)
             {
                 effect.UpdateAmount(amount);
                 return true;
@@ -43,9 +43,9 @@ public class UnitEffects
 
     public int GetEffectAmount(ActionType effectType, bool isBuff = false)
     {
-        foreach(Effect effect in effects)
+        foreach(Effect effect in effects.Where(e => e.Action is Buff == isBuff))
         {
-            if(effect.Action as Buff != null && effect.Action.ActionType == effectType)
+            if(effect.Action.ActionType == effectType)
             {
                 return effect.Action.Amount;
             }

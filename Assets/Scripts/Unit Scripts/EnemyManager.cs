@@ -55,8 +55,8 @@ public class EnemyManager : MonoBehaviour
     {
         List<EnemyWave> combatRounds = new() {
             // Area 1 enemies
-            new EnemyWave(EnemyType.Boar, 2),
             new EnemyWave(EnemyType.Mushroom, 2),
+            new EnemyWave(EnemyType.Boar, 2),
             new EnemyWave(EnemyType.Fairy, 3),
             new EnemyWave(EnemyType.Ent, 1),
             new EnemyWave(EnemyType.Hag, 1, true),

@@ -5,9 +5,11 @@ public class InteractableCardObject : CardObject
     // Set in inspector
     [SerializeField]
     private BoxCollider2D cardCollider;
+    [SerializeField]
+    private Transform hoverOffset;
 
     // Set in script at Start
-    private Vector2 savedPos, dragOffset, hoverOffset;
+    private Vector2 savedPos, dragOffset;
     private Collider2D cardFieldCollider;
     private bool isInField;
 
@@ -20,7 +22,6 @@ public class InteractableCardObject : CardObject
 
         savedPos = transform.position;
         dragOffset = Vector2.zero;
-        hoverOffset = new Vector2(0f, 2f);
         cardFieldCollider = DeckManager.instance.FieldCollider;
         isInField = false;
     }
@@ -53,14 +54,14 @@ public class InteractableCardObject : CardObject
             if(cardData.DoesCardTarget)
             {
                 // If this card targets, move it up
-                transform.position += (Vector3)hoverOffset;
+                transform.position += (Vector3)hoverOffset.localPosition;
             }
             else
             {
                 // If this card does not target, if it is not being dragged, move it up
                 if(!isBeingDragged)
                 {
-                    transform.position += (Vector3)hoverOffset;
+                    transform.position += (Vector3)hoverOffset.localPosition;
                 }
             }
         }
@@ -97,7 +98,8 @@ public class InteractableCardObject : CardObject
         {
             // If it does not target, it is about to be dragged
             // Calculate the offset the mouse is from the center of the card
-            dragOffset = savedPos - TargettingManager.instance.GetMousePosition() + hoverOffset;
+            dragOffset = savedPos - TargettingManager.instance.GetMousePosition() 
+                + new Vector2(hoverOffset.localPosition.x, hoverOffset.localPosition.y);
             isBeingDragged = true;
         }
     }
@@ -176,7 +178,7 @@ public class InteractableCardObject : CardObject
         // remove the hover offset to return it to its original position
         if((Vector2)transform.position != savedPos)
         {
-            transform.position -= (Vector3)hoverOffset;
+            transform.position -= (Vector3)hoverOffset.localPosition;
         }
     }
 
