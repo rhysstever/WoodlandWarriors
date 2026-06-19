@@ -1134,10 +1134,10 @@ MonoBehaviour:
   burnHasRandomizedSpawn: 1
   poisonParticlePrefab: {fileID: 794900904913204268, guid: 2620988ee1258b848b49648d565ba1dc, type: 3}
   poisonParticleVelocity: {x: 0, y: 0.5}
-  poisonSpawnRate: 0.1
-  poisonSpawnLifetime: 0.15
+  poisonSpawnRate: 0.2
+  poisonSpawnLifetime: 0.9
   poisonParticleLifetime: 2
-  poisonHasRandomizedSpawn: 0
+  poisonHasRandomizedSpawn: 1
   resetColor: {r: 1, g: 1, b: 1, a: 1}
   takeDamageColor: {r: 1, g: 0.4575472, b: 0.4575472, a: 1}
   burnColor: {r: 1, g: 0.80566037, b: 0.514151, a: 1}

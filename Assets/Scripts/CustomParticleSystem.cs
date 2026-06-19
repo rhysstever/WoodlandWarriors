@@ -17,7 +17,7 @@ public class CustomParticleSystem : MonoBehaviour
     {
         particleSystemData = ParticlesManager.instance.GetParticleSystemData(actionType);
         spawnArea = GetComponent<BoxCollider2D>();
-        spawnTimer = 0f;
+        spawnTimer = particleSystemData.SpawnRate;
         totalTimer = 0f;
         xMin = spawnArea.offset.x - spawnArea.size.x / 2; 
         xMax = spawnArea.offset.x + spawnArea.size.x / 2; 
@@ -49,7 +49,7 @@ public class CustomParticleSystem : MonoBehaviour
 
     public void EnableParticles() { 
         isEnabled = true;
-        spawnTimer = 0f;
+        spawnTimer = particleSystemData.SpawnRate;
         totalTimer = 0f;
     }
     public void Pause() { isPaused = true; }
@@ -57,15 +57,11 @@ public class CustomParticleSystem : MonoBehaviour
 
     private void SpawnParticle()
     {
-        Vector2 spawnPos = transform.position;
+        Vector2 spawnPos = transform.position + new Vector3(
+            Random.Range(xMin, xMax),
+            Random.Range(yMin, yMax)
+        );
 
-        if(particleSystemData.HasRandomizedSpawn)
-        {
-            spawnPos += new Vector2(
-                Random.Range(xMin, xMax),
-                Random.Range(yMin, yMax)
-            );
-        }
         GameObject newParticle = Instantiate(particleSystemData.ParticlePrefab, transform);
         newParticle.transform.position = spawnPos;
         newParticle.GetComponent<CustomParticle>().SetInitalValues(
