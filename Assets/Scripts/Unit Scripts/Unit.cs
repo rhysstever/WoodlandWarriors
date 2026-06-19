@@ -15,7 +15,7 @@ public class Unit : MonoBehaviour
 {
     // Instantiated in inspector
     [SerializeField]
-    private SpriteRenderer unitSpriteRenderer;
+    protected SpriteRenderer unitSpriteRenderer;
     [SerializeField]
     protected TMP_Text lifeText;
     [SerializeField]
@@ -26,6 +26,8 @@ public class Unit : MonoBehaviour
     private Transform effectTrans1, effectTrans2;
     [SerializeField]
     protected int maxLife;
+    [SerializeField]
+    private CustomParticleSystem healingParticleSystem, burnParticleSystem, poisonParticleSystem;
 
     // Instantiated in code
     protected int currentLife, currentDefense;
@@ -148,6 +150,10 @@ public class Unit : MonoBehaviour
             return;
         }
 
+        if(healingParticleSystem != null)
+        {
+            healingParticleSystem.EnableParticles();
+        }
         AudioManager.instance.PlayHealAudio();
         currentLife += amount + unitEffects.GetEffectAmount(ActionType.Heal, true);
         if(currentLife > maxLife)
@@ -159,6 +165,7 @@ public class Unit : MonoBehaviour
         UpdateEffectsUI();
         // Update life UI text
         UpdateLifeUIText();
+        //healingSystem.DisableParticles();
     }
 
     public void ClearDefense()
@@ -263,7 +270,10 @@ public class Unit : MonoBehaviour
         {
             AudioManager.instance.PlayBurnAudio();
             unitSpriteRenderer.color = ParticlesManager.instance.BurnColor;
-            // TODO: Activate burn visual effect
+            if(burnParticleSystem != null)
+            {
+                burnParticleSystem.EnableParticles();
+            }
             yield return effectTriggerToDamageDelayWait;
             unitSpriteRenderer.color = ParticlesManager.instance.ResetColor;
             TakeDamage(unitEffects.GetEffectAmount(ActionType.Burn), null, DamageType.Burn);
@@ -276,7 +286,10 @@ public class Unit : MonoBehaviour
             yield return betweenEffectsDelayWait;
             AudioManager.instance.PlayPoisonAudio();
             unitSpriteRenderer.color = ParticlesManager.instance.PoisonColor;
-            // TODO: Activate poison visual effect
+            if(poisonParticleSystem != null)
+            {
+                poisonParticleSystem.EnableParticles();
+            }
             yield return effectTriggerToDamageDelayWait;
             unitSpriteRenderer.color = ParticlesManager.instance.ResetColor;
             TakeDamage(unitEffects.GetEffectAmount(ActionType.Poison), null, DamageType.Poison);

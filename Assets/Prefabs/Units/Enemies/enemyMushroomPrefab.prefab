@@ -487,6 +487,9 @@ GameObject:
   - component: {fileID: 3309780963252839986}
   - component: {fileID: 2117019613621582270}
   - component: {fileID: 2046333819481523404}
+  - component: {fileID: 3779069432717657391}
+  - component: {fileID: 1141755914038117108}
+  - component: {fileID: 1581215598276781483}
   m_Layer: 9
   m_Name: enemyMushroomPrefab
   m_TagString: Enemy
@@ -605,11 +608,52 @@ MonoBehaviour:
   effectTrans1: {fileID: 6860954968842074459}
   effectTrans2: {fileID: 2474428185457871075}
   maxLife: 8
+  healingParticleSystem: {fileID: 3779069432717657391}
+  burnParticleSystem: {fileID: 1141755914038117108}
+  poisonParticleSystem: {fileID: 1581215598276781483}
   nextActionText: {fileID: 6089760840660964530}
   nextActionIcon: {fileID: 7565315210742501715}
   nextActionBuffIcon: {fileID: 3114693887769518845}
   enemyType: 1
-  enemySummonPrefab: {fileID: 0}
+--- !u!114 &3779069432717657391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3525771028941821081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 2
+--- !u!114 &1141755914038117108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3525771028941821081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 3
+--- !u!114 &1581215598276781483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3525771028941821081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 4
 --- !u!1 &4277714443026142786
 GameObject:
   m_ObjectHideFlags: 0

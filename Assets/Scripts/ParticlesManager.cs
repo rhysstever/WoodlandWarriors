@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ParticlesManager : MonoBehaviour
@@ -6,21 +8,38 @@ public class ParticlesManager : MonoBehaviour
     public static ParticlesManager instance = null;
 
     // Set in inspector
-    [SerializeField]
-    private Transform particalesParentTrans;
-    [SerializeField]
-    private GameObject damageTakenParticlePrefab;
-    [SerializeField]
-    private GameObject damageBlockedParticlePrefab;
+    // === Healing Particle System Data ===
     [SerializeField]
     private GameObject healParticlePrefab;
     [SerializeField]
-    private GameObject burnedParticlePrefab;
+    private Vector2 healParticleVelocity;
     [SerializeField]
-    private GameObject poisonedParticlePrefab;
+    private float healSpawnRate, healSpawnLifetime, healParticleLifetime;
+    [SerializeField]
+    private bool healHasRandomizedSpawn;
+    // === Burn Particle System Data ===
+    [SerializeField]
+    private GameObject burnParticlePrefab;
+    [SerializeField]
+    private Vector2 burnParticleVelocity;
+    [SerializeField]
+    private float burnSpawnRate, burnSpawnLifetime, burnParticleLifetime;
+    [SerializeField]
+    private bool burnHasRandomizedSpawn;
+    // === Poison Particle System Data ===
+    [SerializeField]
+    private GameObject poisonParticlePrefab;
+    [SerializeField]
+    private Vector2 poisonParticleVelocity;
+    [SerializeField]
+    private float poisonSpawnRate, poisonSpawnLifetime, poisonParticleLifetime;
+    [SerializeField]
+    private bool poisonHasRandomizedSpawn;
 
     [SerializeField]
     private Color resetColor, takeDamageColor, burnColor, poisonColor;
+
+    private Dictionary<ActionType, ParticleSystemData> particleSystemDataMap;
 
     // Properties
     public Color ResetColor { get { return resetColor; } }
@@ -38,55 +57,76 @@ public class ParticlesManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        particleSystemDataMap = new Dictionary<ActionType, ParticleSystemData>();
+        particleSystemDataMap.Add(
+            ActionType.Heal,
+            new ParticleSystemData(
+                healParticlePrefab,
+                healParticleVelocity,
+                healSpawnRate, healSpawnLifetime, healParticleLifetime,
+                healHasRandomizedSpawn
+            )
+        );
+        particleSystemDataMap.Add(
+            ActionType.Burn,
+            new ParticleSystemData(
+                burnParticlePrefab,
+                burnParticleVelocity,
+                burnSpawnRate, burnSpawnLifetime, burnParticleLifetime,
+                burnHasRandomizedSpawn
+            )
+        );
+        particleSystemDataMap.Add(
+            ActionType.Poison,
+            new ParticleSystemData(
+                poisonParticlePrefab,
+                poisonParticleVelocity,
+                poisonSpawnRate, poisonSpawnLifetime, poisonParticleLifetime,
+                poisonHasRandomizedSpawn
+            )
+        );
     }
 
-    public void SpawnDamageTakenParticles()
+    public ParticleSystemData GetParticleSystemData(ActionType actionType)
     {
-        SpawnDamageTakenParticles(particalesParentTrans);
+        if(particleSystemDataMap.ContainsKey(actionType))
+        {
+            return particleSystemDataMap[actionType];
+        }
+        else
+        {
+            Debug.Log(string.Format("Error! No particle system data for type {0}. Returning first data...", actionType));
+            return particleSystemDataMap[particleSystemDataMap.Keys.First()];
+        }
     }
+}
 
-    public void SpawnDamageTakenParticles(Transform parent)
-    {
-        Instantiate(damageTakenParticlePrefab, parent);
-    }
+public class ParticleSystemData
+{
+    private GameObject particlePrefab;
+    private Vector2 particleVelocity;
+    private float spawnRate, spawnLifetime, particleLifetime;
+    private bool hasRandomizedSpawn;
 
-    public void SpawnDamageBlockedParticles()
-    {
-        SpawnDamageBlockedParticles(particalesParentTrans);
-    }
+    public GameObject ParticlePrefab { get { return particlePrefab; } }
+    public Vector2 ParticleVelocity { get { return particleVelocity; } }
+    public float SpawnRate { get { return spawnRate; } }
+    public float SpawnLifetime { get { return spawnLifetime; } }
+    public float ParticleLifetime { get { return particleLifetime; } }
+    public bool HasRandomizedSpawn { get { return hasRandomizedSpawn; } }
 
-    public void SpawnDamageBlockedParticles(Transform parent)
+    public ParticleSystemData(
+        GameObject particlePrefab, 
+        Vector2 particleVelocity, 
+        float spawnRate, float spawnLifetime, float particleLifetime,
+        bool hasRandomizedSpawn)
     {
-        Instantiate(damageTakenParticlePrefab, parent);
-    }
-
-    public void SpawnHealParticles()
-    {
-        SpawnHealParticles(particalesParentTrans);
-    }
-
-    public void SpawnHealParticles(Transform parent)
-    {
-        Instantiate(healParticlePrefab, parent);
-    }
-
-    public void SpawnBurnedParticles()
-    {
-        SpawnBurnedParticles(particalesParentTrans);
-    }
-
-    public void SpawnBurnedParticles(Transform parent)
-    {
-        Instantiate(burnedParticlePrefab, parent);
-    }
-
-    public void SpawnPoisonedParticles()
-    {
-        SpawnPoisonedParticles(particalesParentTrans);
-    }
-
-    public void SpawnPoisonedParticles(Transform parent)
-    {
-        Instantiate(poisonedParticlePrefab, parent);
+        this.particlePrefab = particlePrefab;
+        this.particleVelocity = particleVelocity;
+        this.spawnRate = spawnRate;
+        this.spawnLifetime = spawnLifetime;
+        this.particleLifetime = particleLifetime;
+        this.hasRandomizedSpawn = hasRandomizedSpawn;
     }
 }

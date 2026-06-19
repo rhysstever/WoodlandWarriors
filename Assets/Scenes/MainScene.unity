@@ -1120,12 +1120,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e9649f3a8661743bba0aa004fcb2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particalesParentTrans: {fileID: 322939597}
-  damageTakenParticlePrefab: {fileID: 0}
-  damageBlockedParticlePrefab: {fileID: 0}
-  healParticlePrefab: {fileID: 0}
-  burnedParticlePrefab: {fileID: 0}
-  poisonedParticlePrefab: {fileID: 0}
+  healParticlePrefab: {fileID: 794900904913204268, guid: 53c63becc252e794bb8e9a8ba8202b7b, type: 3}
+  healParticleVelocity: {x: 0, y: 0.75}
+  healSpawnRate: 0.2
+  healSpawnLifetime: 2
+  healParticleLifetime: 1.5
+  healHasRandomizedSpawn: 1
+  burnParticlePrefab: {fileID: 794900904913204268, guid: c23b858b8d72e0f468101c5ce1a052f1, type: 3}
+  burnParticleVelocity: {x: 0, y: 1}
+  burnSpawnRate: 0.2
+  burnSpawnLifetime: 1
+  burnParticleLifetime: 0.5
+  burnHasRandomizedSpawn: 1
+  poisonParticlePrefab: {fileID: 794900904913204268, guid: 2620988ee1258b848b49648d565ba1dc, type: 3}
+  poisonParticleVelocity: {x: 0, y: 0.5}
+  poisonSpawnRate: 0.1
+  poisonSpawnLifetime: 0.15
+  poisonParticleLifetime: 2
+  poisonHasRandomizedSpawn: 0
   resetColor: {r: 1, g: 1, b: 1, a: 1}
   takeDamageColor: {r: 1, g: 0.4575472, b: 0.4575472, a: 1}
   burnColor: {r: 1, g: 0.80566037, b: 0.514151, a: 1}
@@ -1611,7 +1623,7 @@ Transform:
   m_GameObject: {fileID: 480866813}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: -1, z: 0}
+  m_LocalPosition: {x: 4.5, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3746,7 +3758,7 @@ Transform:
   m_GameObject: {fileID: 871300009}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: -1, z: 0}
+  m_LocalPosition: {x: 0.5, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4741,7 +4753,7 @@ Transform:
   m_GameObject: {fileID: 1177039360}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7, y: -1, z: 0}
+  m_LocalPosition: {x: 6.5, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5221,7 +5233,7 @@ Transform:
   m_GameObject: {fileID: 1322608089}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: -1, z: 0}
+  m_LocalPosition: {x: 2.5, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6402,7 +6414,7 @@ Transform:
   m_GameObject: {fileID: 1651469200}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: -1, z: 0}
+  m_LocalPosition: {x: -1.5, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

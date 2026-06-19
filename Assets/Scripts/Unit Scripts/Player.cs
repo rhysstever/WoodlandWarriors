@@ -1,16 +1,11 @@
-using UnityEngine;
-
 public class Player : Unit
 {
-    [SerializeField]
-    private SpriteRenderer characterSpriteRenderer;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
         base.Start();
         Reset();
-        characterSpriteRenderer.sprite = CharacterManager.instance.GetCharacterSprite(CharacterManager.instance.ChosenCharacter);
+        unitSpriteRenderer.sprite = CharacterManager.instance.GetCharacterSprite(CharacterManager.instance.ChosenCharacter);
     }
 
     public override void Reset()
