@@ -73,24 +73,15 @@ public class AudioManager : MonoBehaviour
         onPoisonAudioDelegate += PlayPoisonAudio;
     }
 
-    public void PlayAttackAudio()
+    public void PlaySlotAttackAudio(ActionType actionType)
     {
-        int randIndex = Random.Range(0, attackAudioPrefabs.Count);
-        CreateAudioObject(attackAudioPrefabs[randIndex]);
-    }
-
-    public void PlaySlotAttackAudio(Slot slot)
-    {
-        switch(slot)
+        switch(actionType)
         {
-            case Slot.MainHand:
+            case ActionType.Attack:
                 PlayAttackAudio();
                 break;
-            case Slot.Spell:
+            case ActionType.MagicalAttack:
                 PlaySpellAttackAudio();
-                break;
-            case Slot.Ally:
-                PlaySquirrelAudio();
                 break;
             default:
                 PlayAttackAudio();
@@ -98,52 +89,86 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void PlayAttackAudio()
+    {
+        int randIndex = Random.Range(0, attackAudioPrefabs.Count);
+        CreateAudioObject(attackAudioPrefabs[randIndex]);
+    }
+
+    private void PlaySpellAttackAudio()
+    {
+        CreateAudioObject(spellAttackAudioPrefab);
+    }
+
     public void PlayGiveDefenseAudio()
     {
         CreateAudioObject(giveDefenseAudioPrefab);
     }
 
+    public void PlayAllyAudio(string allyName)
+    {
+        switch(allyName.ToLower())
+        {
+            case "squirrel":
+                PlaySquirrelAudio();
+                break;
+            case "frog":
+                PlayFrogAudio();
+                break;
+            case "rat":
+                PlayRatAudio();
+                break;
+            case "newt":
+                PlayNewtAudio();
+                break;
+            case "toad":
+                PlayToadAudio();
+                break;
+            case "porcupine":
+                PlayPorcupineAudio();
+                break;
+            case "hamster":
+                PlayHamsterAudio();
+                break;
+        }
+    }
+
     #region Ally Audio
-    public void PlaySquirrelAudio()
+    private void PlaySquirrelAudio()
     {
         CreateAudioObject(squirrelAudioPrefab);
     }
 
-    public void PlayFrogAudio()
+    private void PlayFrogAudio()
     {
         CreateAudioObject(frogAudioPrefab);
     }
 
-    public void PlayRatAudio()
+    private void PlayRatAudio()
     {
         CreateAudioObject(ratAudioPrefab);
     }
 
-    public void PlayNewtAudio()
+    private void PlayNewtAudio()
     {
         CreateAudioObject(newtAudioPrefab);
     }
 
-    public void PlayToadAudio()
+    private void PlayToadAudio()
     {
         CreateAudioObject(toadAudioPrefab);
     }
 
-    public void PlayPorcupineAudio()
+    private void PlayPorcupineAudio()
     {
         CreateAudioObject(porcupineAudioPrefab);
     }
 
-    public void PlayHamsterAudio()
+    private void PlayHamsterAudio()
     {
         CreateAudioObject(hamsterAudioPrefab);
     }
     #endregion Ally Audio
-
-    public void PlaySpellAttackAudio()
-    {
-        CreateAudioObject(spellAttackAudioPrefab);
-    }
 
     public void PlayHealAudio()
     {

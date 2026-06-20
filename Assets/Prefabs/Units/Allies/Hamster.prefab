@@ -244,6 +244,9 @@ GameObject:
   - component: {fileID: 4544917906586866623}
   - component: {fileID: 2342040484589157696}
   - component: {fileID: 7227121155969684516}
+  - component: {fileID: 4929015284984076064}
+  - component: {fileID: 8957280021653389052}
+  - component: {fileID: 1325988187359745422}
   m_Layer: 0
   m_Name: Hamster
   m_TagString: Untagged
@@ -343,6 +346,48 @@ MonoBehaviour:
   effectTrans1: {fileID: 2167028917946712117}
   effectTrans2: {fileID: 859106597088470661}
   maxLife: 0
+  healingParticleSystem: {fileID: 4929015284984076064}
+  burnParticleSystem: {fileID: 8957280021653389052}
+  poisonParticleSystem: {fileID: 1325988187359745422}
+--- !u!114 &4929015284984076064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893089760025702593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 3
+--- !u!114 &8957280021653389052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893089760025702593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 4
+--- !u!114 &1325988187359745422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893089760025702593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 5
 --- !u!1 &1146737348702487484
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +528,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7374845061861626600, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  m_Sprite: {fileID: 1202984965197363600, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

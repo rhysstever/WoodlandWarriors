@@ -965,11 +965,12 @@ MonoBehaviour:
   cardBaseRareDrink: {fileID: 21300000, guid: 218d725bf81513a4b9d43250f806d835, type: 3}
   actionIconSpriteAttack: {fileID: 1161201145128540330, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   actionIconSpriteDefend: {fileID: 2130535880278150251, guid: 6a9766e68245de946a4a81db07478054, type: 3}
-  actionIconSpriteHeal: {fileID: 184950751378207249, guid: 6a9766e68245de946a4a81db07478054, type: 3}
-  actionIconSpriteFire: {fileID: 1202984965197363600, guid: 6a9766e68245de946a4a81db07478054, type: 3}
-  actionIconSpritePoison: {fileID: 5543941588292853863, guid: 6a9766e68245de946a4a81db07478054, type: 3}
-  actionIconSpriteSpike: {fileID: -1863859237976802683, guid: 6a9766e68245de946a4a81db07478054, type: 3}
-  actionIconSpriteSummon: {fileID: 7576617242518483205, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  actionIconSpriteMagicalAttack: {fileID: 184950751378207249, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  actionIconSpriteHeal: {fileID: 1202984965197363600, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  actionIconSpriteFire: {fileID: 5543941588292853863, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  actionIconSpritePoison: {fileID: -1863859237976802683, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  actionIconSpriteSpike: {fileID: 7576617242518483205, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  actionIconSpriteSummon: {fileID: -396312902, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   effectUIPrefab: {fileID: 1780603026050417366, guid: 2a0b69699ae040e49a74655431735a28, type: 3}
   effectBuffUIPrefab: {fileID: 1780603026050417366, guid: 336817319dd30b9499f99bfa3c17e17b, type: 3}
 --- !u!114 &231419617
@@ -1125,19 +1126,16 @@ MonoBehaviour:
   healSpawnRate: 0.2
   healSpawnLifetime: 2
   healParticleLifetime: 1.5
-  healHasRandomizedSpawn: 1
   burnParticlePrefab: {fileID: 794900904913204268, guid: c23b858b8d72e0f468101c5ce1a052f1, type: 3}
   burnParticleVelocity: {x: 0, y: 1}
   burnSpawnRate: 0.2
   burnSpawnLifetime: 1
   burnParticleLifetime: 0.5
-  burnHasRandomizedSpawn: 1
   poisonParticlePrefab: {fileID: 794900904913204268, guid: 2620988ee1258b848b49648d565ba1dc, type: 3}
   poisonParticleVelocity: {x: 0, y: 0.5}
   poisonSpawnRate: 0.2
   poisonSpawnLifetime: 0.9
   poisonParticleLifetime: 2
-  poisonHasRandomizedSpawn: 1
   resetColor: {r: 1, g: 1, b: 1, a: 1}
   takeDamageColor: {r: 1, g: 0.4575472, b: 0.4575472, a: 1}
   burnColor: {r: 1, g: 0.80566037, b: 0.514151, a: 1}

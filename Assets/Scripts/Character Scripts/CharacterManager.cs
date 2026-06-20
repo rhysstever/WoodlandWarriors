@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum Character
@@ -156,6 +155,7 @@ public class CharacterManager : MonoBehaviour
             amount++;
         }
 
+        AudioManager.instance.PlayAllyAudio(summonAction.SummonName);
         if(ally != null)
         {
             ally.GetComponent<Ally>().Buff(amount);
@@ -196,13 +196,15 @@ public class CharacterManager : MonoBehaviour
 
     public IEnumerator ProcessAllyTurn()
     {
-        WaitForSeconds allyActionDelayWait = new WaitForSeconds(1);
+        WaitForSeconds allyActionDelayWait = new WaitForSeconds(0.5f);
 
         yield return allyActionDelayWait;
         CardData allyCardToPlay = DeckManager.instance.GetCardDataBySlot(Slot.Ally);
 
         if(allyCardToPlay != null)
         {
+            AudioManager.instance.PlayAllyAudio(allyCardToPlay.Name);
+            yield return allyActionDelayWait;
             ActionManager.instance.PerformActions(ally.GetComponent<Ally>().Actions, ally, null);
             yield return allyActionDelayWait;
             yield return allyActionDelayWait;

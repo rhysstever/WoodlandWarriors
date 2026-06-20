@@ -18,7 +18,7 @@ public class CardManager : MonoBehaviour
     [SerializeField]    // Rare card base sprites
     private Sprite cardBaseRareAttack, cardBaseRareDefend, cardBaseRareAlly, cardBaseRareSpell, cardBaseRareSpirit, cardBaseRareDrink;
     [SerializeField]    // Action icon sprites
-    private Sprite actionIconSpriteAttack, actionIconSpriteDefend, actionIconSpriteHeal, actionIconSpriteFire, actionIconSpritePoison, actionIconSpriteSpike, actionIconSpriteSummon;
+    private Sprite actionIconSpriteAttack, actionIconSpriteDefend, actionIconSpriteMagicalAttack, actionIconSpriteHeal, actionIconSpriteFire, actionIconSpritePoison, actionIconSpriteSpike, actionIconSpriteSummon;
     [SerializeField]
     private GameObject effectUIPrefab, effectBuffUIPrefab;
 
@@ -143,15 +143,15 @@ public class CardManager : MonoBehaviour
             //new CardData("Mud Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(...) }),
 
             // Spell cards
-            new CardData("Arcane Bolt", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }),
+            new CardData("Arcane Bolt", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.MagicalAttack, 1, TargetType.RandomFoe) }),
             new CardData("Fireball", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 3, TargetType.Foe) }),
             new CardData("Life Drain", Slot.Spell, Rarity.Basic, new List<Action> {
-                new Action(ActionType.Attack, 2, TargetType.Foe),
+                new Action(ActionType.MagicalAttack, 2, TargetType.Foe),
                 new Action(ActionType.Heal, 1, TargetType.Player)
             }),
-            new CardData("Lightning Strike", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Attack, 4, TargetType.RandomFoe) }),
+            new CardData("Lightning Strike", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.MagicalAttack, 4, TargetType.RandomFoe) }),
             new CardData("Heal", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Heal, 5, TargetType.Ally) }),
-            new CardData("Blizzard", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Attack, 3, TargetType.AllFoes) }),
+            new CardData("Blizzard", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.MagicalAttack, 3, TargetType.AllFoes) }),
             new CardData("Curse", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Poison, 5, TargetType.Foe) }),
             //new CardData("Arcane Armor", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(...) }),
             //new CardData("Reflect", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(...) }),

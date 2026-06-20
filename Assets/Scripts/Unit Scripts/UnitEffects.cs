@@ -15,6 +15,7 @@ public class UnitEffects
         effects = new List<Effect>
         {
             new Effect(new Buff(ActionType.Attack, 0), false),
+            new Effect(new Buff(ActionType.MagicalAttack, 0), false),
             new Effect(new Buff(ActionType.Defend, 0), false),
             new Effect(new Buff(ActionType.Heal, 0), false),
             burnBuffEffect,

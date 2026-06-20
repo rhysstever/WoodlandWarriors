@@ -66,10 +66,31 @@ public class Unit : MonoBehaviour
 
     public virtual void DealDamage(int baseAttack, Unit target, DamageType damageType)
     {
-        int amount = baseAttack + unitEffects.GetEffectAmount(ActionType.Attack, true);
+        int amount = baseAttack;
+        if(damageType == DamageType.Attack)
+        {
+            amount += unitEffects.GetEffectAmount(ActionType.Attack, true);
+        }
+        else if(damageType == DamageType.Spell)
+        {
+            amount += unitEffects.GetEffectAmount(ActionType.MagicalAttack, true);
+        }
+
         if(amount < 0)
         {
             return;
+        }
+
+        if(this as Ally == null)
+        {
+            if(damageType == DamageType.Attack)
+            {
+                AudioManager.instance.PlaySlotAttackAudio(ActionType.Attack);
+            }
+            else if(damageType == DamageType.Spell)
+            {
+                AudioManager.instance.PlaySlotAttackAudio(ActionType.MagicalAttack);
+            }
         }
         target.TakeDamage(amount, this, damageType);
     }
@@ -96,12 +117,14 @@ public class Unit : MonoBehaviour
                 // subtract the difference from the unit's health
                 currentLife -= (amount - currentDefense);
                 currentDefense = 0;
+                AudioManager.instance.PlayDamageTakenAudio();
             }
             else
             {
                 // If the damage dealth is less than the unit's defense,
                 // subtract it from the current defense
                 currentDefense -= amount;
+                AudioManager.instance.PlayDamageBlockedAudio();
             }
 
             // Update defense UI text
@@ -110,6 +133,7 @@ public class Unit : MonoBehaviour
         else
         {
             currentLife -= amount;
+            AudioManager.instance.PlayDamageTakenAudio();
         }
 
         // Check for Spike Reflection: 
@@ -150,11 +174,8 @@ public class Unit : MonoBehaviour
             return;
         }
 
-        if(healingParticleSystem != null)
-        {
-            healingParticleSystem.EnableParticles();
-        }
         AudioManager.instance.PlayHealAudio();
+        healingParticleSystem.EnableParticles();
         currentLife += amount + unitEffects.GetEffectAmount(ActionType.Heal, true);
         if(currentLife > maxLife)
         {
@@ -183,6 +204,7 @@ public class Unit : MonoBehaviour
         }
 
         AudioManager.instance.PlayBurnAudio();
+        burnParticleSystem.EnableParticles();
         unitEffects.UpdateEffectAmount(ActionType.Burn, amount);
         UpdateEffectsUI();
     }
@@ -196,6 +218,7 @@ public class Unit : MonoBehaviour
         }
 
         AudioManager.instance.PlayPoisonAudio();
+        poisonParticleSystem.EnableParticles();
         unitEffects.UpdateEffectAmount(ActionType.Poison, amount);
         UpdateEffectsUI();
     }
@@ -228,6 +251,12 @@ public class Unit : MonoBehaviour
     public void BuffDefense(int amount)
     {
         unitEffects.UpdateEffectAmount(ActionType.Defend, amount, true);
+        UpdateEffectsUI();
+    }
+
+    public void BuffMagicalAttack(int amount)
+    {
+        unitEffects.UpdateEffectAmount(ActionType.MagicalAttack, amount, true);
         UpdateEffectsUI();
     }
 
@@ -270,10 +299,7 @@ public class Unit : MonoBehaviour
         {
             AudioManager.instance.PlayBurnAudio();
             unitSpriteRenderer.color = ParticlesManager.instance.BurnColor;
-            if(burnParticleSystem != null)
-            {
-                burnParticleSystem.EnableParticles();
-            }
+            burnParticleSystem.EnableParticles();
             yield return effectTriggerToDamageDelayWait;
             unitSpriteRenderer.color = ParticlesManager.instance.ResetColor;
             TakeDamage(unitEffects.GetEffectAmount(ActionType.Burn), null, DamageType.Burn);
@@ -286,10 +312,7 @@ public class Unit : MonoBehaviour
             yield return betweenEffectsDelayWait;
             AudioManager.instance.PlayPoisonAudio();
             unitSpriteRenderer.color = ParticlesManager.instance.PoisonColor;
-            if(poisonParticleSystem != null)
-            {
-                poisonParticleSystem.EnableParticles();
-            }
+            poisonParticleSystem.EnableParticles();
             yield return effectTriggerToDamageDelayWait;
             unitSpriteRenderer.color = ParticlesManager.instance.ResetColor;
             TakeDamage(unitEffects.GetEffectAmount(ActionType.Poison), null, DamageType.Poison);

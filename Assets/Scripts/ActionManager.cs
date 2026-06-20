@@ -128,6 +128,9 @@ public class ActionManager : MonoBehaviour
             case ActionType.Attack:
                 actor.DealDamage(amount, target, DamageType.Attack);
                 break;
+            case ActionType.MagicalAttack:
+                actor.DealDamage(amount, target, DamageType.Spell);
+                break;
             case ActionType.Defend:
                 target.GiveDefense(amount);
                 break;

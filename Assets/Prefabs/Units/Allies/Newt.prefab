@@ -44,6 +44,9 @@ GameObject:
   - component: {fileID: 4544917906586866623}
   - component: {fileID: 2342040484589157696}
   - component: {fileID: 7227121155969684516}
+  - component: {fileID: 9082726798933376453}
+  - component: {fileID: 2419109974689463331}
+  - component: {fileID: 1180594443064466285}
   m_Layer: 0
   m_Name: Newt
   m_TagString: Untagged
@@ -143,6 +146,48 @@ MonoBehaviour:
   effectTrans1: {fileID: 5469578415756449490}
   effectTrans2: {fileID: 5019544907860928286}
   maxLife: 0
+  healingParticleSystem: {fileID: 9082726798933376453}
+  burnParticleSystem: {fileID: 2419109974689463331}
+  poisonParticleSystem: {fileID: 1180594443064466285}
+--- !u!114 &9082726798933376453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893089760025702593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 3
+--- !u!114 &2419109974689463331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893089760025702593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 4
+--- !u!114 &1180594443064466285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893089760025702593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 5
 --- !u!1 &1908791003413105443
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +589,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7374845061861626600, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  m_Sprite: {fileID: 1202984965197363600, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

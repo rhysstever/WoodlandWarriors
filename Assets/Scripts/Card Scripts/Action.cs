@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public enum ActionType
 {
     Attack,
+    MagicalAttack,
     Defend,
     Heal,
     Burn,
@@ -77,6 +78,13 @@ public class Action
                         descriptionAmount++;
                     }
                     descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.Attack, true);
+                }
+                description += string.Format("Attack for {0}", descriptionAmount);
+                break;
+            case ActionType.MagicalAttack:
+                if(unit != null)
+                {
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.MagicalAttack, true);
                 }
                 description += string.Format("Attack for {0}", descriptionAmount);
                 break;

@@ -77,6 +77,9 @@ GameObject:
   - component: {fileID: 4544917906586866623}
   - component: {fileID: 2342040484589157696}
   - component: {fileID: 7227121155969684516}
+  - component: {fileID: 6619883495220484986}
+  - component: {fileID: 8794578036143888589}
+  - component: {fileID: 9075679998367156236}
   m_Layer: 0
   m_Name: Rat
   m_TagString: Untagged
@@ -176,6 +179,48 @@ MonoBehaviour:
   effectTrans1: {fileID: 6644323576177934765}
   effectTrans2: {fileID: 6946300743861750193}
   maxLife: 0
+  healingParticleSystem: {fileID: 6619883495220484986}
+  burnParticleSystem: {fileID: 8794578036143888589}
+  poisonParticleSystem: {fileID: 9075679998367156236}
+--- !u!114 &6619883495220484986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893089760025702593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 3
+--- !u!114 &8794578036143888589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893089760025702593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 4
+--- !u!114 &9075679998367156236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893089760025702593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9e158123a100f478380bba244042eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 5
 --- !u!1 &1648728731826203779
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,7 +800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7374845061861626600, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  m_Sprite: {fileID: 1202984965197363600, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
