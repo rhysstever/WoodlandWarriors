@@ -33,6 +33,7 @@ public class Unit : MonoBehaviour
     protected int currentLife, currentDefense;
     protected UnitEffects unitEffects;
     private float effectOffset;
+    private IEnumerator playerProcessDamageCoroutine;
 
     public int CurrentLife { get { return currentLife; } }
     public UnitEffects UnitEffects { get { return unitEffects; } }
@@ -117,7 +118,8 @@ public class Unit : MonoBehaviour
                 // subtract the difference from the unit's health
                 currentLife -= (amount - currentDefense);
                 currentDefense = 0;
-                AudioManager.instance.PlayDamageTakenAudio();
+                playerProcessDamageCoroutine = ProcessDamage();
+                StartCoroutine(playerProcessDamageCoroutine);
             }
             else
             {
@@ -133,7 +135,8 @@ public class Unit : MonoBehaviour
         else
         {
             currentLife -= amount;
-            AudioManager.instance.PlayDamageTakenAudio();
+            playerProcessDamageCoroutine = ProcessDamage();
+            StartCoroutine(playerProcessDamageCoroutine);
         }
 
         // Check for Spike Reflection: 
@@ -151,6 +154,16 @@ public class Unit : MonoBehaviour
         }
         // Update life UI text
         UpdateLifeUIText();
+    }
+
+    private IEnumerator ProcessDamage()
+    {
+        WaitForSeconds effectTriggerToDamageDelayWait = new WaitForSeconds(0.5f);
+
+        unitSpriteRenderer.color = ParticlesManager.instance.TakeDamageColor;
+        AudioManager.instance.PlayDamageTakenAudio();
+        yield return effectTriggerToDamageDelayWait;
+        unitSpriteRenderer.color = ParticlesManager.instance.ResetColor;
     }
 
     public void GiveDefense(int baseDefense)
@@ -291,12 +304,12 @@ public class Unit : MonoBehaviour
 
     public IEnumerator ProcessEffects()
     {
-        WaitForSeconds betweenEffectsDelayWait = new WaitForSeconds(1);
         WaitForSeconds effectTriggerToDamageDelayWait = new WaitForSeconds(0.5f);
         WaitForSeconds turnBannerDelayWait = new WaitForSeconds(UIManager.instance.TurnBannerVisibleTime);
 
         if(unitEffects.GetEffectAmount(ActionType.Burn) > 0)
         {
+            yield return effectTriggerToDamageDelayWait;
             AudioManager.instance.PlayBurnAudio();
             unitSpriteRenderer.color = ParticlesManager.instance.BurnColor;
             burnParticleSystem.EnableParticles();
@@ -309,7 +322,7 @@ public class Unit : MonoBehaviour
 
         if(unitEffects.GetEffectAmount(ActionType.Poison) > 0)
         {
-            yield return betweenEffectsDelayWait;
+            yield return effectTriggerToDamageDelayWait;
             AudioManager.instance.PlayPoisonAudio();
             unitSpriteRenderer.color = ParticlesManager.instance.PoisonColor;
             poisonParticleSystem.EnableParticles();
