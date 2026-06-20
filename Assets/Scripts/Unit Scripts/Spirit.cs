@@ -42,7 +42,7 @@ public class Spirit : MonoBehaviour
         }
 
         float normalizedPos = currentPosAlongSpline / splineLength;
-        spline.Spline.Evaluate(normalizedPos, out var pos, out var dir, out var up);
+        spline.Spline.Evaluate(normalizedPos, out var pos, out _, out _);
         transform.position = basePos + new Vector2(pos.x, pos.y);
     }
 }

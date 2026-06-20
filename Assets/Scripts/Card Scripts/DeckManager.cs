@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class DeckManager : MonoBehaviour
 {
@@ -11,17 +11,18 @@ public class DeckManager : MonoBehaviour
 
     // Set in inspector
     [SerializeField]
-    private Transform cardParentTrans, cardHandBoundsTrans, cardSelectionCardParentTrans, cardSelectionCard1Pos, cardSelectionCard2Pos, cardSelectionCard3Pos;
+    private Transform cardSelectionCardParentTrans, cardSelectionCard1Pos, cardSelectionCard2Pos, cardSelectionCard3Pos;
     [SerializeField]
     private Collider2D fieldCollider;
     [SerializeField]    // Prefabs
     private GameObject playableCardPrefab, selectableCardPrefab, displayCardPrefab;
+    [SerializeField]
+    private SplineContainer handSpline;
 
     // Set in script
     private List<CardData> deck;
     private int numCardsDrawnAtPlayerTurnStart;
     private CardData currentCardSelection;
-    private float playableCardPosXMin, playableCardPosXMax;
 
     // Properties
     public Collider2D FieldCollider { get { return fieldCollider; } }
@@ -45,10 +46,6 @@ public class DeckManager : MonoBehaviour
     {
         currentCardSelection = null;
         numCardsDrawnAtPlayerTurnStart = 4;
-
-        float playableCardWidthHalf = playableCardPrefab.GetComponent<BoxCollider2D>().bounds.size.x / 2;
-        playableCardPosXMin = cardHandBoundsTrans.position.x - cardHandBoundsTrans.localScale.x / 2 + playableCardWidthHalf;
-        playableCardPosXMax = cardHandBoundsTrans.position.x + cardHandBoundsTrans.localScale.x / 2 - playableCardWidthHalf;
     }
 
     public void SetupForNewCombat()
@@ -100,7 +97,7 @@ public class DeckManager : MonoBehaviour
             CardData cardData = GetRandomCardFromDeck();
 
             // Spawn the card in the scene
-            SpawnCard(playableCardPrefab, cardData, cardParentTrans);
+            SpawnCard(playableCardPrefab, cardData, handSpline.transform);
         }
 
         DisplayHand();
@@ -151,9 +148,9 @@ public class DeckManager : MonoBehaviour
 
     public int GetCardIndex(GameObject cardObject)
     {
-        for(int i = 0; i < cardParentTrans.childCount; i++)
+        for(int i = 0; i < handSpline.transform.childCount; i++)
         {
-            if(cardParentTrans.GetChild(i).gameObject == cardObject)
+            if(handSpline.transform.GetChild(i).gameObject == cardObject)
             {
                 return i;
             }
@@ -189,67 +186,57 @@ public class DeckManager : MonoBehaviour
     {
         // Get a list of active cards (the list of undestroyed cards cannot be used, as destroying cards takes some time)
         List<InteractableCardObject> cardsToBeCentered = new List<InteractableCardObject>();
-        for(int i = 0; i < cardParentTrans.childCount; i++)
+        for(int i = 0; i < handSpline.transform.childCount; i++)
         {
-            if(cardParentTrans.GetChild(i).gameObject.activeSelf)
+            if(handSpline.transform.GetChild(i).gameObject.activeSelf)
             {
-                cardsToBeCentered.Add(cardParentTrans.GetChild(i).gameObject.GetComponent<InteractableCardObject>());
+                cardsToBeCentered.Add(handSpline.transform.GetChild(i).gameObject.GetComponent<InteractableCardObject>());
             }
         }
 
         if(cardsToBeCentered.Count > 1)
         {
-            // If there is more than 1 card, calculate an offset based on how many total cards there are
-            float minPos = playableCardPosXMin;
-            float cardPosDiff = playableCardPosXMax - playableCardPosXMin;
-
-            //if(cardsToBeCentered.Count < 4)
-            //{
-            //    // If there are few cards in hand, place them closer togther by
-            //    // increasing the minimum position by a percentage of the position difference
-            //    // and decreasing the position difference
-            //    float percentage = 0.2f;
-            //    minPos = playableCardPosXMin + cardPosDiff * percentage;
-            //    cardPosDiff *= 1 - (2f * percentage);
-            //}
-
-            float percentage = 0.125f;
-            if(cardsToBeCentered.Count < 3)
-            {
-                percentage = 0.3f;
-            }
-
-            minPos = playableCardPosXMin + cardPosDiff * percentage;
-            cardPosDiff *= 1 - (2f * percentage);
-
-            float offset = cardPosDiff / (cardsToBeCentered.Count - 1);
-
-            // Place each active card
+            // For multiple cards, 
+            float rotationTilt = -3f;
+            float startTilt = -rotationTilt * (cardsToBeCentered.Count + 1) / 2;
             for(int i = 0; i < cardsToBeCentered.Count; i++)
             {
-                cardsToBeCentered[i].Move(new Vector2(minPos + offset * i, 0f));
+                // Place each active card
+                float percentagePosition = (i + 1) * (1f / (cardsToBeCentered.Count + 1));
+                handSpline.Spline.Evaluate(percentagePosition, out var pos, out _, out _);
+                cardsToBeCentered[i].Move(new Vector2(pos.x, pos.y));
+                // Rotate the card based on its index
+                float amountToTilt = startTilt + rotationTilt * i;
+                if(i + 1 > cardsToBeCentered.Count / 2)
+                {
+                    amountToTilt = startTilt + rotationTilt * (i + 1);
+                }
+                cardsToBeCentered[i].transform.eulerAngles = new Vector3(0f, 0f, amountToTilt);
             }
         }
         else if(cardsToBeCentered.Count == 1)
         {
-            // If there is only 1 card, place it in the center
-            cardsToBeCentered[0].Move(Vector2.zero);
+            // If there is only 1 card, place it in the center 
+            handSpline.Spline.Evaluate(0.5f, out var pos, out _, out _);
+            cardsToBeCentered[0].Move(new Vector2(pos.x, pos.y));
+            // Rotate it straight up
+            cardsToBeCentered[0].transform.eulerAngles = Vector3.zero;
         }
     }
 
     private void RemoveAllCardsFromScene()
     {
-        for(int i = cardParentTrans.childCount - 1; i >= 0; i--)
+        for(int i = handSpline.transform.childCount - 1; i >= 0; i--)
         {
-            Destroy(cardParentTrans.GetChild(i).gameObject);
+            Destroy(handSpline.transform.GetChild(i).gameObject);
         }
     }
 
     public void UpdateCurrentHandDescriptions()
     {
-        for(int i = 0; i < cardParentTrans.childCount; i++)
+        for(int i = 0; i < handSpline.transform.childCount; i++)
         {
-            cardParentTrans.GetChild(i).GetComponent<CardObject>().UpdateCardDescription();
+            handSpline.transform.GetChild(i).GetComponent<CardObject>().UpdateCardDescription();
         }
     }
 

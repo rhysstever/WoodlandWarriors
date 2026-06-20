@@ -64,6 +64,8 @@ public class InteractableCardObject : CardObject
                     transform.position += (Vector3)hoverOffset.localPosition;
                 }
             }
+            // Prioritize the card in the sorting layer
+            canvas.sortingOrder = 3;
         }
     }
 
