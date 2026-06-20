@@ -203,15 +203,24 @@ public class DeckManager : MonoBehaviour
             float minPos = playableCardPosXMin;
             float cardPosDiff = playableCardPosXMax - playableCardPosXMin;
 
-            if(cardsToBeCentered.Count < 4)
+            //if(cardsToBeCentered.Count < 4)
+            //{
+            //    // If there are few cards in hand, place them closer togther by
+            //    // increasing the minimum position by a percentage of the position difference
+            //    // and decreasing the position difference
+            //    float percentage = 0.2f;
+            //    minPos = playableCardPosXMin + cardPosDiff * percentage;
+            //    cardPosDiff *= 1 - (2f * percentage);
+            //}
+
+            float percentage = 0.125f;
+            if(cardsToBeCentered.Count < 3)
             {
-                // If there are few cards in hand, place them closer togther by
-                // increasing the minimum position by a percentage of the position difference
-                // and decreasing the position difference
-                float percentage = 0.2f;
-                minPos = playableCardPosXMin + cardPosDiff * percentage;
-                cardPosDiff *= 1 - (2f * percentage);
+                percentage = 0.3f;
             }
+
+            minPos = playableCardPosXMin + cardPosDiff * percentage;
+            cardPosDiff *= 1 - (2f * percentage);
 
             float offset = cardPosDiff / (cardsToBeCentered.Count - 1);
 
