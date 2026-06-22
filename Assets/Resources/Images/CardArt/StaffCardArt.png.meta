@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ce705c282bcffb34ba777a9b32957ea3
+guid: 993cf508d64b4644ebc091960963b60b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4492775132062387123
-    second: FlailCardArt_0
+      213: -4085739877943903220
+    second: StaffCardArt_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FlailCardArt_0
+      name: StaffCardArt_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 270
-        height: 150
+        x: 5
+        y: 1
+        width: 22
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3bb894acd2b895e30800000000000000
-      internalID: 4492775132062387123
+      spriteID: c0c718a6a398c47c0800000000000000
+      internalID: -4085739877943903220
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      FlailCardArt_0: 4492775132062387123
+      StaffCardArt_0: -4085739877943903220
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
