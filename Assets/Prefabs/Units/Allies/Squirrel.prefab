@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8277507894029411464}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectPos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4186221865936028322}
   - component: {fileID: 2139687672764254770}
   - component: {fileID: 7498614531307627421}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerDefenseImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 6312267498577870071}
   - component: {fileID: 3656262485426866038}
   - component: {fileID: 1606321260519158302}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Squirrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,6 +141,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3177307665694569061}
   - {fileID: 8240162701012980202}
   - {fileID: 6907370306526483192}
   m_Father: {fileID: 0}
@@ -263,6 +264,7 @@ MonoBehaviour:
   defenseText: {fileID: 1444573977542450181}
   defenseParent: {fileID: 7321819353932468424}
   effectsParent: {fileID: 9081898319106931960}
+  attackMovePos: {fileID: 3177307665694569061}
   effectTrans1: {fileID: 5388386689198010071}
   effectTrans2: {fileID: 8277507894029411464}
   maxLife: 0
@@ -319,7 +321,7 @@ GameObject:
   - component: {fileID: 4749759632420847228}
   - component: {fileID: 5526414608558702125}
   - component: {fileID: 9015460200979797064}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerLifeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,7 +457,7 @@ GameObject:
   - component: {fileID: 1593324359359465925}
   - component: {fileID: 3205119449453762748}
   - component: {fileID: 1444573977542450181}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerDefenseText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -589,7 +591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8648980235434928120}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LifeParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +626,7 @@ GameObject:
   - component: {fileID: 7743271189485722734}
   - component: {fileID: 3414467371831241579}
   - component: {fileID: 3250080819567514088}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerLifeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -688,6 +690,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &6131878192883578381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3177307665694569061}
+  m_Layer: 10
+  m_Name: AttackMovePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3177307665694569061
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6131878192883578381}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4544917906586866623}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6429134034082302644
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,7 +730,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5388386689198010071}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectPos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -731,7 +764,7 @@ GameObject:
   - component: {fileID: 8692033351025403863}
   - component: {fileID: 7082507487334613162}
   - component: {fileID: 1132508145491701014}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -831,7 +864,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 163054130054968510}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DefenseParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -864,7 +897,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6907370306526483192}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}

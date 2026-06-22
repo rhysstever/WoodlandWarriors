@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6761301013875021030}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DefenseParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7266782588436050907}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LifeParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2167028917946712117}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectPos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 8917418506154599498}
   - component: {fileID: 2542531512998560994}
   - component: {fileID: 6733321011056792728}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerDefenseText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 4929015284984076064}
   - component: {fileID: 8957280021653389052}
   - component: {fileID: 1325988187359745422}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hamster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,6 +268,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 646799768955785989}
   - {fileID: 1250957456199649102}
   - {fileID: 3693033385851270146}
   m_Father: {fileID: 0}
@@ -390,6 +391,7 @@ MonoBehaviour:
   defenseText: {fileID: 6733321011056792728}
   defenseParent: {fileID: 71526295067680111}
   effectsParent: {fileID: 2376923064147052023}
+  attackMovePos: {fileID: 646799768955785989}
   effectTrans1: {fileID: 2167028917946712117}
   effectTrans2: {fileID: 859106597088470661}
   maxLife: 0
@@ -446,7 +448,7 @@ GameObject:
   - component: {fileID: 8791250410473555305}
   - component: {fileID: 5242504722508102851}
   - component: {fileID: 1893462614579008475}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerDefenseImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +523,7 @@ GameObject:
   - component: {fileID: 8689701467796243986}
   - component: {fileID: 4937413110988896886}
   - component: {fileID: 2725336595453008527}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerLifeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -594,7 +596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3693033385851270146}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -627,7 +629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 859106597088470661}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectPos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,7 +662,7 @@ GameObject:
   - component: {fileID: 4398249486007074966}
   - component: {fileID: 6076622072846132301}
   - component: {fileID: 465858089035388062}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerLifeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,7 +799,7 @@ GameObject:
   - component: {fileID: 65418676301122193}
   - component: {fileID: 8209214173973530568}
   - component: {fileID: 5129328705771244926}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -888,3 +890,34 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &9066434864436954448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 646799768955785989}
+  m_Layer: 10
+  m_Name: AttackMovePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &646799768955785989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9066434864436954448}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4544917906586866623}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

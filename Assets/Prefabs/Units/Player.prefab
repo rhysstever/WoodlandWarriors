@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4063457963306556167}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectPos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1234981302948388688}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LifeParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 7150973235304390247}
   - component: {fileID: 6834788136533130924}
   - component: {fileID: 1786477413763081510}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerLifeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5633651713860255111}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 8378928149099544791}
   - component: {fileID: 5234971322712018654}
   - component: {fileID: 6368533601224966002}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,11 +347,12 @@ GameObject:
   - component: {fileID: 7145410529100082221}
   - component: {fileID: 3828256142140078635}
   - component: {fileID: 3300411364610370386}
+  - component: {fileID: 1954613915720710287}
   - component: {fileID: 5038567916803023751}
   - component: {fileID: -4923721005317679765}
   - component: {fileID: 7054178147012902818}
   - component: {fileID: 8809244321418319334}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,6 +372,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 9131654403480938328}
   - {fileID: 8085574248854065935}
   - {fileID: 5633651713860255111}
   m_Father: {fileID: 0}
@@ -476,6 +478,33 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.14, y: 1.73}
   m_EdgeRadius: 0
+--- !u!50 &1954613915720710287
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5105779831913063137}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 6
 --- !u!114 &5038567916803023751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,6 +522,7 @@ MonoBehaviour:
   defenseText: {fileID: 6197874259440982837}
   defenseParent: {fileID: 8199231744967432922}
   effectsParent: {fileID: 4369787777786322911}
+  attackMovePos: {fileID: 9131654403480938328}
   effectTrans1: {fileID: 3900064309980977564}
   effectTrans2: {fileID: 4063457963306556167}
   maxLife: 10
@@ -547,7 +577,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3900064309980977564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectPos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,6 +599,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5633651713860255111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6273966375626650132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9131654403480938328}
+  m_Layer: 10
+  m_Name: AttackMovePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9131654403480938328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6273966375626650132}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7145410529100082221}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7403480657743962115
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,7 +641,7 @@ GameObject:
   - component: {fileID: 1282820683750030820}
   - component: {fileID: 7550739038227477956}
   - component: {fileID: 3421205647034980094}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerLifeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -655,7 +716,7 @@ GameObject:
   - component: {fileID: 2961929495138163398}
   - component: {fileID: 3708121922890593271}
   - component: {fileID: 8342604936241686057}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerDefenseImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -728,7 +789,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1522659097526224036}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DefenseParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -763,7 +824,7 @@ GameObject:
   - component: {fileID: 6599044688655864289}
   - component: {fileID: 1721785991612141886}
   - component: {fileID: 6197874259440982837}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerDefenseText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

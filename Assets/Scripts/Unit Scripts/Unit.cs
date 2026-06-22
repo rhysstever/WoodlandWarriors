@@ -23,17 +23,19 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private GameObject defenseParent, effectsParent;
     [SerializeField]
-    private Transform effectTrans1, effectTrans2;
+    private Transform attackMovePos, effectTrans1, effectTrans2;
     [SerializeField]
     protected int maxLife;
     [SerializeField]
     private CustomParticleSystem healingParticleSystem, burnParticleSystem, poisonParticleSystem;
 
     // Instantiated in code
-    protected int currentLife, currentDefense;
+    protected int currentLife, currentDefense, attackMoveFramesCount;
+    protected Vector2 basePos;
+    protected Rigidbody2D rb;
     protected UnitEffects unitEffects;
-    private float effectOffset;
-    private IEnumerator playerProcessDamageCoroutine;
+    private float effectOffset, attackMoveOffsetX;
+    private IEnumerator unitProcessDamageCoroutine, unitAttackCoroutine;
 
     public int CurrentLife { get { return currentLife; } }
     public UnitEffects UnitEffects { get { return unitEffects; } }
@@ -45,6 +47,10 @@ public class Unit : MonoBehaviour
 
     protected virtual void Start()
     {
+        attackMoveFramesCount = 4;
+        basePos = transform.position;
+        attackMoveOffsetX = (attackMovePos.position.x - transform.position.x) / attackMoveFramesCount;
+        rb = GetComponent<Rigidbody2D>();
         effectOffset = effectTrans2.localPosition.x - effectTrans1.localPosition.x;
     }
 
@@ -84,16 +90,43 @@ public class Unit : MonoBehaviour
 
         if(this as Ally == null)
         {
-            if(damageType == DamageType.Attack)
-            {
-                AudioManager.instance.PlaySlotAttackAudio(ActionType.Attack);
-            }
-            else if(damageType == DamageType.Spell)
-            {
-                AudioManager.instance.PlaySlotAttackAudio(ActionType.MagicalAttack);
-            }
+            unitAttackCoroutine = ProcessAttack(damageType);
+            StartCoroutine(unitAttackCoroutine);
         }
         target.TakeDamage(amount, this, damageType);
+    }
+
+    private IEnumerator ProcessAttack(DamageType damageType)
+    {
+        WaitForSeconds delayWaitFrame = new WaitForSeconds(0.02f);
+
+        // Move the unit towards the center of the screen
+        int currentFrames = attackMoveFramesCount;
+        while(currentFrames > 0)
+        {
+            rb.MovePosition(new Vector2(transform.position.x + attackMoveOffsetX, transform.position.y));
+            yield return delayWaitFrame;
+            currentFrames--;
+        }
+
+        // Play audio 
+        if(damageType == DamageType.Attack)
+        {
+            AudioManager.instance.PlaySlotAttackAudio(ActionType.Attack);
+        }
+        else if(damageType == DamageType.Spell)
+        {
+            AudioManager.instance.PlaySlotAttackAudio(ActionType.MagicalAttack);
+        }
+
+        // Reset frames and move the unit back
+        currentFrames = attackMoveFramesCount;
+        while(currentFrames > 0)
+        {
+            rb.MovePosition(new Vector2(transform.position.x - attackMoveOffsetX, transform.position.y));
+            yield return delayWaitFrame;
+            currentFrames--;
+        }
     }
 
     public virtual void TakeDamage(int amount, DamageType damageType)
@@ -118,8 +151,8 @@ public class Unit : MonoBehaviour
                 // subtract the difference from the unit's health
                 currentLife -= (amount - currentDefense);
                 currentDefense = 0;
-                playerProcessDamageCoroutine = ProcessDamage();
-                StartCoroutine(playerProcessDamageCoroutine);
+                unitProcessDamageCoroutine = ProcessDamage();
+                StartCoroutine(unitProcessDamageCoroutine);
             }
             else
             {
@@ -135,8 +168,8 @@ public class Unit : MonoBehaviour
         else
         {
             currentLife -= amount;
-            playerProcessDamageCoroutine = ProcessDamage();
-            StartCoroutine(playerProcessDamageCoroutine);
+            unitProcessDamageCoroutine = ProcessDamage();
+            StartCoroutine(unitProcessDamageCoroutine);
         }
 
         // Check for Spike Reflection: 
@@ -158,11 +191,11 @@ public class Unit : MonoBehaviour
 
     private IEnumerator ProcessDamage()
     {
-        WaitForSeconds effectTriggerToDamageDelayWait = new WaitForSeconds(0.5f);
+        WaitForSeconds delayWait = new WaitForSeconds(0.5f);
 
         unitSpriteRenderer.color = ParticlesManager.instance.TakeDamageColor;
         AudioManager.instance.PlayDamageTakenAudio();
-        yield return effectTriggerToDamageDelayWait;
+        yield return delayWait;
         unitSpriteRenderer.color = ParticlesManager.instance.ResetColor;
     }
 

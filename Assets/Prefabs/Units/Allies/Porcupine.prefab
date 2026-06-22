@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3744397157855609820}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DefenseParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 45541294318618506}
   - component: {fileID: 2054505232724812416}
   - component: {fileID: 8385674679762205045}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Porcupine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,6 +68,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7606744521188734898}
   - {fileID: 4513159623681193309}
   - {fileID: 2643233862245191847}
   m_Father: {fileID: 0}
@@ -190,6 +191,7 @@ MonoBehaviour:
   defenseText: {fileID: 1746277766629940824}
   defenseParent: {fileID: 820645065411761231}
   effectsParent: {fileID: 2259995550027916871}
+  attackMovePos: {fileID: 7606744521188734898}
   effectTrans1: {fileID: 5453163033171712664}
   effectTrans2: {fileID: 8344276665781550737}
   maxLife: 0
@@ -244,7 +246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5453163033171712664}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectPos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +277,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8344276665781550737}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectPos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,6 +299,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2643233862245191847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1881959768149258934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7606744521188734898}
+  m_Layer: 10
+  m_Name: AttackMovePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7606744521188734898
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881959768149258934}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4544917906586866623}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2259995550027916871
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,7 +339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2643233862245191847}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +372,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 350226463715929110}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LifeParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +407,7 @@ GameObject:
   - component: {fileID: 3594232851399740180}
   - component: {fileID: 2999240641950218512}
   - component: {fileID: 1746277766629940824}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerDefenseText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -511,7 +544,7 @@ GameObject:
   - component: {fileID: 2253319684756231861}
   - component: {fileID: 4534146594945159443}
   - component: {fileID: 3135423765561825142}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -613,7 +646,7 @@ GameObject:
   - component: {fileID: 6865440839994094470}
   - component: {fileID: 8882319691183821284}
   - component: {fileID: 4523486771037594013}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerDefenseImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -688,7 +721,7 @@ GameObject:
   - component: {fileID: 8752825353184919023}
   - component: {fileID: 5473184434138331891}
   - component: {fileID: 1766005697130245097}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerLifeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -824,7 +857,7 @@ GameObject:
   - component: {fileID: 822565879410429992}
   - component: {fileID: 6632137792107632769}
   - component: {fileID: 2994112967468638248}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerLifeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}

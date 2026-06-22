@@ -953,7 +953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a12e905a0d4a7e642bdf7496b900058b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardParentTrans: {fileID: 1771168697}
   cardSelectionCardParentTrans: {fileID: 1533433787}
   cardSelectionCard1Pos: {fileID: 287315101}
   cardSelectionCard2Pos: {fileID: 1727152131}
@@ -1331,7 +1330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1404945760096809877, guid: 0055bd6e5706f264e95bd140e6a11484, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -300
+      value: -400
       objectReference: {fileID: 0}
     - target: {fileID: 1404945760096809877, guid: 0055bd6e5706f264e95bd140e6a11484, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
