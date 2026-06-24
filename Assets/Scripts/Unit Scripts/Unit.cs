@@ -99,7 +99,6 @@ public class Unit : MonoBehaviour
     private IEnumerator ProcessAttack(DamageType damageType)
     {
         WaitForSeconds delayWaitFrame = new WaitForSeconds(0.02f);
-
         // Move the unit towards the center of the screen
         int currentFrames = attackMoveFramesCount;
         while(currentFrames > 0)

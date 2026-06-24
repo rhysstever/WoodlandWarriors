@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6860954968842074459}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EffectPos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6221155968802975419}
   - component: {fileID: 7980290328209802982}
   - component: {fileID: 5809988163708267882}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: NextActionBuffIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3537561257874850085}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EffectsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 6167941963753562879}
   - component: {fileID: 7287941044819814351}
   - component: {fileID: 8216573357952119562}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: PlayerDefenseText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 8669051428062785722}
   - component: {fileID: 5790313163648019023}
   - component: {fileID: 6089760840660964530}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: NextActionAmountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4795186282148205950}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LifeParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +453,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2474428185457871075}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EffectPos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,7 +665,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9028282712481886186}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DefenseParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -701,7 +701,7 @@ GameObject:
   - component: {fileID: 4138289808503663449}
   - component: {fileID: 3744025343838680836}
   - component: {fileID: 7058083453949527749}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -802,7 +802,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9134831584516543633}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: NextActionUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -840,7 +840,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3235520503323877329}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttackMovePos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -873,7 +873,7 @@ GameObject:
   - component: {fileID: 6653960822226328898}
   - component: {fileID: 4991872730370294355}
   - component: {fileID: 4173016121222087423}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: PlayerDefenseImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -948,7 +948,7 @@ GameObject:
   - component: {fileID: 3195166089354314726}
   - component: {fileID: 7313014664868110631}
   - component: {fileID: 7565315210742501715}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: NextActionIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1023,7 +1023,7 @@ GameObject:
   - component: {fileID: 2657414185708837307}
   - component: {fileID: 842641948873946029}
   - component: {fileID: 9184009717036956153}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: PlayerLifeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1159,7 +1159,7 @@ GameObject:
   - component: {fileID: 2838790578313914250}
   - component: {fileID: 4975306459211090543}
   - component: {fileID: 5320264834280210986}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: PlayerLifeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}

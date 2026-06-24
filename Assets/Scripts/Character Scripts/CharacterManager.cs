@@ -166,7 +166,7 @@ public class CharacterManager : MonoBehaviour
                 GetAllyPrefab(summonAction.SummonName),
                 allySpawnTrans.position,
                 Quaternion.identity,
-                GameManager.instance.Player.transform
+                transform
             ).GetComponent<Ally>();
 
             newAlly.SetHealth(amount);
@@ -187,7 +187,7 @@ public class CharacterManager : MonoBehaviour
                 GetSpiritPrefab(spiritTypeToSummon),
                 spiritSpawnTrans.position,
                 Quaternion.identity,
-                GameManager.instance.Player.transform
+                transform
             );
 
             spiritObject = newSpirit;

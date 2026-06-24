@@ -1071,11 +1071,11 @@ MonoBehaviour:
   porcupinePrefab: {fileID: 893089760025702593, guid: 7cf66ef504471af4eaf8a731b9a3dedb, type: 3}
   hamsterPrefab: {fileID: 893089760025702593, guid: 78a5d9faaf33efb4a90627c07da0f094, type: 3}
   earthSpiritPrefab: {fileID: 441819906633108402, guid: 12aca27b1e916f04da9f07f643766ac1, type: 3}
-  airSpiritPrefab: {fileID: 893089760025702593, guid: dc1d6e57eca2ad24ab1c97d54b9ad53c, type: 3}
-  fireSpiritPrefab: {fileID: 893089760025702593, guid: 5caefc0383220e340be7b71bfd5d78f3, type: 3}
-  waterSpiritPrefab: {fileID: 893089760025702593, guid: 78bbf234d10ee9d479afe9311885ea05, type: 3}
-  darkSpiritPrefab: {fileID: 893089760025702593, guid: ed4a0e8fdc72002498960f5e72f96e9f, type: 3}
-  lightSpiritPrefab: {fileID: 893089760025702593, guid: 6edbb4e95e98b5c489d512990fa9e43b, type: 3}
+  airSpiritPrefab: {fileID: 441819906633108402, guid: 67aae53d677fdf344b288717104b7bf1, type: 3}
+  fireSpiritPrefab: {fileID: 441819906633108402, guid: 3f5cc4993cf893b42afd6c5147a8d21f, type: 3}
+  waterSpiritPrefab: {fileID: 441819906633108402, guid: 369b841c4f5962544a13707ab9e450fc, type: 3}
+  darkSpiritPrefab: {fileID: 441819906633108402, guid: 06872c42a7e2d3b449f3023816f64663, type: 3}
+  lightSpiritPrefab: {fileID: 441819906633108402, guid: 10a117db23c402247aa32c9ed1e3f082, type: 3}
 --- !u!114 &231419623
 MonoBehaviour:
   m_ObjectHideFlags: 0
