@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7888588701518753217}
   - component: {fileID: 350747897964253252}
   m_Layer: 5
-  m_Name: ButtonPrefab
+  m_Name: LongTextButtonPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 4377092358001067670}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2271647187046907216}
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 60}
+  m_SizeDelta: {x: 375, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6288954467234277644
 CanvasRenderer:
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5637747791548802160, guid: 244cfa885de478e45bb1c7dfd8d143be, type: 3}
+  m_Sprite: {fileID: 502841369720868135, guid: 308c05c0ab4787e40961d42e228a8b63, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -106,10 +106,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -12837868, guid: 244cfa885de478e45bb1c7dfd8d143be, type: 3}
-    m_PressedSprite: {fileID: -904022205, guid: 244cfa885de478e45bb1c7dfd8d143be, type: 3}
-    m_SelectedSprite: {fileID: -12837868, guid: 244cfa885de478e45bb1c7dfd8d143be, type: 3}
-    m_DisabledSprite: {fileID: 1634097787, guid: 244cfa885de478e45bb1c7dfd8d143be, type: 3}
+    m_HighlightedSprite: {fileID: 743850603, guid: 308c05c0ab4787e40961d42e228a8b63, type: 3}
+    m_PressedSprite: {fileID: 1202050444, guid: 308c05c0ab4787e40961d42e228a8b63, type: 3}
+    m_SelectedSprite: {fileID: 743850603, guid: 308c05c0ab4787e40961d42e228a8b63, type: 3}
+    m_DisabledSprite: {fileID: 1326144082, guid: 308c05c0ab4787e40961d42e228a8b63, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: text
+  m_text: long text button
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 697d8eceb4371c6498a079cc2dc14eb1, type: 2}
   m_sharedMaterial: {fileID: -6841830904822697613, guid: 697d8eceb4371c6498a079cc2dc14eb1, type: 2}
@@ -213,8 +213,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
