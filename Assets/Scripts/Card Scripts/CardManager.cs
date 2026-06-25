@@ -86,9 +86,9 @@ public class CardManager : MonoBehaviour
             // Off hand cards
             new CardData("Wooden Shield", Slot.OffHand, Rarity.Basic, new List<Action> { new Action(ActionType.Defend, 1, TargetType.Player) }),
             new CardData("Buckler", Slot.OffHand, Rarity.Basic, new List<Action> { new Action(ActionType.Defend, 2, TargetType.Player) }),
-            new CardData("Cloak and Dagger", Slot.OffHand, Rarity.Basic, new List<Action> {
-                new Action(ActionType.Defend, 1, TargetType.Player),
-                new Action(ActionType.Attack, 1, TargetType.Foe)
+            new CardData("Poison Dagger", Slot.OffHand, Rarity.Basic, new List<Action> {
+                new Action(ActionType.Attack, 1, TargetType.Foe),
+                new Action(ActionType.Poison, 1, TargetType.Foe)
             }),
             new CardData("Quiver", Slot.OffHand, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }),
             //new CardData("Scroll", Slot.OffHand, Rarity.Basic, new List<CardAction> {}),
