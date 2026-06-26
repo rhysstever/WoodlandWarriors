@@ -1,4 +1,4 @@
-# Department of Woodland Security
+# Woodland Warriors
 
 ## Attributions and Credits: 
 Forest background inspiration: https://www.reddit.com/r/PixelArt/comments/188lkmo/pixel_forest_study/
