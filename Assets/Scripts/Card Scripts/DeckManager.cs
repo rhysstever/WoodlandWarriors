@@ -123,12 +123,12 @@ public class DeckManager : MonoBehaviour
         int randomNum = UnityEngine.Random.Range(0, 18);
         return randomNum switch
         {
-            < 4 => CardManager.instance.GetCurrentCardData(Slot.MainHand),
-            < 8 => CardManager.instance.GetCurrentCardData(Slot.OffHand),
-            < 11 => CardManager.instance.GetCurrentCardData(Slot.Ally),
-            < 14 => CardManager.instance.GetCurrentCardData(Slot.Spell),
-            < 16 => CardManager.instance.GetCurrentCardData(Slot.Spirit),
-            _ => CardManager.instance.GetCurrentCardData(Slot.Drink),
+            < 4 => CardManager.instance.GetCurrentCardData(Slot.MainHand),  // Main hand: 4 (0-3)
+            < 8 => CardManager.instance.GetCurrentCardData(Slot.OffHand),   // Off hand: 4 (4-7)
+            < 11 => CardManager.instance.GetCurrentCardData(Slot.Ally),     // Ally: 3 (8-10)
+            < 14 => CardManager.instance.GetCurrentCardData(Slot.Spell),    // Spell: 3 (11-13)
+            < 16 => CardManager.instance.GetCurrentCardData(Slot.Spirit),   // Spirit: 2 (14-15)
+            _ => CardManager.instance.GetCurrentCardData(Slot.Drink),       // Drink: 2 (16-17)
         };
     }
 
@@ -196,21 +196,50 @@ public class DeckManager : MonoBehaviour
 
         if(cardsToBeCentered.Count > 1)
         {
-            // For multiple cards, 
-            float rotationTilt = -3f;
-            float startTilt = -rotationTilt * (cardsToBeCentered.Count + 1) / 2;
+            // For multiple cards
+            float maxRotation = 8f;
+            //float rotationTilt = -3f;
+            //float startTilt = -rotationTilt * (cardsToBeCentered.Count + 1) / 2;
             for(int i = 0; i < cardsToBeCentered.Count; i++)
             {
                 // Place each active card
                 float percentagePosition = (i + 1) * (1f / (cardsToBeCentered.Count + 1));
                 handSpline.Spline.Evaluate(percentagePosition, out var pos, out _, out _);
                 cardsToBeCentered[i].Move(new Vector2(pos.x, pos.y));
-                // Rotate the card based on its index
-                float amountToTilt = startTilt + rotationTilt * i;
-                if(i + 1 > cardsToBeCentered.Count / 2)
+
+                float amountToTilt;
+                if(cardsToBeCentered.Count == 1)
                 {
-                    amountToTilt = startTilt + rotationTilt * (i + 1);
+                    // If there is only 1 card, do not rotate it
+                    amountToTilt = 0f;
                 }
+                else if(cardsToBeCentered.Count == 2)
+                {
+                    // If there are only 2 cards, tilt each slightly
+                    maxRotation /= 2f;
+                    amountToTilt = (i == 0) ? maxRotation : -maxRotation;
+                }
+                else
+                {
+                    // If there are more than 2 cards, do some math
+
+                    // Find the change of tilt from one card to the next
+                    // which is the max rotation / half the cards
+                    float tiltDelta = maxRotation / (cardsToBeCentered.Count / 2);
+                    // Calculate the amount to tilt starting with max rotation
+                    // and subtracting the tilt delta, each time for the # of card it is
+                    amountToTilt = maxRotation - (i * tiltDelta);
+
+                    // If the hand has an even # of cards AND
+                    // the card is on the right side of the hand (back half)
+                    // Rotate it further since there is no center card in hand
+                    if(cardsToBeCentered.Count % 2 == 0 && 
+                        i + 1 > cardsToBeCentered.Count / 2)
+                    {
+                        amountToTilt -= tiltDelta;
+                    }
+                }
+
                 cardsToBeCentered[i].transform.eulerAngles = new Vector3(0f, 0f, amountToTilt);
             }
         }

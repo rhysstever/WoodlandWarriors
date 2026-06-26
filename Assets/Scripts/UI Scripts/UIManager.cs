@@ -162,7 +162,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateCharacterSelectInfo()
     {
-        characterSelectInfoText.text = "Choose Your Character";
+        characterSelectInfoText.text = "Choose Your Warrior";
         characterSelectInfoText.verticalAlignment = VerticalAlignmentOptions.Middle;
     }
 
