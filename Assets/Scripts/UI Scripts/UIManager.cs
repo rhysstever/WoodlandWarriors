@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,18 +9,24 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     // Set in inspector
-    [SerializeField]
-    private GameObject mainMenuUIParent, characterSelectUIParent, gameUIParent, gameEndUIParent;
-    [SerializeField]
-    private GameObject mainMenuButtonsParent, combatUIParent, nonCombatUIParent, cardSelectionUIParent, wellUIParent;
-    [SerializeField]
+    [SerializeField]    // MenuState UI Parents
+    private GameObject mainMenuUIParent, statsParent, characterSelectUIParent, gameUIParent, gameEndUIParent;
+    [SerializeField]    // Sub-menu UI Parents
+    private GameObject mainMenuButtonsParent, statsTextParent, combatUIParent, nonCombatUIParent, cardSelectionUIParent, wellUIParent;
+    [SerializeField]    // Game Sub-menu UI Parents
     private GameObject gameInfoUIParent, viewDeckUIParent, viewDeckCardsUIParent;
-    [SerializeField]
+    [SerializeField]    // Turn Banners
     private GameObject playerTurnBanner, enemyTurnBanner;
-    [SerializeField]
-    private Button mainMenuToCharacterSelectButton, quitButton, gameInfoButton, closeGameInfoButton, viewDeckButton, closeViewDeckButton, endTurnButton, selectCardButton, skipButton, drinkWellButton, gameEndToMainMenuButton;
-    [SerializeField]
+    [SerializeField]    // Buttons
+    private Button mainMenuToCharacterSelectButton, mainMenuToStatsButton, quitButton,  // Main Menu Buttons
+        statsToMainMenuButton,                                                          // Stats Buttons
+        gameInfoButton, closeGameInfoButton, viewDeckButton, closeViewDeckButton,       // Game Top Buttons
+        endTurnButton, selectCardButton, skipButton, drinkWellButton,                   // Game Buttons
+        gameEndToMainMenuButton;                                                        // GameEnd Buttons
+    [SerializeField]    // Texts
     private TMP_Text characterSelectInfoText, gameAreaStageText, gameEndHeaderText, gameEndDeckInfoText;
+    [SerializeField]
+    private GameObject statsTextPrefab;
 
     private bool isSubMenuShowing;
     private float turnBannerVisibleTime;
@@ -49,7 +56,9 @@ public class UIManager : MonoBehaviour
             mainMenuButtonsParent.SetActive(false);
             Camera.main.GetComponent<CameraPan>().PanCameraDown();
         });
+        mainMenuToStatsButton.onClick.AddListener(() => GameManager.instance.ChangeMenuState(MenuState.Stats));
         quitButton.onClick.AddListener(() => Application.Quit());
+        statsToMainMenuButton.onClick.AddListener(() => GameManager.instance.ChangeMenuState(MenuState.MainMenu));
         gameInfoButton.onClick.AddListener(() => ShowGameInfo());
         closeGameInfoButton.onClick.AddListener(() => HideGameInfo());
         viewDeckButton.onClick.AddListener(() => ShowDeckInfo());
@@ -75,34 +84,34 @@ public class UIManager : MonoBehaviour
 
     public void UpdateMenuUI(MenuState menuState)
     {
+        // Hide all parents, then show the ui parent based on the MenuState
+        mainMenuUIParent.SetActive(false);
+        statsParent.SetActive(false);
+        characterSelectUIParent.SetActive(false);
+        gameUIParent.SetActive(false);
+        gameEndUIParent.SetActive(false);
+
         switch(menuState)
         {
             case MenuState.MainMenu:
                 mainMenuUIParent.SetActive(true);
                 mainMenuButtonsParent.SetActive(true);
-                characterSelectUIParent.SetActive(false);
-                gameUIParent.SetActive(false);
-                gameEndUIParent.SetActive(false);
+                mainMenuToStatsButton.interactable = SaveDataManager.instance.HasSaveData;
+                break;
+            case MenuState.Stats:
+                statsParent.SetActive(true);
+                UpdateRunHistory();
                 break;
             case MenuState.CharacterSelect:
-                mainMenuUIParent.SetActive(false);
                 characterSelectUIParent.SetActive(true);
                 UpdateCharacterSelectInfo();
-                gameUIParent.SetActive(false);
-                gameEndUIParent.SetActive(false);
                 break;
             case MenuState.Game:
-                mainMenuUIParent.SetActive(false);
-                characterSelectUIParent.SetActive(false);
                 gameUIParent.SetActive(true);
-                gameEndUIParent.SetActive(false);
                 HideGameInfo();
                 HideDeckInfo();
                 break;
             case MenuState.GameEnd:
-                mainMenuUIParent.SetActive(false);
-                characterSelectUIParent.SetActive(false);
-                gameUIParent.SetActive(false);
                 gameEndUIParent.SetActive(true);
                 UpdateGameEndText();
                 break;
@@ -158,6 +167,30 @@ public class UIManager : MonoBehaviour
     public void ToggleEnemyTurnBanner(bool isActive)
     {
         enemyTurnBanner.SetActive(isActive);
+    }
+
+    public void UpdateRunHistory()
+    {
+        // Destroy all current text children
+        for(int i = statsTextParent.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(statsTextParent.transform.GetChild(i).gameObject);
+        }
+
+        // Load run history data
+        List<SaveDataObject> runHistoryList = SaveDataManager.instance.LoadRunInfo();
+
+        // Loop thr each data object 
+        runHistoryList.ForEach(runData => {
+            // Construct a string using the run data 
+            string displayString = string.Format(
+                "{0} {1}: {2}\n    {3}, {4}, {5}, {6}, {7}, {8}\n",
+                runData.date, runData.character, runData.progress,
+                runData.mainHand, runData.offHand, runData.ally, runData.spell, runData.spirit, runData.drink);
+
+            // Spawn a text prefab
+            Instantiate(statsTextPrefab, statsTextParent.transform).GetComponent<TMP_Text>().text = displayString;
+        });
     }
 
     public void UpdateCharacterSelectInfo()

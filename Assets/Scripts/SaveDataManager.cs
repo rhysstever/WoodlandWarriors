@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -7,8 +8,7 @@ public class SaveDataManager : MonoBehaviour
     // Singleton
     public static SaveDataManager instance;
 
-    private string saveDataDirPath;
-    private string saveDataFileName;
+    private string saveDataDirPath, saveDataDirName, saveDataFileName, saveDataFullPath;
     private bool hasSaveData;
 
     public bool HasSaveData { get { return hasSaveData; } } 
@@ -27,9 +27,11 @@ public class SaveDataManager : MonoBehaviour
 
     private void Start()
     {
-        saveDataDirPath = "Assets/Saves";
-        saveDataFileName = "saveData.game";
-        hasSaveData = false;
+        saveDataDirPath = "Assets";
+        saveDataDirName = "Saves";
+        saveDataFileName = "saveData.txt";
+        saveDataFullPath = Path.Combine(saveDataDirPath, saveDataDirName, saveDataFileName);
+        hasSaveData = CheckForSaveData();
     }
 
     public void SaveGame()
@@ -68,12 +70,24 @@ public class SaveDataManager : MonoBehaviour
         CreateSave(saveData);
     }
 
-    private void CreateSave(SaveDataObject saveData)
+    private bool CheckForSaveData()
     {
-        string fullPath = Path.Combine(saveDataDirPath, saveDataFileName);
         try
         {
-            if(!Directory.Exists(saveDataDirPath))
+            return Directory.Exists(Path.Combine(saveDataDirPath, saveDataDirName));
+        } 
+        catch(Exception e)
+        {
+            Debug.LogError(string.Format("Error! Failed to check for save data: {0}\n {1}", saveDataFullPath, e));
+            return false;
+        }
+    }
+
+    private void CreateSave(SaveDataObject saveData)
+    {
+        try
+        {
+            if(!CheckForSaveData())
             {
                 Directory.CreateDirectory(saveDataDirPath);
             }
@@ -85,7 +99,7 @@ public class SaveDataManager : MonoBehaviour
             {
                 mode = FileMode.Append;
             }
-            using(var stream = File.Open(fullPath, mode))
+            using(var stream = new FileStream(saveDataFullPath, mode))
             {
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
@@ -97,29 +111,31 @@ public class SaveDataManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError(string.Format("Error! Failed to save data to file: {0}\n {1}", fullPath, e));
+            Debug.LogError(string.Format("Error! Failed to save data to file: {0}\n {1}", saveDataFullPath, e));
         }
     }
 
-    public SaveDataObject LoadGame()
+    public List<SaveDataObject> LoadRunInfo()
     {
-        string fullPath = Path.Combine(saveDataDirPath, saveDataFileName);
-        SaveDataObject saveData = null;
+        List<SaveDataObject> saveData = new List<SaveDataObject>();
         try
         {
-            string readData = "";
-            using(FileStream stream = new FileStream(fullPath, FileMode.Open))
+            string readLine = "";
+            using(var stream = new FileStream(saveDataFullPath, FileMode.Open))
             {
                 using(StreamReader reader = new StreamReader(stream))
                 {
-                    readData = reader.ReadToEnd();
+                    while((readLine = reader.ReadLine()) != null)
+                    {
+                        saveData.Add(JsonUtility.FromJson<SaveDataObject>(readLine));
+                    }
                 }
             }
-            saveData = JsonUtility.FromJson<SaveDataObject>(readData);
+
         } 
         catch(Exception e)
         {
-            Debug.LogError(string.Format("Error! Failed to load data from file: {0}\n {1}", fullPath, e));
+            Debug.LogError(string.Format("Error! Failed to load data from file: {0}\n {1}", saveDataFullPath, e));
         }
 
         return saveData;

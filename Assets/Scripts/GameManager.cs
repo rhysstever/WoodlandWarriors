@@ -4,6 +4,7 @@ using UnityEngine;
 public enum MenuState
 {
     MainMenu,
+    Stats,
     CharacterSelect,
     Game,
     GameEnd
@@ -92,6 +93,8 @@ public class GameManager : MonoBehaviour
                 ChangeGameState(GameState.None);
                 ChangeCombatState(CombatState.None);
                 Camera.main.GetComponent<CameraPan>().ResetCameraPosition();
+                break;
+            case MenuState.Stats:
                 break;
             case MenuState.CharacterSelect:
                 CharacterManager.instance.ShowCharacterSelectIcons();

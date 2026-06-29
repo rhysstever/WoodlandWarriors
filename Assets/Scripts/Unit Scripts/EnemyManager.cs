@@ -77,6 +77,7 @@ public class EnemyManager : MonoBehaviour
         {
             EnemyType.Boar => new List<Action>
             {
+                new Action(ActionType.Attack, 10, TargetType.Player),   // TODO: remove when finished testing saving
                 new Action(ActionType.Defend, 2, TargetType.Self),
                 new Action(ActionType.Attack, 2, TargetType.Player),
                 new Buff(ActionType.Attack, 2),
