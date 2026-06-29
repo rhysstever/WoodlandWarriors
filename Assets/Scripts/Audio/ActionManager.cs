@@ -44,6 +44,11 @@ public class ActionManager : MonoBehaviour
             // Repeat action if it triggers multiple times
             for(int i = 0; i < action.Times; i++)
             {
+                if(EnemyManager.instance.IsWaveOver())
+                {
+                    break;
+                }
+
                 yield return timesDelayWait;
                 // Check if the action should hit all enemies
                 if((action.TargetType == TargetType.AllFoes && actor is Player)

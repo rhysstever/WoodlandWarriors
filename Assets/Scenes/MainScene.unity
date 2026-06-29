@@ -849,6 +849,7 @@ GameObject:
   - component: {fileID: 231419617}
   - component: {fileID: 231419618}
   - component: {fileID: 231419619}
+  - component: {fileID: 231419625}
   - component: {fileID: 231419623}
   - component: {fileID: 231419620}
   m_Layer: 0
@@ -1117,6 +1118,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcdf427ddfdd21049b0580c17dc68065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &231419625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231419612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe8f7d65599fe4e41939e990bd8bc12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &242233830
@@ -3531,7 +3544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1404945760096809877, guid: 0055bd6e5706f264e95bd140e6a11484, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -350
+      value: -400
       objectReference: {fileID: 0}
     - target: {fileID: 1404945760096809877, guid: 0055bd6e5706f264e95bd140e6a11484, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
