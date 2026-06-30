@@ -115,18 +115,22 @@ public class Enemy : Unit
     public void UpdateNextActionUI()
     {
         Action nextAction = ParseRoundAction();
-        int nextActionTotalAmount = nextAction.Amount;
-        // If the next action is not a buff, add any existing buff amounts
-        if(nextAction is not Buff)
-        {
-            nextActionTotalAmount += unitEffects.GetEffectAmount(nextAction.ActionType, true);
-        }
-        nextActionText.text = nextActionTotalAmount.ToString();
-        nextActionIcon.sprite = CardManager.instance.GetActionSprite(nextAction.ActionType);
 
-        nextActionText.gameObject.SetActive(true);
-        nextActionIcon.gameObject.SetActive(true);
-        nextActionBuffIcon.SetActive(nextAction is Buff);
+        if(nextAction is Buff)
+        {
+            nextActionText.gameObject.SetActive(false);
+            nextActionIcon.gameObject.SetActive(false);
+            nextActionBuffIcon.SetActive(true);
+        }
+        else
+        {
+            int nextActionTotalAmount = nextAction.Amount + unitEffects.GetEffectAmount(nextAction.ActionType, true);
+            nextActionText.text = nextActionTotalAmount.ToString();
+            nextActionIcon.sprite = CardManager.instance.GetActionSprite(nextAction.ActionType);
+
+            nextActionText.gameObject.SetActive(true);
+            nextActionIcon.gameObject.SetActive(true);
+        }
     }
 
     private void OnMouseEnter()
