@@ -12,10 +12,9 @@
 /[Uu]ser[Ss]ettings/
 *.log
 # Custom
-/[Ss]aves/
-/[Ss]ave/
-/[Ss]aves/*
-/[Ss]ave/*
+/[Aa]ssets/[Ss]aves/
+/[Aa]ssets/[Ss]aves.meta
+/[Aa]ssets/[Ss]aves/*
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
