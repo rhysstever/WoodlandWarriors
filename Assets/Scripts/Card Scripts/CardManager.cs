@@ -53,8 +53,9 @@ public class CardManager : MonoBehaviour
     void Start()
     {
         rarityPercentages = new Dictionary<Rarity, float>();
-        rarityPercentages.Add(Rarity.Basic, 0.75f);
-        rarityPercentages.Add(Rarity.Uncommon, 0.25f);
+        rarityPercentages.Add(Rarity.Basic, 0.8f);
+        rarityPercentages.Add(Rarity.Uncommon, 0.15f);
+        rarityPercentages.Add(Rarity.Uncommon, 0.05f);
     }
 
     #region Card Creation
@@ -78,7 +79,7 @@ public class CardManager : MonoBehaviour
                 new Action(ActionType.Attack, 4, TargetType.Foe),
                 new Action(ActionType.Heal, 4, TargetType.Player)
             }),
-            new CardData("Scythe", Slot.MainHand, Rarity.Uncommon, new List<Action> {
+            new CardData("Scythe", Slot.MainHand, Rarity.Rare, new List<Action> {
                 new Action(ActionType.Attack, 3, TargetType.Foe),
                 new Action(ActionType.Poison, 3, TargetType.Foe)
             }),
@@ -97,7 +98,7 @@ public class CardManager : MonoBehaviour
                 new Action(ActionType.Spike, 1, TargetType.Player)
             }),
             //new CardData("Tome", Slot.OffHand, Rarity.Uncommon, new List<CardAction> {}),
-            new CardData("Tower Shield", Slot.OffHand, Rarity.Uncommon, new List<Action> { new Action(ActionType.Defend, 5, TargetType.Player) }),
+            new CardData("Tower Shield", Slot.OffHand, Rarity.Rare, new List<Action> { new Action(ActionType.Defend, 5, TargetType.Player) }),
             //new CardData("Arcane Focus", Slot.OffHand, Rarity.Uncommon, new List<CardAction> {}),
 
             // Ally cards
@@ -128,19 +129,9 @@ public class CardManager : MonoBehaviour
             //new CardData("Chipmunk", Slot.Ally, Rarity.Uncommon, new List<Action> {
             //    new Summon(1, "Chipmunk", new List<Action> { ... })
             //}),
-            new CardData("Hamster", Slot.Ally, Rarity.Uncommon, new List<Action> { 
+            new CardData("Hamster", Slot.Ally, Rarity.Rare, new List<Action> { 
                 new Summon(1, "Hamster", new List<Action> { new Action(ActionType.Draw, 1, TargetType.None) }) 
             }),
-
-            // Spirit cards
-            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Attack, 1) }),
-            new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Defend, 1) }),
-            new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Burn, 1) }),
-            new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Poison, 1) }),
-            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Spike, 1) }),
-            new CardData("Light Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Heal, 1) }),
-            //new CardData("Lava Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(...) }),
-            //new CardData("Mud Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(...) }),
 
             // Spell cards
             new CardData("Arcane Bolt", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.MagicalAttack, 1, TargetType.RandomFoe) }),
@@ -151,10 +142,20 @@ public class CardManager : MonoBehaviour
             }),
             new CardData("Lightning Strike", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.MagicalAttack, 4, TargetType.RandomFoe) }),
             new CardData("Heal", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Heal, 5, TargetType.Ally) }),
-            new CardData("Blizzard", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.MagicalAttack, 3, TargetType.AllFoes) }),
             new CardData("Curse", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Poison, 5, TargetType.Foe) }),
             //new CardData("Arcane Armor", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(...) }),
             //new CardData("Reflect", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(...) }),
+            new CardData("Blizzard", Slot.Spell, Rarity.Rare, new List<Action> { new Action(ActionType.MagicalAttack, 3, TargetType.AllFoes) }),
+
+            // Spirit cards
+            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.MagicalAttack, 1) }),
+            new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Defend, 1) }),
+            new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Burn, 1) }),
+            new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Poison, 1) }),
+            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Attack, 1) }),
+            new CardData("Light Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(ActionType.Heal, 1) }),  // TODO: when other spirits are added, downgrade this to Uncommon
+            //new CardData("Lava Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(...) }),
+            //new CardData("Mud Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(...) }),
 
             // Drink cards
             new CardData("Cup", Slot.Drink, Rarity.Basic, new List<Action> { new Action(ActionType.Heal, 1, TargetType.Player) }),
@@ -169,7 +170,7 @@ public class CardManager : MonoBehaviour
                 new Action(ActionType.Heal, 1, TargetType.Player),
                 new Action(ActionType.Poison, 2, TargetType.Foe)
             }),
-            new CardData("Chalice", Slot.Drink, Rarity.Uncommon, new List<Action> {
+            new CardData("Chalice", Slot.Drink, Rarity.Rare, new List<Action> {
                 new Action(ActionType.Heal, 1, TargetType.Player),
                 new Action(ActionType.Cleanse, 0, TargetType.Player)
             }),
