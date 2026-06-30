@@ -133,10 +133,18 @@ public class Action
                 {
                     descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.Spike, true);
                 }
-                description += string.Format("Gain {0} spikes", descriptionAmount);
+                description += string.Format("Gain {0} spike", descriptionAmount);
+                if(descriptionAmount > 1)
+                {
+                    description += "s";
+                }
                 break;
             case ActionType.Draw:
-                description += string.Format("Draw {0} cards", amount);
+                description += string.Format("Draw {0} card", amount);
+                if(amount > 1)
+                {
+                    description += "s";
+                }
                 break;
             case ActionType.Cleanse:
                 description += "Cleanse";
