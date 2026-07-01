@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum Character
@@ -28,16 +29,15 @@ public class CharacterManager : MonoBehaviour
     [SerializeField]    // Ally Prefabs
     private GameObject squirrelPrefab, frogPrefab, ratPrefab, newtPrefab, toadPrefab, porcupinePrefab, hamsterPrefab;
     [SerializeField]    // Spirit Prefabs
-    private GameObject earthSpiritPrefab, airSpiritPrefab, fireSpiritPrefab, waterSpiritPrefab, darkSpiritPrefab, lightSpiritPrefab;  // TODO: add the rest
+    private GameObject earthSpiritPrefab, airSpiritPrefab, fireSpiritPrefab, waterSpiritPrefab, darkSpiritPrefab, lightSpiritPrefab;
 
     // Set at Start
     private Character chosenCharacter;
     private Ally ally;
-    private GameObject spiritObject;
+    private List<GameObject> spirits;
 
     public Character ChosenCharacter { get { return chosenCharacter; } }
     public Ally Ally { get { return ally; } }
-    public GameObject SpiritObject { get { return spiritObject; } }
 
     private void Awake()
     {
@@ -54,6 +54,7 @@ public class CharacterManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        spirits = new List<GameObject>();
         HideCharacterSelectIcons();
     }
 
@@ -173,21 +174,13 @@ public class CharacterManager : MonoBehaviour
 
     public void SummonSpirit(string spiritTypeToSummon)
     {
-        if(spiritObject != null)
-        {
-            // TODO: buff the current spirit
-        }
-        else
-        {
-            GameObject newSpirit = Instantiate(
-                GetSpiritPrefab(spiritTypeToSummon),
-                spiritSpawnTrans.position,
-                Quaternion.identity,
-                transform
-            );
-
-            spiritObject = newSpirit;
-        }
+        GameObject newSpirit = Instantiate(
+            GetSpiritPrefab(spiritTypeToSummon),
+            spiritSpawnTrans.position,
+            Quaternion.identity,
+            transform
+        );
+        spirits.Add(newSpirit);
     }
 
     public IEnumerator ProcessAllyTurn()
@@ -220,10 +213,10 @@ public class CharacterManager : MonoBehaviour
             ally = null;
         }
 
-        if(spiritObject != null)
+        for(int i = spirits.Count - 1; i >= 0; i--)
         {
-            Destroy(spiritObject);
-            spiritObject = null;
+            Destroy(spirits[i]);
         }
+        spirits.Clear();
     }
 }

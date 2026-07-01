@@ -148,11 +148,11 @@ public class CardManager : MonoBehaviour
             new CardData("Blizzard", Slot.Spell, Rarity.Rare, new List<Action> { new Action(ActionType.SpellAttack, 3, TargetType.AllFoes) }),
 
             // Spirit cards
-            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.SpellAttack, 1) }),
+            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.WeaponAttack, 1) }),
             new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Defend, 1) }),
             new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Burn, 1) }),
-            new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Poison, 1) }),
-            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.WeaponAttack, 1) }),
+            new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.SpellAttack, 1) }),
+            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Poison, 1) }),
             new CardData("Light Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(ActionType.Heal, 1) }),  // TODO: when other spirits are added, downgrade this to Uncommon
             //new CardData("Lava Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(...) }),
             //new CardData("Mud Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(...) }),
