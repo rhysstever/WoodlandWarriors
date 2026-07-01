@@ -103,8 +103,15 @@ public class ActionManager : MonoBehaviour
             case TargetType.RandomFoe:
                 if(actor is Enemy)
                 {
-                    // TODO - Get random between player and ally
-                    return GameManager.instance.Player;
+                    // If an ally exists, randomly choose between the ally and the player
+                    if(CharacterManager.instance.Ally != null || UnityEngine.Random.Range(0, 2) == 1)
+                    {
+                        return CharacterManager.instance.Ally;
+                    }
+                    else
+                    {
+                        return GameManager.instance.Player;
+                    }
                 }
                 else
                 {
