@@ -102,6 +102,7 @@ public class CardManager : MonoBehaviour
         // Reminder: First card of each slot will be there starter card 
         List<CardData> cards = new() {
             // Main hand cards
+            new CardData("Flail", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 2, TargetType.RandomFoe, 3) }),
             new CardData("Shortsword", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 1, TargetType.Foe) }),
             new CardData("Wand", Slot.MainHand, Rarity.Basic, 
                 new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) },
@@ -110,7 +111,6 @@ public class CardManager : MonoBehaviour
                 new List<Action> { new Action(ActionType.Burn, 2, TargetType.Foe) },
                 new List<Action> { new Buff(ActionType.SpellAttack, 1) }),
             new CardData("Mace", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 3, TargetType.AllFoes) }),
-            new CardData("Flail", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 2, TargetType.RandomFoe, 3) }),
             new CardData("Flaming Arrow", Slot.MainHand, Rarity.Uncommon, new List<Action> {
                 new Action(ActionType.WeaponAttack, 2, TargetType.Foe),
                 new Action(ActionType.Burn, 2, TargetType.Foe),
