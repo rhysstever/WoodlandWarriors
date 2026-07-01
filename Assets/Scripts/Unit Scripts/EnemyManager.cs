@@ -79,14 +79,14 @@ public class EnemyManager : MonoBehaviour
             EnemyType.Boar => new List<Action>
             {
                 new Action(ActionType.Defend, 2, TargetType.Self),
-                new Action(ActionType.Attack, 2, TargetType.Player),
-                new Buff(ActionType.Attack, 2),
+                new Action(ActionType.WeaponAttack, 2, TargetType.Player),
+                new Buff(ActionType.WeaponAttack, 2),
             },
             EnemyType.Mushroom => new List<Action>
             {
                 new Action(ActionType.Defend, 2, TargetType.Self),
                 new Action(ActionType.Poison, 2, TargetType.Player),
-                new Action(ActionType.Attack, 2, TargetType.Player),
+                new Action(ActionType.WeaponAttack, 2, TargetType.Player),
                 new Buff(ActionType.Poison, 1),
             },
             EnemyType.Fairy => new List<Action>
@@ -95,15 +95,14 @@ public class EnemyManager : MonoBehaviour
                 new Action(ActionType.Burn, 1, TargetType.Player),
                 new EnemySummon(1, EnemyType.Fairy),
                 new Buff(ActionType.Burn, 1),
-                // TODO: add summon of self
             },
             EnemyType.Ent => new List<Action>
             {
                 new Action(ActionType.Poison, 6, TargetType.Player),
                 new Action(ActionType.Defend, 5, TargetType.Self),
                 new Action(ActionType.Defend, 5, TargetType.Self),
-                new Action(ActionType.Attack, 15, TargetType.Player),
-                new Buff(ActionType.Attack, 10),
+                new Action(ActionType.WeaponAttack, 15, TargetType.Player),
+                new Buff(ActionType.WeaponAttack, 10),
             },
             EnemyType.Hag => new List<Action>
             {

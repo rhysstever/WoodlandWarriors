@@ -130,10 +130,10 @@ public class ActionManager : MonoBehaviour
         int amount = action.Amount;
         switch(action.ActionType)
         {
-            case ActionType.Attack:
+            case ActionType.WeaponAttack:
                 actor.DealDamage(amount, target, DamageType.Attack);
                 break;
-            case ActionType.MagicalAttack:
+            case ActionType.SpellAttack:
                 actor.DealDamage(amount, target, DamageType.Spell);
                 break;
             case ActionType.Defend:
@@ -152,6 +152,7 @@ public class ActionManager : MonoBehaviour
                 target.GiveSpike(amount);
                 break;
             case ActionType.Draw:
+                // Only draw cards for the player
                 if(action.TargetType == TargetType.Player)
                 {
                     DeckManager.instance.DrawCards(amount);
@@ -163,19 +164,21 @@ public class ActionManager : MonoBehaviour
             case ActionType.Summon:
                 if(action.TargetType == TargetType.None)
                 {
-                    for(int i = 0; i < action.Amount; i++)
+                    // For enemies, use the amount as the number of enemies to spawn
+                    if(actor is Enemy)
                     {
-                        if(actor is Enemy)
+                        for(int i = 0; i < action.Amount; i++)
                         {
                             EnemySummon summon = action as EnemySummon;
                             GameObject enemySummonPrefab = EnemyManager.instance.GetEnemyPrefabByType(summon.EnemyType);
                             EnemyManager.instance.SpawnSummon(enemySummonPrefab);
                         }
-                        else
-                        {
-                            Summon summon = action as Summon;
-                            CharacterManager.instance.SummonAlly(summon);
-                        }
+                    }
+                    // For other units (mainly the Player), only spawn once
+                    else
+                    {
+                        Summon summon = action as Summon;
+                        CharacterManager.instance.SummonAlly(summon);
                     }
                 }
                 break;
@@ -186,8 +189,11 @@ public class ActionManager : MonoBehaviour
     {
         switch(action.ActionType)
         {
-            case ActionType.Attack:
-                target.BuffAttack(action.Amount);
+            case ActionType.WeaponAttack:
+                target.BuffWeaponAttack(action.Amount);
+                break;
+            case ActionType.SpellAttack:
+                target.BuffSpellAttack(action.Amount);
                 break;
             case ActionType.Defend:
                 target.BuffDefense(action.Amount);
@@ -203,6 +209,9 @@ public class ActionManager : MonoBehaviour
                 break;
             case ActionType.Spike:
                 target.BuffSpike(action.Amount);
+                break;
+            case ActionType.Summon:
+                target.BuffSummon(action.Amount);
                 break;
             default:
                 Debug.Log(string.Format("Error! No buff for type: {0}", action.ActionType));

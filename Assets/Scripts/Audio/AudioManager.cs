@@ -77,10 +77,10 @@ public class AudioManager : MonoBehaviour
     {
         switch(actionType)
         {
-            case ActionType.Attack:
+            case ActionType.WeaponAttack:
                 PlayAttackAudio();
                 break;
-            case ActionType.MagicalAttack:
+            case ActionType.SpellAttack:
                 PlaySpellAttackAudio();
                 break;
             default:

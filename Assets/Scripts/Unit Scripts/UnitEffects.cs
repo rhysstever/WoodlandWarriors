@@ -14,8 +14,8 @@ public class UnitEffects
 
         effects = new List<Effect>
         {
-            new Effect(new Buff(ActionType.Attack, 0), false),
-            new Effect(new Buff(ActionType.MagicalAttack, 0), false),
+            new Effect(new Buff(ActionType.WeaponAttack, 0), false),
+            new Effect(new Buff(ActionType.SpellAttack, 0), false),
             new Effect(new Buff(ActionType.Defend, 0), false),
             new Effect(new Buff(ActionType.Heal, 0), false),
             burnBuffEffect,
@@ -24,6 +24,7 @@ public class UnitEffects
             new Effect(new Action(ActionType.Burn, 0, TargetType.Self), true, burnBuffEffect),
             new Effect(new Action(ActionType.Poison, 0, TargetType.Self), true, poisonBuffEffect),
             new Effect(new Action(ActionType.Spike, 0, TargetType.Self), false, spikeBuffEffect),
+            new Effect(new Buff(ActionType.Summon, 0), false)
         };
     }
 

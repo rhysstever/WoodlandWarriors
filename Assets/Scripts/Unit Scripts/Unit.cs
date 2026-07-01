@@ -76,11 +76,11 @@ public class Unit : MonoBehaviour
         int amount = baseAttack;
         if(damageType == DamageType.Attack)
         {
-            amount += unitEffects.GetEffectAmount(ActionType.Attack, true);
+            amount += unitEffects.GetEffectAmount(ActionType.WeaponAttack, true);
         }
         else if(damageType == DamageType.Spell)
         {
-            amount += unitEffects.GetEffectAmount(ActionType.MagicalAttack, true);
+            amount += unitEffects.GetEffectAmount(ActionType.SpellAttack, true);
         }
 
         if(amount < 0)
@@ -111,11 +111,11 @@ public class Unit : MonoBehaviour
         // Play audio 
         if(damageType == DamageType.Attack)
         {
-            AudioManager.instance.PlaySlotAttackAudio(ActionType.Attack);
+            AudioManager.instance.PlaySlotAttackAudio(ActionType.WeaponAttack);
         }
         else if(damageType == DamageType.Spell)
         {
-            AudioManager.instance.PlaySlotAttackAudio(ActionType.MagicalAttack);
+            AudioManager.instance.PlaySlotAttackAudio(ActionType.SpellAttack);
         }
 
         // Reset frames and move the unit back
@@ -287,21 +287,21 @@ public class Unit : MonoBehaviour
         UpdateEffectsUI();
     }
 
-    public void BuffAttack(int amount)
+    public void BuffWeaponAttack(int amount)
     {
-        unitEffects.UpdateEffectAmount(ActionType.Attack, amount, true);
+        unitEffects.UpdateEffectAmount(ActionType.WeaponAttack, amount, true);
+        UpdateEffectsUI();
+    }
+
+    public void BuffSpellAttack(int amount)
+    {
+        unitEffects.UpdateEffectAmount(ActionType.SpellAttack, amount, true);
         UpdateEffectsUI();
     }
 
     public void BuffDefense(int amount)
     {
         unitEffects.UpdateEffectAmount(ActionType.Defend, amount, true);
-        UpdateEffectsUI();
-    }
-
-    public void BuffMagicalAttack(int amount)
-    {
-        unitEffects.UpdateEffectAmount(ActionType.MagicalAttack, amount, true);
         UpdateEffectsUI();
     }
 
@@ -326,6 +326,12 @@ public class Unit : MonoBehaviour
     public void BuffSpike(int amount)
     {
         unitEffects.UpdateEffectAmount(ActionType.Spike, amount, true);
+        UpdateEffectsUI();
+    }
+
+    public void BuffSummon(int amount)
+    {
+        unitEffects.UpdateEffectAmount(ActionType.Summon, amount, true);
         UpdateEffectsUI();
     }
 

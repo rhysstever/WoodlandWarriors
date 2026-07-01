@@ -58,10 +58,10 @@ public class DeckManager : MonoBehaviour
         switch(CharacterManager.instance.ChosenCharacter)
         {
             case Character.Badger:
-                buffs.Add(new Buff(ActionType.Attack, 1));
+                buffs.Add(new Buff(ActionType.WeaponAttack, 1));
                 break;
             case Character.Fox:
-                buffs.Add(new Buff(ActionType.MagicalAttack, 1));
+                buffs.Add(new Buff(ActionType.SpellAttack, 1));
                 break;
             case Character.Opossum:
                 buffs.Add(new Buff(ActionType.Summon, 1));

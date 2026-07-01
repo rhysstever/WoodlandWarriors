@@ -18,7 +18,7 @@ public class CardManager : MonoBehaviour
     [SerializeField]    // Rare card base sprites
     private Sprite cardBaseRareAttack, cardBaseRareDefend, cardBaseRareAlly, cardBaseRareSpell, cardBaseRareSpirit, cardBaseRareDrink;
     [SerializeField]    // Action icon sprites
-    private Sprite actionIconSpriteAttack, actionIconSpriteDefend, actionIconSpriteMagicalAttack, actionIconSpriteHeal, actionIconSpriteFire, actionIconSpritePoison, actionIconSpriteSpike, actionIconSpriteSummon;
+    private Sprite actionIconSpriteWeaponAttack, actionIconSpriteDefend, actionIconSpriteSpellAttack, actionIconSpriteHeal, actionIconSpriteFire, actionIconSpritePoison, actionIconSpriteSpike, actionIconSpriteSummon;
     [SerializeField]
     private GameObject effectUIPrefab, effectBuffUIPrefab;
 
@@ -65,22 +65,22 @@ public class CardManager : MonoBehaviour
 
         List<CardData> cards = new() {
             // Main hand cards
-            new CardData("Shortsword", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 1, TargetType.Foe) }),
+            new CardData("Shortsword", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 1, TargetType.Foe) }),
             new CardData("Wand", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) }),
             new CardData("Staff", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 2, TargetType.Foe) }),
-            new CardData("Mace", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 3, TargetType.AllFoes) }),
-            new CardData("Flail", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 2, TargetType.RandomFoe, 3) }),
+            new CardData("Mace", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 3, TargetType.AllFoes) }),
+            new CardData("Flail", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 2, TargetType.RandomFoe, 3) }),
             new CardData("Flaming Arrow", Slot.MainHand, Rarity.Basic, new List<Action> {
-                new Action(ActionType.Attack, 2, TargetType.Foe),
+                new Action(ActionType.WeaponAttack, 2, TargetType.Foe),
                 new Action(ActionType.Burn, 2, TargetType.Foe),
             }),
-            new CardData("Spear", Slot.MainHand, Rarity.Uncommon, new List<Action> { new Action(ActionType.Attack, 6, TargetType.Foe) }),
+            new CardData("Spear", Slot.MainHand, Rarity.Uncommon, new List<Action> { new Action(ActionType.WeaponAttack, 6, TargetType.Foe) }),
             new CardData("Trident", Slot.MainHand, Rarity.Uncommon, new List<Action> {
-                new Action(ActionType.Attack, 4, TargetType.Foe),
+                new Action(ActionType.WeaponAttack, 4, TargetType.Foe),
                 new Action(ActionType.Heal, 4, TargetType.Player)
             }),
             new CardData("Scythe", Slot.MainHand, Rarity.Rare, new List<Action> {
-                new Action(ActionType.Attack, 3, TargetType.Foe),
+                new Action(ActionType.WeaponAttack, 3, TargetType.Foe),
                 new Action(ActionType.Poison, 3, TargetType.Foe)
             }),
 
@@ -88,10 +88,10 @@ public class CardManager : MonoBehaviour
             new CardData("Wooden Shield", Slot.OffHand, Rarity.Basic, new List<Action> { new Action(ActionType.Defend, 1, TargetType.Player) }),
             new CardData("Buckler", Slot.OffHand, Rarity.Basic, new List<Action> { new Action(ActionType.Defend, 2, TargetType.Player) }),
             new CardData("Poison Dagger", Slot.OffHand, Rarity.Basic, new List<Action> {
-                new Action(ActionType.Attack, 1, TargetType.Foe),
+                new Action(ActionType.WeaponAttack, 1, TargetType.Foe),
                 new Action(ActionType.Poison, 1, TargetType.Foe)
             }),
-            new CardData("Quiver", Slot.OffHand, Rarity.Basic, new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }),
+            new CardData("Quiver", Slot.OffHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 1, TargetType.RandomFoe) }),
             //new CardData("Scroll", Slot.OffHand, Rarity.Basic, new List<CardAction> {}),
             new CardData("Spike Shield", Slot.OffHand, Rarity.Uncommon, new List<Action> {
                 new Action(ActionType.Defend, 3, TargetType.Player),
@@ -103,7 +103,7 @@ public class CardManager : MonoBehaviour
 
             // Ally cards
             new CardData("Squirrel", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(1, "Squirrel", new List<Action> { new Action(ActionType.Attack, 1, TargetType.RandomFoe) }) 
+                new Summon(1, "Squirrel", new List<Action> { new Action(ActionType.WeaponAttack, 1, TargetType.RandomFoe) }) 
             }),
             new CardData("Frog", Slot.Ally, Rarity.Basic, new List<Action> { 
                 new Summon(1, "Frog", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Player) }) 
@@ -134,25 +134,25 @@ public class CardManager : MonoBehaviour
             }),
 
             // Spell cards
-            new CardData("Arcane Bolt", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.MagicalAttack, 1, TargetType.RandomFoe) }),
+            new CardData("Arcane Bolt", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.SpellAttack, 1, TargetType.RandomFoe) }),
             new CardData("Fireball", Slot.Spell, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 3, TargetType.Foe) }),
             new CardData("Life Drain", Slot.Spell, Rarity.Basic, new List<Action> {
-                new Action(ActionType.MagicalAttack, 2, TargetType.Foe),
+                new Action(ActionType.SpellAttack, 2, TargetType.Foe),
                 new Action(ActionType.Heal, 1, TargetType.Player)
             }),
-            new CardData("Lightning Strike", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.MagicalAttack, 4, TargetType.RandomFoe) }),
+            new CardData("Lightning Strike", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.SpellAttack, 4, TargetType.RandomFoe) }),
             new CardData("Heal", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Heal, 5, TargetType.Ally) }),
             new CardData("Curse", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(ActionType.Poison, 5, TargetType.Foe) }),
             //new CardData("Arcane Armor", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(...) }),
             //new CardData("Reflect", Slot.Spell, Rarity.Uncommon, new List<Action> { new Action(...) }),
-            new CardData("Blizzard", Slot.Spell, Rarity.Rare, new List<Action> { new Action(ActionType.MagicalAttack, 3, TargetType.AllFoes) }),
+            new CardData("Blizzard", Slot.Spell, Rarity.Rare, new List<Action> { new Action(ActionType.SpellAttack, 3, TargetType.AllFoes) }),
 
             // Spirit cards
-            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.MagicalAttack, 1) }),
+            new CardData("Air Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.SpellAttack, 1) }),
             new CardData("Earth Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Defend, 1) }),
             new CardData("Fire Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Burn, 1) }),
             new CardData("Water Spirit", Slot.Spirit, Rarity.Basic, new List<Action> { new Buff(ActionType.Poison, 1) }),
-            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.Attack, 1) }),
+            new CardData("Dark Spirit", Slot.Spirit, Rarity.Uncommon, new List<Action> { new Buff(ActionType.WeaponAttack, 1) }),
             new CardData("Light Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(ActionType.Heal, 1) }),  // TODO: when other spirits are added, downgrade this to Uncommon
             //new CardData("Lava Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(...) }),
             //new CardData("Mud Spirit", Slot.Spirit, Rarity.Rare, new List<Action> { new Buff(...) }),
@@ -162,7 +162,7 @@ public class CardManager : MonoBehaviour
             new CardData("Pouch", Slot.Drink, Rarity.Basic, new List<Action> { new Action(ActionType.Draw, 1, TargetType.Player) }),
             new CardData("Tankard", Slot.Drink, Rarity.Basic, new List<Action> {
                 new Action(ActionType.Heal, 1, TargetType.None),
-                new Action(ActionType.Attack, 1, TargetType.RandomFoe)
+                new Action(ActionType.WeaponAttack, 1, TargetType.RandomFoe)
             }),
             new CardData("Goblet", Slot.Drink, Rarity.Basic, new List<Action> { new Action(ActionType.Heal, 2, TargetType.Player) }),
             new CardData("Potion", Slot.Drink, Rarity.Uncommon, new List<Action> { new Action(ActionType.Heal, 4, TargetType.Player) }),
@@ -355,7 +355,8 @@ public class CardManager : MonoBehaviour
     {
         return actionType switch
         {
-            ActionType.Attack => actionIconSpriteAttack,
+            ActionType.WeaponAttack => actionIconSpriteWeaponAttack,
+            ActionType.SpellAttack => actionIconSpriteSpellAttack,
             ActionType.Defend => actionIconSpriteDefend,
             ActionType.Heal => actionIconSpriteHeal,
             ActionType.Burn => actionIconSpriteFire,

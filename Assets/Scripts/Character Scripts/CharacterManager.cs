@@ -149,7 +149,7 @@ public class CharacterManager : MonoBehaviour
 
     public void SummonAlly(Summon summonAction)
     {
-        int amount = summonAction.Amount;
+        int amount = summonAction.Amount + GameManager.instance.Player.UnitEffects.GetEffectAmount(ActionType.Summon, true);
 
         AudioManager.instance.PlayAllyAudio(summonAction.SummonName);
         if(ally != null)

@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 public enum ActionType
 {
-    Attack,
-    MagicalAttack,
+    WeaponAttack,
+    SpellAttack,
     Defend,
     Heal,
     Burn,
@@ -70,19 +70,19 @@ public class Action
 
         switch(actionType)
         {
-            case ActionType.Attack:
+            case ActionType.WeaponAttack:
                 if(unit != null)
                 {
-                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.Attack, true);
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.WeaponAttack, true);
                 }
-                description += string.Format("Attack for {0}", descriptionAmount);
+                description += string.Format("Physcially attack for {0}", descriptionAmount);
                 break;
-            case ActionType.MagicalAttack:
+            case ActionType.SpellAttack:
                 if(unit != null)
                 {
-                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.MagicalAttack, true);
+                    descriptionAmount += unit.UnitEffects.GetEffectAmount(ActionType.SpellAttack, true);
                 }
-                description += string.Format("Attack for {0}", descriptionAmount);
+                description += string.Format("Magically attack for {0}", descriptionAmount);
                 break;
             case ActionType.Defend:
                 if(unit != null)
@@ -194,12 +194,8 @@ public class Summon : Action
     {
         // ===== Description Format =====
         // Summon: "Summon a [NAME] with X health. ..."
-        int descriptionAmount = amount;
-        if(CharacterManager.instance.ChosenCharacter == Character.Opossum)
-        {
-            descriptionAmount++;
-        }
-        string description = string.Format("Summon a {0} for {1} health. \n\nOn its turn:", summonName, descriptionAmount);
+        int buffedAmount = amount + GameManager.instance.Player.UnitEffects.GetEffectAmount(ActionType.Summon, true);
+        string description = string.Format("Summon a {0} for {1} health. \n\nOn its turn:", summonName, buffedAmount);
 
         foreach(Action action in summonActions)
         {

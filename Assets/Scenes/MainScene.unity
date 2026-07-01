@@ -1007,9 +1007,9 @@ MonoBehaviour:
   cardBaseRareSpell: {fileID: 21300000, guid: 8cb06b8414c92f043af8fcdbe6c51f25, type: 3}
   cardBaseRareSpirit: {fileID: 21300000, guid: f64906e6d295c2e409d481c1f6d97bd0, type: 3}
   cardBaseRareDrink: {fileID: 21300000, guid: 218d725bf81513a4b9d43250f806d835, type: 3}
-  actionIconSpriteAttack: {fileID: 1161201145128540330, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  actionIconSpriteWeaponAttack: {fileID: 1161201145128540330, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   actionIconSpriteDefend: {fileID: 2130535880278150251, guid: 6a9766e68245de946a4a81db07478054, type: 3}
-  actionIconSpriteMagicalAttack: {fileID: 184950751378207249, guid: 6a9766e68245de946a4a81db07478054, type: 3}
+  actionIconSpriteSpellAttack: {fileID: 184950751378207249, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   actionIconSpriteHeal: {fileID: 1202984965197363600, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   actionIconSpriteFire: {fileID: 5543941588292853863, guid: 6a9766e68245de946a4a81db07478054, type: 3}
   actionIconSpritePoison: {fileID: -1863859237976802683, guid: 6a9766e68245de946a4a81db07478054, type: 3}
