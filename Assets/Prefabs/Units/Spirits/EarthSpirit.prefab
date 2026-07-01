@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 537601882604148041}
   - component: {fileID: 5827580618836276608}
   - component: {fileID: 4999680957972489071}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EarthSpirit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spline: {fileID: 4605376449837793915}
-  speed: 1
+  speed: 0.5
 --- !u!1 &3387560912777046822
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7736114354471850587}
   - component: {fileID: 4605376449837793915}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spline
   m_TagString: Untagged
   m_Icon: {fileID: 0}

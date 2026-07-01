@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 public enum Character
@@ -26,15 +28,13 @@ public class CharacterManager : MonoBehaviour
     private Transform allySpawnTrans, spiritSpawnTrans;
     [SerializeField]    // Character Sprites
     private Sprite badgerSprite, beaverSprite, foxSprite, opossumSprite, otterSprite, skunkSprite;
-    [SerializeField]    // Ally Prefabs
-    private GameObject squirrelPrefab, frogPrefab, ratPrefab, newtPrefab, toadPrefab, porcupinePrefab, hamsterPrefab;
-    [SerializeField]    // Spirit Prefabs
-    private GameObject earthSpiritPrefab, airSpiritPrefab, fireSpiritPrefab, waterSpiritPrefab, darkSpiritPrefab, lightSpiritPrefab;
 
     // Set at Start
+    private Dictionary<string, GameObject> allyPrefabs;
+    private Dictionary<string, GameObject> spiritPrefabs;
     private Character chosenCharacter;
     private Ally ally;
-    private List<GameObject> spirits;
+    private List<GameObject> summonedSpirits;
 
     public Character ChosenCharacter { get { return chosenCharacter; } }
     public Ally Ally { get { return ally; } }
@@ -49,13 +49,67 @@ public class CharacterManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        allyPrefabs = LoadAllyPrefabs();
+        spiritPrefabs = LoadSpiritPrefabs();
     }
 
     void Start()
     {
-        spirits = new List<GameObject>();
+        summonedSpirits = new List<GameObject>();
         HideCharacterSelectIcons();
     }
+
+    #region Prefab File Loading
+    private Dictionary<string, GameObject> LoadAllyPrefabs()
+    {
+        // Ally Sprites
+        Dictionary<string, GameObject> newAllyPrefabs = new Dictionary<string, GameObject>();
+
+        string allyPrefabFilePath = "Assets/Prefabs/Units/Allies/";
+        string[] allyPrefabFiles = Directory.GetFiles(allyPrefabFilePath, "*.prefab", SearchOption.TopDirectoryOnly);
+
+        foreach(var allyPrefabFile in allyPrefabFiles)
+        {
+            var allyPrefab = AssetDatabase.LoadAssetAtPath(allyPrefabFile, typeof(GameObject));
+
+            if(allyPrefab != null)
+            {
+                newAllyPrefabs.Add(allyPrefab.name, (GameObject)allyPrefab);
+            }
+            else
+            {
+                Debug.Log("Error! Ally Prefab not loaded");
+            }
+        }
+
+        return newAllyPrefabs;
+    }
+
+    private Dictionary<string, GameObject> LoadSpiritPrefabs()
+    {
+        Dictionary<string, GameObject> newSpiritPrefabs = new Dictionary<string, GameObject>();
+
+        string spiritPrefabFilePath = "Assets/Prefabs/Units/Spirits/";
+        string[] spiritPrefabFiles = Directory.GetFiles(spiritPrefabFilePath, "*.prefab", SearchOption.TopDirectoryOnly);
+
+        foreach(var spiritPrefabFile in spiritPrefabFiles)
+        {
+            var spiritPrefab = AssetDatabase.LoadAssetAtPath(spiritPrefabFile, typeof(GameObject));
+
+            if(spiritPrefab != null)
+            {
+                newSpiritPrefabs.Add(spiritPrefab.name, (GameObject)spiritPrefab);
+            }
+            else
+            {
+                Debug.Log("Error! Ally Prefab not loaded");
+            }
+        }
+
+        return newSpiritPrefabs;
+    }
+    #endregion Prefab File Loading
 
     public void ShowCharacterSelectIcons()
     {
@@ -118,35 +172,6 @@ public class CharacterManager : MonoBehaviour
         };
     }
 
-    private GameObject GetAllyPrefab(string allyType)
-    {
-        return allyType.ToLower() switch
-        {
-            "squirrel" => squirrelPrefab,
-            "frog" => frogPrefab,
-            "rat" => ratPrefab,
-            "newt" => newtPrefab,
-            "toad" => toadPrefab,
-            "porcupine" => porcupinePrefab,
-            "hamster" => hamsterPrefab,
-            _ => squirrelPrefab,
-        };
-    }
-
-    private GameObject GetSpiritPrefab(string spiritType)
-    {
-        return spiritType.ToLower() switch
-        {
-            "earth" => earthSpiritPrefab,
-            "air" => airSpiritPrefab,
-            "fire" => fireSpiritPrefab,
-            "water" => waterSpiritPrefab,
-            "dark" => darkSpiritPrefab,
-            "light" => lightSpiritPrefab,
-            _ => earthSpiritPrefab,
-        };
-    }
-
     public void SummonAlly(Summon summonAction)
     {
         int amount = summonAction.Amount + GameManager.instance.Player.UnitEffects.GetEffectAmount(ActionType.Summon, true);
@@ -159,7 +184,7 @@ public class CharacterManager : MonoBehaviour
         else
         {
             Ally newAlly = Instantiate(
-                GetAllyPrefab(summonAction.SummonName),
+                allyPrefabs[summonAction.SummonName.Replace(" ", "")],
                 allySpawnTrans.position,
                 Quaternion.identity,
                 transform
@@ -174,12 +199,12 @@ public class CharacterManager : MonoBehaviour
     public void SummonSpirit(string spiritTypeToSummon)
     {
         GameObject newSpirit = Instantiate(
-            GetSpiritPrefab(spiritTypeToSummon),
+            spiritPrefabs[spiritTypeToSummon.Replace(" ", "")],
             spiritSpawnTrans.position,
             Quaternion.identity,
             transform
         );
-        spirits.Add(newSpirit);
+        summonedSpirits.Add(newSpirit);
     }
 
     public IEnumerator ProcessAllyTurn()
@@ -212,10 +237,10 @@ public class CharacterManager : MonoBehaviour
             ally = null;
         }
 
-        for(int i = spirits.Count - 1; i >= 0; i--)
+        for(int i = summonedSpirits.Count - 1; i >= 0; i--)
         {
-            Destroy(spirits[i]);
+            Destroy(summonedSpirits[i]);
         }
-        spirits.Clear();
+        summonedSpirits.Clear();
     }
 }

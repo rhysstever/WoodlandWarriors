@@ -1144,19 +1144,6 @@ MonoBehaviour:
   opossumSprite: {fileID: -5515171930948586337, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   otterSprite: {fileID: 6151593519759729981, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
   skunkSprite: {fileID: 5915982472212450843, guid: f852d1df703aab44e8cacccaf51e8a0f, type: 3}
-  squirrelPrefab: {fileID: 893089760025702593, guid: 0f205192699a00f40ba2c237bb18bf00, type: 3}
-  frogPrefab: {fileID: 893089760025702593, guid: d10c3b065aba3484aaf748eedadaab7b, type: 3}
-  ratPrefab: {fileID: 893089760025702593, guid: 6ec94c60df763a341af849c5e3095f0e, type: 3}
-  newtPrefab: {fileID: 893089760025702593, guid: 93e01c6ca362e884e971cdd961c85264, type: 3}
-  toadPrefab: {fileID: 893089760025702593, guid: 7cf66ef504471af4eaf8a731b9a3dedb, type: 3}
-  porcupinePrefab: {fileID: 893089760025702593, guid: 7cf66ef504471af4eaf8a731b9a3dedb, type: 3}
-  hamsterPrefab: {fileID: 893089760025702593, guid: 78a5d9faaf33efb4a90627c07da0f094, type: 3}
-  earthSpiritPrefab: {fileID: 441819906633108402, guid: 12aca27b1e916f04da9f07f643766ac1, type: 3}
-  airSpiritPrefab: {fileID: 441819906633108402, guid: 67aae53d677fdf344b288717104b7bf1, type: 3}
-  fireSpiritPrefab: {fileID: 441819906633108402, guid: 3f5cc4993cf893b42afd6c5147a8d21f, type: 3}
-  waterSpiritPrefab: {fileID: 441819906633108402, guid: 369b841c4f5962544a13707ab9e450fc, type: 3}
-  darkSpiritPrefab: {fileID: 441819906633108402, guid: 06872c42a7e2d3b449f3023816f64663, type: 3}
-  lightSpiritPrefab: {fileID: 441819906633108402, guid: 10a117db23c402247aa32c9ed1e3f082, type: 3}
 --- !u!114 &231419623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7603,7 +7590,7 @@ Transform:
   m_GameObject: {fileID: 1846258372}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 0}
+  m_LocalPosition: {x: -4, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

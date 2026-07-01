@@ -171,7 +171,13 @@ public class Buff : Action
     {
         // ===== Description Format =====
         // Buff: "Buff X by Y"
-        return string.Format("Buff {0} by {1}", actionType, amount);
+        string actionTypeString = actionType switch
+        {
+            ActionType.WeaponAttack => "physcial attacks",
+            ActionType.SpellAttack => "magical attacks",
+            _ => actionType.ToString(),
+        };
+        return string.Format("Buff {0} by {1}", actionTypeString, amount);
     }
 }
 

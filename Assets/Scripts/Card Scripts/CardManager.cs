@@ -11,21 +11,16 @@ public class CardManager : MonoBehaviour
     public static CardManager instance = null;
 
     // Set in inspector
-    [SerializeField]    // Basic card base sprites
-    private Sprite cardBaseAttack, cardBaseDefend, cardBaseAlly, cardBaseSpell, cardBaseSpirit, cardBaseDrink;
-    [SerializeField]    // Uncommon card base sprites
-    private Sprite cardBaseUncommonAttack, cardBaseUncommonDefend, cardBaseUncommonAlly, cardBaseUncommonSpell, cardBaseUncommonSpirit, cardBaseUncommonDrink;
-    [SerializeField]    // Rare card base sprites
-    private Sprite cardBaseRareAttack, cardBaseRareDefend, cardBaseRareAlly, cardBaseRareSpell, cardBaseRareSpirit, cardBaseRareDrink;
     [SerializeField]    // Action icon sprites
     private Sprite actionIconSpriteWeaponAttack, actionIconSpriteDefend, actionIconSpriteSpellAttack, actionIconSpriteHeal, actionIconSpriteFire, actionIconSpritePoison, actionIconSpriteSpike, actionIconSpriteSummon;
     [SerializeField]
     private GameObject effectUIPrefab, effectBuffUIPrefab;
 
     // Set in script
+    private Dictionary<(Slot, Rarity), Sprite> cardBaseSprites;
+    private List<Sprite> cardArtList;
     private List<CardData> cardLibrary;
     private Dictionary<Rarity, float> rarityPercentages;
-    private List<Sprite> cardArtList;
 
     // Slots
     private CardData mainHand, offHand, spirit, ally, spell, drink;
@@ -44,6 +39,7 @@ public class CardManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        cardBaseSprites = LoadCardBaseSprites();
         cardArtList = LoadCardArtSprites();
         cardLibrary = CardCreation();
 
@@ -56,6 +52,48 @@ public class CardManager : MonoBehaviour
         rarityPercentages.Add(Rarity.Basic, 0.8f);
         rarityPercentages.Add(Rarity.Uncommon, 0.15f);
         rarityPercentages.Add(Rarity.Rare, 0.05f);
+    }
+
+    private Dictionary<(Slot, Rarity), Sprite> LoadCardBaseSprites()
+    {
+        Dictionary<(Slot, Rarity), Sprite> newCardBaseSprites = new Dictionary<(Slot, Rarity), Sprite>();
+
+        string cardBaseDirPath = "Assets/Resources/Images/CardBase/";
+
+        // Check in each rarity sub directory
+        foreach(Rarity rarity in Enum.GetValues(typeof(Rarity)))
+        {
+            string cardBaseRarityPath = string.Format("{0}{1}/", cardBaseDirPath, rarity);
+            string[] cardBaseFiles = Directory.GetFiles(cardBaseRarityPath, "*.png", SearchOption.TopDirectoryOnly);
+            foreach(var cardBaseFile in cardBaseFiles)
+            {
+                var cardBaseSprite = AssetDatabase.LoadAssetAtPath(cardBaseFile, typeof(Sprite));
+
+                if(cardBaseSprite != null)
+                {
+                    // Get the slot of the sprite from its name
+                    string fileNamePreSlot = string.Format("cardBase{0}", rarity);
+                    Slot slot = cardBaseSprite.name.Substring(fileNamePreSlot.Length) switch
+                    {
+                        "Attack" => Slot.MainHand,
+                        "Defend" => Slot.OffHand,
+                        "Ally" => Slot.Ally,
+                        "Spell" => Slot.Spell,
+                        "Spirit" => Slot.Spirit,
+                        "Drink" => Slot.Drink,
+                        _ => Slot.MainHand
+                    };
+
+                    newCardBaseSprites.Add((slot, rarity), (Sprite)cardBaseSprite);
+                }
+                else
+                {
+                    Debug.Log("Error! Card Base Sprite not loaded");
+                }
+            }
+        }        
+
+        return newCardBaseSprites;
     }
 
     #region Card Creation
@@ -190,6 +228,10 @@ public class CardManager : MonoBehaviour
     public void Play(GameObject cardObject, Enemy targetEnemy)
     {
         CardData cardData = cardObject.GetComponent<CardObject>().CardData;
+        if(cardData.Slot == Slot.Spirit)
+        {
+            CharacterManager.instance.SummonSpirit(cardData.Name);
+        }
         ActionManager.instance.PerformActions(cardData.Actions, GameManager.instance.Player, targetEnemy);
         DeckManager.instance.RemoveCard(cardObject);
     }
@@ -300,10 +342,9 @@ public class CardManager : MonoBehaviour
     /// </summary>
     /// <param name="slotType">The slot type of the card</param>
     /// <returns>Returns the first card of that slot</returns>
-    public CardData GetStarterCardData(Slot slotType)
+    private CardData GetStarterCardData(Slot slotType)
     {
-        return cardLibrary
-            .FindAll(card => card.Slot == slotType)[0];
+        return cardLibrary.FindAll(card => card.Slot == slotType)[0];
     }
 
     /// <summary>
@@ -327,28 +368,7 @@ public class CardManager : MonoBehaviour
 
     public Sprite GetCardBaseSprite(Slot slotType, Rarity rarity)
     {
-        return (rarity, slotType) switch
-        {
-            (Rarity.Basic, Slot.MainHand) => cardBaseAttack,
-            (Rarity.Basic, Slot.OffHand) => cardBaseDefend,
-            (Rarity.Basic, Slot.Ally) => cardBaseAlly,
-            (Rarity.Basic, Slot.Spirit) => cardBaseSpirit,
-            (Rarity.Basic, Slot.Spell) => cardBaseSpell,
-            (Rarity.Basic, Slot.Drink) => cardBaseDrink,
-            (Rarity.Uncommon, Slot.MainHand) => cardBaseUncommonAttack,
-            (Rarity.Uncommon, Slot.OffHand) => cardBaseUncommonDefend,
-            (Rarity.Uncommon, Slot.Ally) => cardBaseUncommonAlly,
-            (Rarity.Uncommon, Slot.Spirit) => cardBaseUncommonSpirit,
-            (Rarity.Uncommon, Slot.Spell) => cardBaseUncommonSpell,
-            (Rarity.Uncommon, Slot.Drink) => cardBaseUncommonDrink,
-            (Rarity.Rare, Slot.MainHand) => cardBaseRareAttack,
-            (Rarity.Rare, Slot.OffHand) => cardBaseRareDefend,
-            (Rarity.Rare, Slot.Ally) => cardBaseRareAlly,
-            (Rarity.Rare, Slot.Spirit) => cardBaseRareSpirit,
-            (Rarity.Rare, Slot.Spell) => cardBaseRareSpell,
-            (Rarity.Rare, Slot.Drink) => cardBaseRareDrink,
-            _ => null
-        };
+        return cardBaseSprites[(slotType, rarity)];
     }
 
     public Sprite GetActionSprite(ActionType actionType)
