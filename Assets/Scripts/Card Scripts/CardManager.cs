@@ -100,15 +100,18 @@ public class CardManager : MonoBehaviour
     private List<CardData> CardCreation()
     {
         // Reminder: First card of each slot will be there starter card 
-
         List<CardData> cards = new() {
             // Main hand cards
             new CardData("Shortsword", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 1, TargetType.Foe) }),
-            new CardData("Wand", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) }),
-            new CardData("Staff", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.Burn, 2, TargetType.Foe) }),
+            new CardData("Wand", Slot.MainHand, Rarity.Basic, 
+                new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) },
+                new List<Action> { new Buff(ActionType.SpellAttack, 1) }),
+            new CardData("Staff", Slot.MainHand, Rarity.Basic, 
+                new List<Action> { new Action(ActionType.Burn, 2, TargetType.Foe) },
+                new List<Action> { new Buff(ActionType.SpellAttack, 1) }),
             new CardData("Mace", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 3, TargetType.AllFoes) }),
             new CardData("Flail", Slot.MainHand, Rarity.Basic, new List<Action> { new Action(ActionType.WeaponAttack, 2, TargetType.RandomFoe, 3) }),
-            new CardData("Flaming Arrow", Slot.MainHand, Rarity.Basic, new List<Action> {
+            new CardData("Flaming Arrow", Slot.MainHand, Rarity.Uncommon, new List<Action> {
                 new Action(ActionType.WeaponAttack, 2, TargetType.Foe),
                 new Action(ActionType.Burn, 2, TargetType.Foe),
             }),
@@ -136,8 +139,8 @@ public class CardManager : MonoBehaviour
                 new Action(ActionType.Spike, 1, TargetType.Player)
             }),
             //new CardData("Tome", Slot.OffHand, Rarity.Uncommon, new List<CardAction> {}),
-            new CardData("Tower Shield", Slot.OffHand, Rarity.Rare, new List<Action> { new Action(ActionType.Defend, 5, TargetType.Player) }),
             //new CardData("Arcane Focus", Slot.OffHand, Rarity.Uncommon, new List<CardAction> {}),
+            new CardData("Tower Shield", Slot.OffHand, Rarity.Rare, new List<Action> { new Action(ActionType.Defend, 5, TargetType.Player) }),
 
             // Ally cards
             new CardData("Squirrel", Slot.Ally, Rarity.Basic, new List<Action> { 
@@ -147,10 +150,10 @@ public class CardManager : MonoBehaviour
                 new Summon(1, "Frog", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Player) }) 
             }),
             new CardData("Rat", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(1, "Rat", new List<Action> { new Action(ActionType.Poison, 1, TargetType.RandomFoe) }) 
+                new Summon(1, "Rat", new List<Action> { new Action(ActionType.Poison, 2, TargetType.RandomFoe) }) 
             }),
             new CardData("Newt", Slot.Ally, Rarity.Basic, new List<Action> { 
-                new Summon(1, "Newt", new List<Action> { new Action(ActionType.Burn, 1, TargetType.RandomFoe) }) 
+                new Summon(1, "Newt", new List<Action> { new Action(ActionType.Burn, 2, TargetType.RandomFoe) }) 
             }),
             //new CardData("Bunny", Slot.Ally, Rarity.Uncommon, new List<Action> {
             //    new Summon(1, "Bunny", new List<Action> { new Action(ActionType.Heal, 1, TargetType.Self) })
@@ -162,7 +165,10 @@ public class CardManager : MonoBehaviour
                 }) 
             }),
             new CardData("Porcupine", Slot.Ally, Rarity.Uncommon, new List<Action> { 
-                new Summon(1, "Porcupine", new List<Action> { new Action(ActionType.Spike, 1, TargetType.Player) }) 
+                new Summon(1, "Porcupine", new List<Action> { 
+                    new Action(ActionType.Spike, 1, TargetType.Player),
+                    new Action(ActionType.WeaponAttack, 1, TargetType.RandomFoe)
+                }) 
             }),
             //new CardData("Chipmunk", Slot.Ally, Rarity.Uncommon, new List<Action> {
             //    new Summon(1, "Chipmunk", new List<Action> { ... })
@@ -197,12 +203,12 @@ public class CardManager : MonoBehaviour
 
             // Drink cards
             new CardData("Cup", Slot.Drink, Rarity.Basic, new List<Action> { new Action(ActionType.Heal, 1, TargetType.Player) }),
-            new CardData("Pouch", Slot.Drink, Rarity.Basic, new List<Action> { new Action(ActionType.Draw, 1, TargetType.Player) }),
             new CardData("Tankard", Slot.Drink, Rarity.Basic, new List<Action> {
                 new Action(ActionType.Heal, 1, TargetType.None),
                 new Action(ActionType.WeaponAttack, 1, TargetType.RandomFoe)
             }),
             new CardData("Goblet", Slot.Drink, Rarity.Basic, new List<Action> { new Action(ActionType.Heal, 2, TargetType.Player) }),
+            new CardData("Pouch", Slot.Drink, Rarity.Uncommon, new List<Action> { new Action(ActionType.Draw, 1, TargetType.Player) }),
             new CardData("Potion", Slot.Drink, Rarity.Uncommon, new List<Action> { new Action(ActionType.Heal, 4, TargetType.Player) }),
             new CardData("Flagon", Slot.Drink, Rarity.Uncommon, new List<Action> {
                 new Action(ActionType.Heal, 1, TargetType.Player),

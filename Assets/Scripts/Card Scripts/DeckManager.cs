@@ -47,7 +47,7 @@ public class DeckManager : MonoBehaviour
         currentCardSelection = null;
         numCardsDrawnAtPlayerTurnStart = 4;
     }
-
+    
     public void SetupForNewCombat()
     {
         deck = GenerateDeck();
@@ -83,6 +83,12 @@ public class DeckManager : MonoBehaviour
                     GameManager.instance.Player,
                     GameManager.instance.Player);
             }
+        }
+
+        // Perform Deck-specific start of combat actions
+        foreach(CardData cardData in deck)
+        {
+            ActionManager.instance.PerformActions(cardData.CombatStartActions, GameManager.instance.Player, null);
         }
 
         fieldCollider.gameObject.SetActive(true);
